@@ -1,0 +1,23 @@
+export const Color = {
+    brand:{
+        primary:"#ffff",
+        black:"#000",
+        colorButton:"#E00084",
+        white:"#fff",
+        grey:"#929292",
+        gryDLight:"#D0D0D0",
+        textGrey:"#646464",
+        suggestColor:"#303035",
+        AdvertisementColor:"#DA3842",
+        gryLight:"#EEEE",
+        border:"#B4B4B4",
+        blue:"#007FF7",
+        textGry:"#212121",
+        f9:"#F9F9F9",
+        fc:"#FCFCFC",
+        b4:"#b4b4b4",
+        green:"#2ACC65",
+        c4:"#C4c4c4",
+        red:"#E50000"
+    }
+}
