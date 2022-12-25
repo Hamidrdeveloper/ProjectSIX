@@ -21,6 +21,7 @@ class ProductDataService {
         sale_price: {
           value: vat,
           value_not_vat: res?.sale_price?.gross_value_after_discount,
+          iso3:res?.sale_price?.iso3
         },
       };
     });
@@ -36,6 +37,7 @@ class ProductDataService {
       sale_price: {
         value: vat,
         value_not_vat: res?.sale_price?.gross_value_after_discount,
+        iso3:res?.sale_price?.iso3,
       },
     };
   }

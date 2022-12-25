@@ -28,7 +28,7 @@ function ButtonInformation({title,ButtonTitle,onClick}:ButtonInformation) {
             <IconlyProvider
               primaryColor={Color.brand.black}
               secondaryColor={Color.brand.black}
-              stroke="bold"
+              set="light"
               size="xlarge">
               <ChevronRight />
             </IconlyProvider>

@@ -16,6 +16,7 @@ class BasketDataService {
           value: vat,
           gross_value: res?.sale_price?.gross_value,
           value_not_vat: res?.sale_price?.gross_value_after_discount,
+          iso3:res?.sale_price?.iso3
         },
       };
     });
@@ -65,7 +66,7 @@ class BasketDataService {
 
     return http
       .get(
-        `https://api.solutionsapps.shop/api/shop/product-variations/wallet-coin?maxAmount=${max}`,
+        `${Address.walletCoin}?maxAmount=${max}`,
       )
       .then(res => {
         console.log(Address.walletCoin, res);

@@ -17,7 +17,7 @@ import {TextInputSign} from '../../screen/signUp/style/signUp.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {TextInputInform} from '../../css/main.style';
-
+import PhoneInput from "react-native-phone-number-input";
 interface TextInputProps extends RNTextInputProps, UseControllerProps {
   label: string;
   name: string;
@@ -54,6 +54,52 @@ export const ControlledInput = (props: TextInputProps) => {
         value={field.value}
         {...inputProps}
       />
+    </>
+  );
+};
+export const ControlledInputPhone = (props: TextInputProps) => {
+  const {name, label, rules, defaultValue, ...inputProps} = props;
+  console.log('rules', rules);
+
+  const {field} = useController({name, rules, defaultValue});
+  React.useEffect(() => {
+    console.log(props.defaultValue);
+    
+    if (props.defaultValue != null) {
+      field.onChange(props.defaultValue);
+    } else {
+      field.onChange(' ');
+    }
+  }, []);
+  return (
+    <>
+      <Space lineH={10} />
+      {label && (
+        <Text style={styles.label}>
+          {label}
+          {rules != null ? <Text style={{color: 'red'}}>{'*'}</Text> : null}
+        </Text>
+      )}
+      <Space lineH={10} />
+      <PhoneInput
+            onChangeFormattedText={field.onChange}
+            value={field.value}
+            defaultValue={field.value}
+            defaultCode="DE"
+            textInputProps={{maxLength:11}}
+            layout="first"
+            containerStyle={{
+              width: `100%`,
+  height: 55,
+  borderWidth: 1,
+  borderColor: `${Color.brand.border}`,
+  borderRadius: 5,
+  color:` ${Color.brand.black}`,
+  fontSize: 18,
+  backgroundColor:` ${Color.brand.f9}`,
+            }}
+      
+          />
     </>
   );
 };

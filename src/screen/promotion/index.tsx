@@ -84,7 +84,7 @@ export default function PromotionScreen({navigation}) {
 
                 elevation: 5,
               }}>
-              <Plus color={Color.brand.blue} size={'medium'} />
+              <Plus set="light" primaryColor={Color.brand.blue} size={'medium'} />
             </View>
             <Text style={{color: Color.brand.blue, fontSize: 15}}>
               {'Add promotion code'}
@@ -127,7 +127,7 @@ export default function PromotionScreen({navigation}) {
             setCouponsProductPriceFn();
             navigation.goBack();
           }}>
-          <Wallet set="bold" primaryColor={Color.brand.blue} />
+          <Wallet set="light" primaryColor={Color.brand.blue} />
           <Space lineW={15} />
           <NumberFormat
             value={codePrice}
@@ -291,7 +291,7 @@ export default function PromotionScreen({navigation}) {
           source={{uri: IMAGE_ADDRESS + imageUrl}}
         />
         <View style={{position: 'absolute', top: 3, right: 3}}>
-          <CloseSquare set="bold" primaryColor={Color.brand.red} />
+          <CloseSquare set="light" primaryColor={Color.brand.red} />
         </View>
       </TouchableOpacity>
       <Space lineH={12} />
@@ -312,7 +312,7 @@ export default function PromotionScreen({navigation}) {
       />
       {addOfferProduct.length > 0 ? (
         <View style={{flexDirection: 'row', paddingLeft: 20}}>
-          <Buy set="bold" primaryColor={Color.brand.blue} />
+          <Buy set="light" primaryColor={Color.brand.blue} />
           <Text
             style={{
               color: Color.brand.blue,

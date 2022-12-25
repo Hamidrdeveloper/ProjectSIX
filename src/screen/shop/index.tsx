@@ -603,9 +603,8 @@ function ShopScreen({ navigation }) {
               data={categoriesInformation}
               renderItem={Advertisement}
               snap={0}
-              height={210}
+              height={100}
             />
-            <Space lineH={25} />
             <TitleStep>{"Newest Products"}</TitleStep>
             <Space lineH={25} />
             <FlatList

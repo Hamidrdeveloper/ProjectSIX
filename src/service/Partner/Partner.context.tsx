@@ -26,14 +26,15 @@ export default function PartnerContextProvider({
   const [partnerSelectId, setPartnerSelectId] = useState<PartnerId>();
   const partnerCheck = {data: []};
 
-  async function partnerMeFn(id: number) {
-    partnerCheck.data?.forEach(element => {
-      if (element.id == id) {
-        setPartnerSelectId(element);
-      }
-    });
-    console.log('partnerMeFn', partnerCheck.data);
-    console.log('partnerMeFn', id);
+  async function partnerMeFn(id: any) {
+    setPartnerSelectId(id);
+
+    // partnerCheck.data?.forEach(element => {
+    //   if (element.id == id) {
+    //   }
+    // });
+    // console.log('partnerMeFn', partnerCheck.data);
+    // console.log('partnerMeFn', id);
   }
   function PartnerFn(countryId: number) {
     PartnerAc(countryId)
@@ -48,10 +49,10 @@ export default function PartnerContextProvider({
       })
       .catch(() => {});
   }
-  async function partnerIdFn(id: number) {
-    const res = await PartnerIdAc(id);
-    setPartnerId(res);
-    setPartnerSelectId(res);
+   function partnerIdFn(id: any) {
+   
+    setPartnerId(id);
+    setPartnerSelectId(id);
     setLoading(true);
   }
 

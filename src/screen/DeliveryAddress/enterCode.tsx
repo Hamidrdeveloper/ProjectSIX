@@ -95,7 +95,7 @@ export default function EnterCode({onChange, visible}: Type) {
               <ChevronDownCircle
                 set="broken"
                 size={'medium'}
-                color={Color.brand.black}
+                primaryColor={Color.brand.black}
               />
             </TouchableOpacity>
           </Card>

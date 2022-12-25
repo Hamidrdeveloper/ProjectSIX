@@ -1,6 +1,8 @@
 export const SIGNUP_ADDRESS = 'register';
 export const SIGNIN_ADDRESS = 'login';
 export const PROFILE_ADDRESS = 'users/profile';
+export const PROFILE_DOCUMENT = 'users/profile/documents';
+
 export const PROFILE_EDIT_ADDRESS = '/users/profile/edit';
 export const INVOICE_ADDRESS_ADDRESS =
   '/users/profile/change-invoice-contact-group';
@@ -30,12 +32,12 @@ export const MAP_ADDRESS = 'http://api.mapbox.com/geocoding/v5/mapbox.places/';
 export const COUPONS = 'coupons/set';
 export const COUPONS_ID = 'coupons/';
 
-export const IMAGE_ADDRESS = 'https://api.solutionsapps.shop';
+export const IMAGE_ADDRESS = 'https://api.cleafin.shop';
 export const Partner_ADDRESS = 'shop/partners';
 export const Partner_ADDRESS_ID = 'shop/partners';
 export const Favorites = 'users/favorites';
 export const widgets = 'widgets';
-export const walletCoin = '/shop/product-variations/wallet-coin';
+export const walletCoin = 'shop/product-variations/wallet-coin';
 export const USERS_LEVEL = 'partners/users-of-first-level';
 export const SEND_USER = 'basket/send-to-other-user';
 export const SHOP_CONFIG = 'shop/config';

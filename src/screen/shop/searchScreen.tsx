@@ -210,6 +210,7 @@ export default function SearchPageScreen({
           searchIcon={() => (
             <ArrowLeft
               size={'large'}
+              set="light"
               primaryColor={Color.brand.textGrey}
               onPress={() => onShow()}
             />
@@ -237,6 +238,7 @@ export default function SearchPageScreen({
               onPress={() => {
                 navigation.navigate('SortScreen');
               }}
+              set="light"
               primaryColor={Color.brand.black}
             />
             <Space lineW={10} />

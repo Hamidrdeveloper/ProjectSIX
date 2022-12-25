@@ -270,7 +270,7 @@ export default function DetailsProduct({navigation, route}) {
             <ChevronDownCircle
               set="broken"
               size={'large'}
-              color={Color.brand.black}
+              primaryColor={Color.brand.black}
             />
           </TouchableOpacity>
         </View>

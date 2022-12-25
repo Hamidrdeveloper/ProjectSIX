@@ -25,7 +25,7 @@ export default function Email() {
           <IconlyProvider
             primaryColor={'yellow'}
             secondaryColor={'yellow'}
-            stroke="bold"
+            set="light"
             size="xlarge">
             <InfoCircle />
           </IconlyProvider>

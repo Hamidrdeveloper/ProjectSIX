@@ -33,9 +33,9 @@ export default function PartnerDetailScreen({navigation, route}) {
         <IconlyProvider
           primaryColor={Color.brand.black}
           secondaryColor={Color.brand.black}
-          stroke="bold"
+          set="light"
           size="xlarge">
-          <CloseSquare onPress={()=>navigation.goBack()}/>
+          <CloseSquare set="light"  primaryColor={Color.brand.black} onPress={()=>navigation.goBack()}/>
         </IconlyProvider>
       </View>
       <Padding>
@@ -79,7 +79,7 @@ export default function PartnerDetailScreen({navigation, route}) {
             style={{
               flexDirection: 'row',
             }}>
-            <Message size={'medium'} primaryColor={Color.brand.black} />
+            <Message set="light" size={'medium'} primaryColor={Color.brand.black} />
             <Space lineW={5} />
             <Text style={{fontSize: 14, color: Color.brand.black}}>
               {partner?.email}
@@ -89,7 +89,7 @@ export default function PartnerDetailScreen({navigation, route}) {
             style={{
               flexDirection: 'row',
             }}>
-            <Call size={22} primaryColor={Color.brand.black} />
+            <Call set="light" size={22} primaryColor={Color.brand.black} />
             <Space lineW={5} />
             <Text style={{fontSize: 14, color: Color.brand.black}}>
             {partner?.mobile}

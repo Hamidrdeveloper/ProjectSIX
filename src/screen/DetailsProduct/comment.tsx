@@ -3,7 +3,7 @@ import {FormProvider, useController, useForm} from 'react-hook-form';
 import {Image, Modal, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
 import {Rating} from 'react-native-elements';
-import {ChevronDownCircle} from 'react-native-iconly';
+import { ChevronDownCircle } from 'react-native-iconly';
 import {LoadingButton} from '../../components/buttonLoading';
 import {ControlledInput} from '../../components/textInputController';
 import {Padding} from '../../css/main.style';
@@ -140,8 +140,7 @@ export default function CommentModal({show, onChange, id}) {
               }}>
               <ChevronDownCircle
                 set="broken"
-                size={'medium'}
-                color={Color.brand.black}
+                primaryColor="black"
               />
             </TouchableOpacity>
           </View>

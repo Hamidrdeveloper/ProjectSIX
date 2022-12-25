@@ -189,7 +189,7 @@ export default function DeliveryAddressScreen({navigation}) {
                 navigation.navigate('MyAddress_SCREEN', {type: 'Basket'});
               }}>
               <ViewRowJust>
-                <Location size={'medium'} primaryColor={Color.brand.blue} />
+                <Location set="light" size={'medium'} primaryColor={Color.brand.blue} />
                 <Space lineW={10} />
                 <TextBlue18>{'Add new address'}</TextBlue18>
               </ViewRowJust>

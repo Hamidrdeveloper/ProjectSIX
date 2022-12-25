@@ -149,7 +149,7 @@ export default function ReturnBackForm({navigation}) {
           </TextBlack>
           <Space lineH={8} />
           <ViewBoxImage>
-              <Plus size={'large'} primaryColor={Color.brand.blue}/>
+              <Plus set="light" size={'large'} primaryColor={Color.brand.blue}/>
           </ViewBoxImage>
         </Padding>
 

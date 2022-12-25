@@ -35,6 +35,7 @@ function PopUp({
             <CloseSquare
               style={{alignSelf: 'flex-end'}}
               size={'medium'}
+              set="light"
               primaryColor={Color.brand.black}
             />
             <View

@@ -12,7 +12,7 @@ import {Space} from '../../infrastructuer/theme/space.style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {BackgroundView, Padding} from '../../css/main.style';
 import HeaderScComponent from '../../components/header2';
-import {ArrowLeft, Show} from 'react-native-iconly';
+// import {ArrowLeft, Show} from 'react-native-iconly';
 import {
   TextInputSign,
   ViewIcon,
@@ -56,12 +56,12 @@ export default function SignInScreen({navigation}) {
             padding: 15,
             backgroundColor: Color.brand.white,
           }}>
-          <ArrowLeft
+          {/* <ArrowLeft
             set="light"
             size={'large'}
             primaryColor={Color.brand.black}
             onPress={() => navigation.goBack()}
-          />
+          /> */}
 
           <View
             style={{
@@ -118,19 +118,13 @@ export default function SignInScreen({navigation}) {
             <Space lineH={10} />
             <ViewRowTextInput>
               <TextInputSign
-                secureTextEntry={showPassOne}
+               
                 onChangeText={e => {
                   SignInModel.password = e;
                   setPassword(e);
                 }}
               />
-              <ViewIcon>
-                <Show
-                  onPress={() => setShowPassOne(!showPassOne)}
-                  size={'medium'}
-                  primaryColor={Color.brand.textGrey}
-                />
-              </ViewIcon>
+            
             </ViewRowTextInput>
             <Space lineH={30} />
             <View
@@ -146,21 +140,7 @@ export default function SignInScreen({navigation}) {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  <View
-                    style={{
-                      backgroundColor: Color.brand.blue,
-                      width: 20,
-                      height: 20,
-                      borderRadius: 6,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <AntDesign
-                      name="check"
-                      color={Color.brand.white}
-                      size={20}
-                    />
-                  </View>
+                 
                 </View>
                 <Space lineW={10} />
                 <Text style={{color: Color.brand.textGrey}}>

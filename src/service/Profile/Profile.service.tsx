@@ -21,6 +21,21 @@ class ProfileDataService {
         throw new Error(error);
       });
   }
+  document() {
+    return http
+      .get(Url.PROFILE_DOCUMENT)
+      .then(res => {
+        console.log(Url.PROFILE_DOCUMENT, res.data.data);
+
+        return res.data.data;
+      })
+      .catch(error => {
+        console.log(Url.PROFILE_ADDRESS, error.response);
+
+        throw new Error(error);
+      });
+  }
+  
   async updateUserProfile(values: Type.UserProfile): Promise<Type.User> {
     return await http
       .put(Url.PROFILE_EDIT_ADDRESS, values)

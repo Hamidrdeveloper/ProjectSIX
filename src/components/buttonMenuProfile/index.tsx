@@ -24,7 +24,7 @@ export default function ButtonMenuProfile({icon, text,onClick}) {
         <IconlyProvider
           primaryColor={Color.brand.black}
           secondaryColor={Color.brand.black}
-          stroke="bold"
+          set="light"
           size="xlarge">
           {icon}
         </IconlyProvider>

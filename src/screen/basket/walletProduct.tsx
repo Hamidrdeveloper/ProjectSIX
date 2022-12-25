@@ -171,7 +171,7 @@ export default function WalletProductScreen({navigation}) {
       imageUrl = item?.product?.file;
     }
     return (
-      <View style={{height: 110}}>
+      <View style={{height: 120,marginBottom:5}}>
         <TouchableOpacity
           onPress={() => {
             removeCoinProduct(item);
@@ -201,7 +201,7 @@ export default function WalletProductScreen({navigation}) {
             source={{uri: IMAGE_ADDRESS + imageUrl}}
           />
           <View style={{position: 'absolute', top: 3, right: 3}}>
-            <CloseSquare set="bold" primaryColor={Color.brand.red} />
+            <CloseSquare set="light" primaryColor={Color.brand.red} />
           </View>
         </TouchableOpacity>
         <Space lineH={12} />
@@ -211,9 +211,9 @@ export default function WalletProductScreen({navigation}) {
   return (
     <BackgroundView>
       <HeaderScComponent navigation={navigation} title={'Wallet Product'} />
-      {addCoinProduct.length > 0 ? (
+      {addCoinProduct.length >= 0 ? (
         <View style={{flexDirection: 'row', paddingLeft: 20}}>
-          <Buy set="bold" primaryColor={Color.brand.blue} />
+          <Buy set="light" primaryColor={Color.brand.blue} />
           <Text
             style={{
               color: Color.brand.blue,
@@ -225,20 +225,25 @@ export default function WalletProductScreen({navigation}) {
           </Text>
         </View>
       ) : null}
+     
       <FlatList
         data={addCoinProduct}
-        numColumns={3}
+        style={{minHeight:130}}
+        horizontal
         renderItem={item => {
           return selectOfferItem(item);
         }}
       />
-      <Space lineH={12} />
+     
+      <Space lineH={30} />
+      <View >
       <FlatList
         data={product}
         renderItem={item => {
           return CategoryProductItem(item);
         }}
       />
+      </View>
       <DropdownAlert
         titleNumOfLines={3}
         renderImage={props => {

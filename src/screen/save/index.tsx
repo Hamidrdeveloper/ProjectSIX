@@ -13,6 +13,7 @@ import { BackgroundView } from '../../css/main.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {AddressContext} from '../../service/Address/Address.context';
+import { FavoriteContext } from '../../service/Favorite/Favorite.context';
 import {IMAGE_ADDRESS} from '../../utils/adress.api';
 import {
   ImageSuggest,
@@ -21,7 +22,7 @@ import {
 } from '../shop/style/shop.style';
 
 export default function MySave({navigation}) {
-  const {saveProduct, deleteAddressFn} = useContext(AddressContext);
+  const {favorite,removeFavoriteFn} = useContext(FavoriteContext);
 
   function _renderItemBasket(item): any {
     let imageUrl;
@@ -60,9 +61,8 @@ export default function MySave({navigation}) {
             <Text
               style={{
                 color: Color.brand.black,
-
                 fontSize: 18,
-                width: '80%',
+                width: '200%',
               }}>
               {item.name}
             </Text>
@@ -111,8 +111,9 @@ export default function MySave({navigation}) {
               bottom: 15,
             }}>
             <Delete
+            set="light"
               onPress={() => {
-                deleteAddressFn(item);
+                removeFavoriteFn(item.id);
               }}
               size={'medium'}
               primaryColor={`${Color.brand.textGrey}`}
@@ -121,7 +122,7 @@ export default function MySave({navigation}) {
             <Space lineW={10} />
             <TouchableOpacity
               onPress={() => {
-                deleteAddressFn(item);
+                removeFavoriteFn(item.id);
               }}>
               <Text style={{color: Color.brand.textGrey, fontSize: 14}}>
                 {'Delete from list'}
@@ -148,7 +149,7 @@ export default function MySave({navigation}) {
             backgroundColor: Color.brand.white,
           }}>
           <Space lineH={15} />
-          {saveProduct.map(value => {
+          {favorite.map(value => {
             return _renderItemBasket(value);
           })}
         </View>

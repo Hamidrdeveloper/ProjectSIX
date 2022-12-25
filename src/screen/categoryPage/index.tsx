@@ -276,6 +276,7 @@ export default function CategoryPageScreen({navigation, route}) {
           searchIcon={() => (
             <ArrowLeft
               size={'medium'}
+              set="light"
               onPress={() => {
                 updateSearch('');
                 navigation.goBack();

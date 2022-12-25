@@ -8,6 +8,7 @@ import React, {
 import {AddressContext} from '../Address/Address.context';
 import {PartnerContext} from '../Partner/Partner.context';
 import {
+  documentAc,
   profileAc,
   updateUserProfileAc,
   userInvoiceAddressAC,
@@ -27,6 +28,9 @@ interface IProfileContext {
   userInvoiceAddressFn: (invoice_contact_group_id: unknown) => void;
   rolesUser: string;
   walletBalance: string;
+  listDocument: any ;
+  documentFn: any ;
+
 }
 export const ProfileContext = createContext<IProfileContext>(
   {} as IProfileContext,
@@ -41,8 +45,9 @@ export default function ProfileContextProvider({
   const [isLoading, setLoading] = useState(false);
   const {partnerMeFn, PartnerFn} = useContext(PartnerContext);
   const {addresses} = useContext(AddressContext);
-  const [rolesUser, setRolesUser] = useState(false);
-  
+  const [rolesUser, setRolesUser] = useState("");
+  const [listDocument, setListDocument] = useState([]);
+
   const [walletBalance, setWalletBalance] = useState('0');
 
   const [showInvoiceAddress, setShowInvoiceAddress] = useState();
@@ -82,11 +87,20 @@ export default function ProfileContextProvider({
         if (is.roles?.length > 0) setRolesUser(is.roles[0]?.slug);
         getAddressFn();
         setDataUser(is);
-        PartnerFn();
-        partnerMeFn(is?.sponsor_id);
+        PartnerFn(is?.sponsor);
+        partnerMeFn(is?.sponsor);
       })
       .catch(() => {
         setLodUser('2');
+      });
+  }
+  function documentFn() {
+    documentAc()
+      .then(is => {
+       setListDocument(is)
+      })
+      .catch(() => {
+        
       });
   }
   function profileUpdateFn(value: UserProfile) {
@@ -129,6 +143,8 @@ export default function ProfileContextProvider({
         showInvoiceAddress,
         rolesUser,
         walletBalance,
+        listDocument,
+        documentFn
       }}>
       {children}
     </ProfileContext.Provider>

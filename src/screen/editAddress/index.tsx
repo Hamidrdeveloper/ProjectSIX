@@ -14,7 +14,7 @@ import {
   useController,
 } from 'react-hook-form';
 import {ContactGroupsContext} from '../../service/Address/types';
-import {ControlledInput} from '../../components/textInputController';
+import {ControlledInput, ControlledInputPhone} from '../../components/textInputController';
 import {AddressContext} from '../../service/Address/Address.context';
 import {useContext} from 'react';
 import {TOKEN} from '../../utils/main';
@@ -52,16 +52,14 @@ export default function EditAddressScreen({navigation, route}) {
   function onSubmit(data: FormValues) {
     const finalData: ContactGroupsContext = {
       country_id: 83,
+      first_name: data.first_name + '',
+      last_name: data.last_name + '',
+      company_name: data.company_name + '',
       translate: {
         de: {
           locale: 'de',
           title: data.cart_title,
         },
-      },
-      people: {
-        first_name: data.first_name + '',
-        last_name: data.last_name + '',
-        company_name: data.company_name + '',
       },
       addresses: [
         {
@@ -137,15 +135,15 @@ export default function EditAddressScreen({navigation, route}) {
               <ControlledInput
                 name="company_name"
                 label="Company Name"
-                defaultValue={defaultValues?.people[0]?.company_name}
-                placeholder={defaultValues?.people[0]?.company_name}
+                defaultValue={defaultValues?.company_name}
+                placeholder={defaultValues?.company_name}
                 placeholderTextColor={'#000'}
                 setFormError={setError}
                 maxLength={50}
               />
               <ControlledInput
-                defaultValue={defaultValues?.people[0]?.first_name}
-                placeholder={defaultValues?.people[0]?.first_name}
+                defaultValue={defaultValues?.first_name}
+                placeholder={defaultValues?.first_name}
                 name="first_name"
                 label="First Name"
                 placeholderTextColor={'#000'}
@@ -156,8 +154,8 @@ export default function EditAddressScreen({navigation, route}) {
               <ControlledInput
                 name="last_name"
                 label="Last Name"
-                defaultValue={defaultValues?.people[0]?.last_name}
-                placeholder={defaultValues?.people[0]?.last_name}
+                defaultValue={defaultValues?.last_name}
+                placeholder={defaultValues?.last_name}
                 placeholderTextColor={'#000'}
                 rules={{required: 'Password is required!'}}
                 setFormError={setError}
@@ -172,12 +170,14 @@ export default function EditAddressScreen({navigation, route}) {
                 setFormError={setError}
                 maxLength={60}
               />
-              <ControlledInput
+              <ControlledInputPhone
                 name="house_number"
                 label="House Number"
                 rules={{required: 'Password is required!'}}
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
+                defaultValue={defaultValues?.phones[0]?.number}
+                placeholder={defaultValues?.phones[0]?.number}
                 maxLength={11}
                 keyboardType="number-pad"
               />
@@ -233,7 +233,7 @@ export default function EditAddressScreen({navigation, route}) {
                 onChange={() => {}}
               />
 
-              <ControlledInput
+              <ControlledInputPhone
                 name="phone"
                 label="Phone"
                 defaultValue={defaultValues?.phones[0]?.number}

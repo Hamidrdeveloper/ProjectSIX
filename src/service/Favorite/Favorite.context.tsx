@@ -32,7 +32,9 @@ export default function FavoriteContextProvider({
 
   function addFavoriteFn(data: Favorite) {
     addFavoriteAc(data)
-      .then(res => {})
+      .then(res => {
+        getAllFavoritesFn()
+      })
       .catch(error => {});
   }
   function addAllFavoritesFn(data: Favorite[]) {
@@ -42,42 +44,19 @@ export default function FavoriteContextProvider({
   }
   function removeFavoriteFn(id: number) {
     removeFavoriteAc(id)
-      .then(res => {})
+      .then(res => {
+        getAllFavoritesFn()
+
+      })
       .catch(error => {});
   }
   function getAllFavoritesFn() {
-    // getAllFavoritesAc()
-    //   .then(e => {
-    //     Storage.retrieveData(KEY.MySave).then(res => {
-    //       console.log(KEY.MySave, JSON.parse(res));
-    //       e.map(x => {
-    //         Storage.removeData(`${x.id}`);
-    //       });
-    //     });
-    //     e.map(x => {
-    //       console.log('====================================');
-    //       console.log("SaveLoade",x);
-    //       console.log('====================================');
-    //       Storage.storeData(`${x.id}`, JSON.stringify(x));
-          
-    //     });
-    //   })
-    //   .catch(error => {});
-    //   Storage.retrieveData(KEY.MySave).then(res => {
-    //         let productsSave = [];
-    //         if (res != null) {
-    //           productsSave = [...JSON.parse(res), x];
-    //         } else {
-    //           productsSave.push(x);
-    //         }
-
-    //         console.log(productsSave);
-    //         Storage.storeData(KEY.MySave, JSON.stringify(productsSave)).then(
-    //           () => {
-    //             loadedSaveAddressFn();
-    //           },
-    //         );
-    //       });
+    getAllFavoritesAc()
+      .then(e => {
+        setDataFavorites(e);
+      })
+      .catch(error => {});
+     
   }
 
   return (

@@ -7,6 +7,10 @@ export function profileAc() {
 export function updateUserProfileAc(values: Type.UserProfile) {
   return ProfileDataService.updateUserProfile(values);
 }
+export function documentAc() {
+  return ProfileDataService.document();
+}
+
 export function userInvoiceAddressAC(id: number) {
   return ProfileDataService.userInvoiceAddress(id);
 }

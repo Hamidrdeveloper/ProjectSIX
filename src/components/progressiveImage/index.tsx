@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Animated, Dimensions} from 'react-native';
-import ContentLoader from 'react-native-content-loader';
-import {Rect} from 'react-native-svg';
+// import ContentLoader from 'react-native-content-loader';
+// import {Rect} from 'react-native-svg';
 import { IMAGE_ADDRESS } from '../../utils/adress.api';
 const w = Dimensions.get('screen').width;
 const styles = StyleSheet.create({

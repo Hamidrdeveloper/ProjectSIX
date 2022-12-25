@@ -15,7 +15,8 @@ import {ProfileContext} from '../Profile/Profile.context';
 import {BasketContext} from '../Basket/Basket.context';
 import {PartnerContext} from '../Partner/Partner.context';
 import {FavoriteContext} from '../Favorite/Favorite.context';
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import * as Updates from 'expo-updates';
+import { Platform } from 'react-native';
 interface IMainContext {
   token: string;
   onRunAllApi: (navigation) => void;
@@ -53,7 +54,14 @@ export default function MainContextProvider({
     setLoginOpen(false);
     Storage.removeDataAll();
     Storage.removeData('TOKEN');
-    RNRestart.Restart();
+    if(Platform.OS=="web")
+    {
+        window.location.reload()
+    }
+    else{
+        Updates.reloadAsync();
+    }
+    
   }
   function onGetUser() {
     Storage.retrieveData('TOKEN').then(res => {
@@ -61,7 +69,7 @@ export default function MainContextProvider({
       TOKEN.token = res;
       http.defaults.headers.common.Authorization = `Bearer ${res}`;
       setToken(res);
-
+      
       PartnerFn();
       profileFn();
 
@@ -80,52 +88,51 @@ export default function MainContextProvider({
   function onRunAllApi(navigation) {
     Storage.retrieveData('TOKEN').then(res => {
       console.log('MainContext', navigation);
-
+   
+      
       TOKEN.token = res;
       setToken(`res`);
       http.defaults.headers.common.Authorization = `Bearer ${res}`;
- 
-      // setTimeout(() => {
-      //   PartnerFn();
-      // }, 1000);
-      // // getAllFavoritesFn();
-      // setTimeout(() => {
-      //   widgetsFn();
-      // }, 1000);
+      
+      setTimeout(() => {
+        PartnerFn();
+      }, 1000);
+      getAllFavoritesFn();
+      setTimeout(() => {
+        widgetsFn();
+      }, 1000);
       setTimeout(() => {
         countriesFn();
       }, 1000);
-      // setTimeout(() => {
-      //   languageFn();
-      // }, 1000);
+      setTimeout(() => {
+        languageFn();
+      }, 1000);
       setTimeout(() => {
         productsFn();
       }, 1000);
      
-      // setTimeout(() => {
-      //   categoriesFn();
-      // }, 1000);
+      setTimeout(() => {
+        categoriesFn();
+      }, 1000);
       
-      // setTimeout(() => {
-      //   arrivalFn();
-      // }, 1000);
-      // setTimeout(() => {
-      //   cardBottomArrivalFn()
-      // }, 1000);
-      // setTimeout(() => {
-      //   bestSellingFn();
-      // }, 1000);
-      // setTimeout(() => {
-      //   newProductsFn();
-      // }, 1000);
-      // setTimeout(() => {
-      //   categoriesTreeFn();
-      // }, 1000);
+      setTimeout(() => {
+        arrivalFn();
+      }, 1000);
+      setTimeout(() => {
+        cardBottomArrivalFn()
+      }, 1000);
+      setTimeout(() => {
+        bestSellingFn();
+      }, 1000);
+      setTimeout(() => {
+        newProductsFn();
+      }, 1000);
+      setTimeout(() => {
+        categoriesTreeFn();
+      }, 1000);
      
     
-      if (res.length > 15) {
-        setLoginOpen(true);
-      }
+      
       if (res.length > 15) {
         orderSale();
       }
@@ -133,9 +140,12 @@ export default function MainContextProvider({
         page: 1,
         per_page: 12,
       };
+      if (res.length > 15) {
+        setLoginOpen(true);
+      }
       setTimeout(() => {
         profileFn();
-      }, 1000);
+      }, 100);
       setTimeout(() => {
         shopConfigFn();
       }, 1000);

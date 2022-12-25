@@ -9,6 +9,7 @@ import {
   Logout,
   Notification,
   User,
+  Document
 } from 'react-native-iconly';
 import Storage from '../../utils/storeData';
 import Picker from '../../components/addFileImage';
@@ -160,6 +161,15 @@ export default function ProfileScreen({navigation}) {
                   })
                 }
               /> */}
+               <Space lineH={10} />
+              <ButtonMenuProfile
+                icon={<Document />}
+                text="Document"
+                onClick={() => {
+                  
+                  navigation.navigate('DocumentScreen');
+                }}
+              />
               <Space lineH={10} />
               <ButtonMenuProfile
                 icon={<Logout />}
@@ -169,6 +179,7 @@ export default function ProfileScreen({navigation}) {
                   navigation.replace('SignInScreen');
                 }}
               />
+             
             </View>
           </View>
         </ScrollView>

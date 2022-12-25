@@ -135,6 +135,7 @@ export default function PartFive({navigation, onChangeValue}) {
                 flexDirection: 'row',
               }}>
               <Edit
+                set="light"
                 size={20}
                 primaryColor={Color.brand.blue}
                 onPress={() => {

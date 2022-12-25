@@ -183,7 +183,7 @@ export default function MyAddressScreen({navigation, route}) {
         </ViewItemAddress>
         <Space lineH={10} />
         <View style={{flexDirection: 'row'}}>
-          <User size={'medium'} primaryColor={`${Color.brand.textGrey}`} />
+          <User set="light" size={'medium'} primaryColor={`${Color.brand.textGrey}`} />
 
           <Space lineW={10} />
           <DetailsAddress>
@@ -192,14 +192,14 @@ export default function MyAddressScreen({navigation, route}) {
         </View>
         <Space lineH={10} />
         <View style={{flexDirection: 'row'}}>
-          <Call size={'medium'} primaryColor={`${Color.brand.textGrey}`} />
+          <Call set="light" size={'medium'} primaryColor={`${Color.brand.textGrey}`} />
 
           <Space lineW={10} />
           <DetailsAddress> {value?.phones[0]?.number}</DetailsAddress>
         </View>
         <Space lineH={10} />
         <View style={{flexDirection: 'row'}}>
-          <Discovery size={'medium'} primaryColor={`${Color.brand.textGrey}`} />
+          <Discovery set="light" size={'medium'} primaryColor={`${Color.brand.textGrey}`} />
 
           <Space lineW={10} />
           <DetailsAddress>{value?.title}</DetailsAddress>
@@ -222,7 +222,7 @@ export default function MyAddressScreen({navigation, route}) {
                 navigation.navigate('AddAddress_SCREEN');
               }}>
               <View style={{flexDirection: 'row'}}>
-                <Location size={'large'} primaryColor={Color.brand.blue} />
+                <Location set="light" size={'large'} primaryColor={Color.brand.blue} />
                 <Space lineW={10} />
                 <Text style={{color: Color.brand.blue, fontSize: 18}}>
                   {'Add new address'}
@@ -230,7 +230,7 @@ export default function MyAddressScreen({navigation, route}) {
               </View>
             </TouchableOpacity>
             <Space lineH={15} />
-            {addressList?.reverse()?.map(value => {
+            {addressList?.map(value => {
               return _renderItemAddress(value);
             })}
             <Space lineH={65} />

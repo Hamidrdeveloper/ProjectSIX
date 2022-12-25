@@ -343,7 +343,7 @@ export default function BasketScreen({navigation}) {
         ) : null}
         {data?.offer ? (
           <View style={{position: 'absolute', left: 8, top: 8}}>
-            <Discount set="bold" size={'large'} primaryColor="red" />
+            <Discount set="light" size={'large'} primaryColor="red" />
           </View>
         ) : null}
       </ItemBasket>
@@ -381,7 +381,7 @@ export default function BasketScreen({navigation}) {
             position: 'absolute',
             top: 50,
             right: 15,
-            width: 80,
+            width: 150,
             height: 30,
             backgroundColor: Color.brand.colorButton,
             alignItems: 'center',

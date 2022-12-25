@@ -42,6 +42,7 @@ import FinalScreen from '../../screen/final';
 import PromotionScreen from '../../screen/promotion';
 import WalletProductScreen from '../../screen/basket/walletProduct';
 import EmailVerify from '../../screen/emailVarfiy';
+import DocumentScreen from '../../screen/document';
 
 const Slack = createNativeStackNavigator();
 
@@ -50,9 +51,11 @@ const NavigationStart = () => {
     <NavigationContainer>
       <Slack.Navigator screenOptions={{headerShown: false}}>
       
+      
 
         <Slack.Screen name={'Splash_SCREEN'} component={SplashScreen} />
         <Slack.Screen name={'EmailVerify'} component={EmailVerify} />
+        <Slack.Screen name={'DocumentScreen'} component={DocumentScreen} />
 
         <Slack.Screen name={'Promotion_SCREEN'} component={PromotionScreen} />
         <Slack.Screen

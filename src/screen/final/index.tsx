@@ -167,9 +167,10 @@ export default function FinalScreen({navigation, route}) {
                 </Text>
                 <Space lineW={8} />
                 <CloseSquare
+                  set="light"
                   style={{top: 2}}
                   size="small"
-                  color={Color.brand.white}
+                  primaryColor={Color.brand.white}
                 />
               </TouchableOpacity>
             </View>

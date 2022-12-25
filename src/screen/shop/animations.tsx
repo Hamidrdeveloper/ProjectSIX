@@ -93,9 +93,7 @@ export const Animations = ({open}) => {
                 <Space lineW={30} />
                 <View>
                   <Text style={{color: Color.brand.colorButton}}>
-                    {partnerSelectId?.firstName +
-                      ' ' +
-                      partnerSelectId?.lastName}
+                    {partnerSelectId?.fullname}
                   </Text>
                   <Text>{'Independent Cleafin sales partner'}</Text>
                   <TouchableOpacity
@@ -112,20 +110,20 @@ export const Animations = ({open}) => {
               </View>
               <Space lineH={15} />
               <View style={{flexDirection: 'row'}}>
-                <Call primaryColor={Color.brand.grey} size={'small'} />
+                <Call set="light" primaryColor={Color.brand.grey} size={'small'} />
                 <Space lineW={10} />
-                <Text style={{color: Color.brand.grey}}>
-                  {partnerSelectId?.mobile}
-                </Text>
+                {/* <Text style={{color: Color.brand.grey}}>
+                  {partnerSelectId?.iban}
+                </Text> */}
                 <Space lineW={10} />
-                <Message primaryColor={Color.brand.grey} size={'small'} />
+                <Message set="light" primaryColor={Color.brand.grey} size={'small'} />
                 <Space lineW={10} />
-                <Text>{partnerSelectId?.email}</Text>
+                <Text>{partnerSelectId?.bank_name}</Text>
               </View>
               <Space lineH={10} />
-              <Text style={{height: 40, width: 200}}>
+              {/* <Text style={{height: 40, width: 200}}>
                 {partnerSelectId?.address_complete.replace(regexHtml, ',')}
-              </Text>
+              </Text> */}
             </>
           ) : (
             <>
@@ -133,9 +131,7 @@ export const Animations = ({open}) => {
                 <Space lineW={30} />
                 <View>
                   <Text style={{color: Color.brand.colorButton}}>
-                    {partnerSelectId?.firstName +
-                      ' ' +
-                      partnerSelectId?.lastName}
+                    {partnerSelectId?.fullname}
                   </Text>
                   <Text>{'Independent Cleafin sales partner'}</Text>
                   <TouchableOpacity
@@ -158,9 +154,9 @@ export const Animations = ({open}) => {
             }}
             style={styles.aicon}>
             {!played ? (
-              <ChevronDown primaryColor={Color.brand.grey} size={'medium'} />
+              <ChevronDown set="light" primaryColor={Color.brand.grey} size={'medium'} />
             ) : (
-              <ChevronUp primaryColor={Color.brand.grey} size={'medium'} />
+              <ChevronUp set="light"  primaryColor={Color.brand.grey} size={'medium'} />
             )}
           </Pressable>
         </Animated.View>

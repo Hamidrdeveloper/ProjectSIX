@@ -66,6 +66,7 @@ export default function PartOne({onChangeValue = value => {}}) {
           />
           <ViewIcon>
             <Message
+            set="light"
               size={'medium'}
               primaryColor={checkEmail ? Color.brand.green : Color.brand.red}
             />

@@ -1,4 +1,4 @@
-import React, {createContext, ReactElement, useContext, useState} from 'react';
+import React, {createContext, ReactElement, useContext, useEffect, useState} from 'react';
 import Toast from '../../components/toast';
 import {ProductVariation} from '../Products/types';
 import {ProfileContext} from '../Profile/Profile.context';
@@ -130,6 +130,12 @@ export default function BasketContextProvider({
   const [addOfferProduct, setAddOfferProduct] = useState<any>([]);
   const [addCoinProduct, setAddCoinProduct] = useState<any>([]);
   const [vatShipping, setVatShipping] = useState<any>(0);
+  const [vatTransportation, setVatTransportation] = useState<any>(0);
+  const [chackRole, setChackRole] = useState<any>("");
+
+useEffect(() => {
+  setChackRole(rolesUser)
+}, [rolesUser])
 
   function paymentMethodsFn() {
     AC.paymentMethodsAc().then(res => {
@@ -227,17 +233,15 @@ export default function BasketContextProvider({
     setResultPriceNotVat(priceNotVat);
     setTransportation(transport);
     let plusT = 0;
-    if (rolesUser == 'partner') {
-      if (
-        dataConfig?.transportation_rule?.min_partner_amount > transportation
-      ) {
-        plusT = dataConfig?.transportation_rule?.partner_cost;
-      }
-    } else {
-      if (
-        dataConfig?.transportation_rule?.min_customer_amount > transportation
-      ) {
-        plusT = dataConfig?.transportation_rule?.customer_cost;
+    if (
+      dataConfig?.transportation_rule?.min_customer_amount > transportation
+    ) {
+      if (price < shopConfig?.shipping_cost_rule?.min_amount) {
+      plusT = dataConfig?.transportation_rule?.customer_cost;
+      }else{
+        plusT = vatTransportation;
+
+
       }
     }
     let plusS = 0;
@@ -289,17 +293,15 @@ export default function BasketContextProvider({
     setResultPriceNotVat(priceNotVat);
     setTransportation(transport);
     let plusT = 0;
-    if (rolesUser == 'partner') {
-      if (
-        dataConfig?.transportation_rule?.min_partner_amount > transportation
-      ) {
-        plusT = dataConfig?.transportation_rule?.partner_cost;
-      }
-    } else {
-      if (
-        dataConfig?.transportation_rule?.min_customer_amount > transportation
-      ) {
-        plusT = dataConfig?.transportation_rule?.customer_cost;
+    if (
+      dataConfig?.transportation_rule?.min_customer_amount > transportation
+    ) {
+      if (price < shopConfig?.shipping_cost_rule?.min_amount) {
+      plusT = dataConfig?.transportation_rule?.customer_cost;
+      }else{
+        plusT = vatTransportation;
+
+
       }
     }
     let plusS = 0;
@@ -532,9 +534,14 @@ export default function BasketContextProvider({
     return AC.dataConfigAc().then(res => {
       setDataConfig(res);
       setShopConfig(res);
+      
       if(res?.country?.vats)
       setVatShipping((((1+res?.country?.vats[0].value)/100)*res?.shipping_cost_rule?.amount)+res?.shipping_cost_rule?.amount)
-
+      if (chackRole == 'partner') {
+          setVatTransportation((((1+res?.country?.vats[0].value)/100)*res?.transportation_rule?.partner_cost)+res?.transportation_rule?.partner_cost)
+      } else {
+        setVatTransportation((((1+res?.country?.vats[0].value)/100)*res?.transportation_rule?.customer_cost)+res?.transportation_rule?.customer_cost)
+      }
       if (res == 'null') {
         return false;
       }

@@ -6,8 +6,8 @@ export default axios.create({
   headers: {
     'Accept': 'application/json', 
     'HTTP_ACCEPT_LANGUAGE':'en',
-    'referer': 'https://solutionsapps.shop/',  
-    'Origin': 'https://solutionsapps.shop/',
+    'referer': 'https://cleafin.shop/',  
+    'Origin': 'https://cleafin.shop/',
     'Content-Type': 'application/json'
   }
 });

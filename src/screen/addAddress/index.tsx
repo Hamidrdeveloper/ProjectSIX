@@ -14,7 +14,7 @@ import {
   useController,
 } from 'react-hook-form';
 import {ContactGroupsContext} from '../../service/Address/types';
-import {ControlledInput} from '../../components/textInputController';
+import {ControlledInput, ControlledInputPhone} from '../../components/textInputController';
 import {AddressContext} from '../../service/Address/Address.context';
 import {useContext} from 'react';
 import {TOKEN} from '../../utils/main';
@@ -190,7 +190,7 @@ export default function AddAddressScreen({navigation}) {
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
               />
-              <ControlledInput
+              <ControlledInputPhone
                 name="house_number"
                 label="House Number"
                 rules={{required: 'Password is required!'}}
@@ -243,7 +243,7 @@ export default function AddAddressScreen({navigation}) {
                 onChange={() => {}}
               />
 
-              <ControlledInput
+              <ControlledInputPhone
                 name="phone"
                 label="Phone"
                 rules={{required: 'Password is required!'}}

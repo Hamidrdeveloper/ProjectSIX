@@ -67,9 +67,11 @@ export default function AuthContextProvider({
     setRegisterOpen(false);
     singUpAc().then(is => {
       setRegister(false);
-      if (SignUpModel?.sponsor_id > 0) {
-        partnerIdFn(SignUpModel.sponsor_id);
+      if (is?.sponsor) {
+        partnerIdFn(is?.sponsor);
       }
+        
+   
 
       setRegisterOpen(is);
     });
@@ -85,8 +87,8 @@ export default function AuthContextProvider({
           setIsShowError(!is.status);
           
         } else {
-          if (is.message.sponsor_id) {
-            partnerIdFn(is.message.sponsor_id);
+          if (is?.sponsor) {
+            partnerIdFn(is?.sponsor);
           }
 
           setLoginOpen(is.status);

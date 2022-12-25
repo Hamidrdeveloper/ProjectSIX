@@ -1,7 +1,7 @@
 import { Dimensions } from 'react-native';
 import {IMAGE_ADDRESS} from './adress.api';
 
-export const BASE_URL = 'https://api.solutionsapps.shop/api/';
+export const BASE_URL = 'https://api.cleafin.shop/api/';
 export const regexHtml = /(<([^>]+)>)/gi;
 export const widthFullScreen = Dimensions.get('screen').width;
 

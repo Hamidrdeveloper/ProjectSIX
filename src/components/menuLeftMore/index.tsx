@@ -108,7 +108,7 @@ export default function MenuLeftMore() {
               <ChevronDownCircle
                 set="broken"
                 size={'medium'}
-                color={Color.brand.black}
+                primaryColor={Color.brand.black}
               />
             </TouchableOpacity>
           </View>
@@ -155,7 +155,7 @@ export default function MenuLeftMore() {
             <Text style={{fontSize: 18, color: Color.brand.blue}}>
               {'Share Cart'}
             </Text>
-            <Send set="bold" primaryColor={Color.brand.blue} />
+            <Send set="light" primaryColor={Color.brand.blue} />
           </TouchableOpacity>
         </View>
         <ModalSendCart />

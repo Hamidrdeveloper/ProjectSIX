@@ -42,8 +42,9 @@ export default function EmailVerify({navigation}) {
         </ButtonColor>
         <View style={{position: 'absolute', top: 50}}>
           <CloseSquare
-            color={'#000'}
+            primaryColor={'#000'}
             size="large"
+            set="light"
             onPress={() => {
               navigation.replace('Splash_SCREEN');
             }}
