@@ -8,6 +8,7 @@ import {Space} from '../../infrastructuer/theme/space.style';
 import {SignUpModel} from '../../service/Auth/model';
 import {validateEmail} from '../../utils/regular';
 import {TextInputSign, ViewRowTextInput, ViewIcon} from './style/signUp.style';
+import i18n from '../../core/i18n/config';
 
 export default function PartOne({onChangeValue = value => {}}) {
   const [firstName, setFirstName] = useState(SignUpModel.first_name);
@@ -31,7 +32,7 @@ export default function PartOne({onChangeValue = value => {}}) {
   return (
     <>
       <BackgroundForm>
-        <Text style={{color: Color.brand.black}}>{'First Name'}</Text>
+        <Text style={{color: Color.brand.black}}>{i18n.t('FirstName')}</Text>
         <Space lineH={10} />
         <TextInputSign
           placeholderTextColor={'#000'}
@@ -42,7 +43,7 @@ export default function PartOne({onChangeValue = value => {}}) {
           }}
         />
         <Space lineH={20} />
-        <Text style={{color: Color.brand.black}}>{'Last Name'}</Text>
+        <Text style={{color: Color.brand.black}}>{i18n.t('Global.LastName')}</Text>
         <Space lineH={10} />
         <TextInputSign
           placeholderTextColor={'#000'}
@@ -53,7 +54,7 @@ export default function PartOne({onChangeValue = value => {}}) {
           }}
         />
         <Space lineH={20} />
-        <Text style={{color: Color.brand.black}}>{'Email'}</Text>
+        <Text style={{color: Color.brand.black}}>{i18n.t('Global.Email')}</Text>
         <Space lineH={10} />
         <ViewRowTextInput>
           <TextInputSign
@@ -85,7 +86,7 @@ export default function PartOne({onChangeValue = value => {}}) {
               fontSize: 18,
               color: Color.brand.white,
             }}>
-            {'Next'}
+            {i18n.t('Global.Next')}
           </Text>
         </ButtonColor>
         {!isForm ? <ShadowButton /> : null}

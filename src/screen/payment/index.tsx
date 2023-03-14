@@ -21,7 +21,10 @@ import NumberFormat from 'react-number-format';
 import {IMAGE_ADDRESS} from '../../utils/adress.api';
 import DropdownAlert from 'react-native-dropdownalert';
 import { ProfileContext } from '../../service/Profile/Profile.context';
-
+import i18n from '../../core/i18n/config';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en';
+import SliderComponent from './SliderComponent';
 export default function PaymentScreen({navigation, route}) {
   const {
     totalPrice,
@@ -34,13 +37,19 @@ export default function PaymentScreen({navigation, route}) {
     pointProducts,
     resultPriceNotVat,
     resultPrice,
+    setTotalPrice,
     dataConfig,
+    totalCoin,
+    ISO3,
+    setCodePrice
   } = useContext(BasketContext);
   const {rolesUser} = useContext(ProfileContext);
 
   const [dataPayment, setDataPayment] = useState([]);
   const [selectPayment, setSelectPayment] = useState(0);
   const [error, setError] = useState(false);
+  const [priceNumber, setPriceNumber] = useState(totalPrice);
+
   const [showFinish, setShowFinish] = useState(false);
   let dropDownAlertRef = React.useRef();
 
@@ -62,7 +71,7 @@ export default function PaymentScreen({navigation, route}) {
 
   useEffect(() => {
     if (error) {
-      dropDownAlertRef.alertWithType('error', 'All fields must be filled');
+      dropDownAlertRef.alertWithType('error',  i18n.t('Global.Allfields') );
       setError(false);
     }
   }, [error]);
@@ -95,11 +104,12 @@ export default function PaymentScreen({navigation, route}) {
             />
             <Text
               style={{fontStyle: 'normal', fontWeight: 'bold', fontSize: 22}}>
-              {'Thank you for purchasing from our app'}
+           
+              {i18n.t("Global.Thankyou")}
             </Text>
             <Space lineH={15} />
             <Text style={{fontStyle: 'normal', fontSize: 17}}>
-              {'Your purchase has been made'}
+              {i18n.t("Global.Yourpurchase")}
             </Text>
             <Space lineH={15} />
             <ButtonColor
@@ -113,7 +123,7 @@ export default function PaymentScreen({navigation, route}) {
                   fontSize: 18,
                   color: Color.brand.white,
                 }}>
-                {'Finish'}
+                {i18n.t("Global.Finish")}
               </Text>
             </ButtonColor>
           </View>
@@ -130,11 +140,12 @@ export default function PaymentScreen({navigation, route}) {
             details={''}
             isProduct={false}
             IsText={true}
-            title={'Payment Info'}
+            title={i18n.t("Global.PaymentInfo")}
           />
           <Padding>
             <Text style={{fontSize: 20, color: Color.brand.black}}>
-              {'Payment Method'}
+           
+              {i18n.t("Global.PaymentMethod")}
             </Text>
             <RadioButton
               flexDirection={'column'}
@@ -146,7 +157,7 @@ export default function PaymentScreen({navigation, route}) {
             />
          <Space lineH={30} />
             <ViewRow>
-              <TextBlack>{'Total'}</TextBlack>
+              <TextBlack>{i18n.t("Global.Total")}</TextBlack>
               <NumberFormat
                 value={resultPrice}
                 displayType={'text'}
@@ -157,7 +168,7 @@ export default function PaymentScreen({navigation, route}) {
                 renderText={(value, props) => {
                   return (
                     <TextBlack>
-                      {value?.replace('.', ',') + ' ' + resultSymbol}
+                      {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                     </TextBlack>
                   );
                 }}
@@ -165,7 +176,7 @@ export default function PaymentScreen({navigation, route}) {
             </ViewRow>
             <Space lineH={10} />
             <LineW />
-            <Space lineH={10} />
+            {/* <Space lineH={10} />
             <ViewRow>
               <TextGray>{'Total Points'}</TextGray>
               <NumberFormat
@@ -183,8 +194,8 @@ export default function PaymentScreen({navigation, route}) {
                   );
                 }}
               />
-            </ViewRow>
-            <Space lineH={10} />
+            </ViewRow> */}
+            {/* <Space lineH={10} />
 
             <ViewRow>
               <TextGray>{'Transportation'}</TextGray>
@@ -207,7 +218,7 @@ export default function PaymentScreen({navigation, route}) {
                   );
                 }}
               />
-            </ViewRow>
+            </ViewRow> */}
 {/* 
             <Space lineH={10} />
             <ViewRow>
@@ -228,9 +239,28 @@ export default function PaymentScreen({navigation, route}) {
                 }}
               />
             </ViewRow> */}
+             <Space lineH={10} />
+            <ViewRow>
+              <TextGray>{'CST'}</TextGray>
+              <NumberFormat
+                value={totalCoin}
+                displayType={'text'}
+                thousandSeparator={true}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                prefix={''}
+                renderText={(value, props) => {
+                  return (
+                    <TextBlack>
+                      {value?.replace('.', ',')}
+                    </TextBlack>
+                  );
+                }}
+              />
+            </ViewRow>
             <Space lineH={10} />
             <ViewRow>
-              <TextGray>{'Discount'}</TextGray>
+              <TextGray>{i18n.t("Global.Discount")}</TextGray>
               <NumberFormat
                 value={codePrice}
                 displayType={'text'}
@@ -239,13 +269,13 @@ export default function PaymentScreen({navigation, route}) {
                 fixedDecimalScale={true}
                 decimalScale={2}
                 renderText={(value, props) => {
-                  return <TextRed>{value.replace('.', ',') + ' ' + resultSymbol}</TextRed>;
+                  return <TextRed>{new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}</TextRed>;
                 }}
               />
             </ViewRow>
             <Space lineH={10} />
             <ViewRow>
-              <TextGray>{'Shipping'}</TextGray>
+              <TextGray>{i18n.t("Global.Shipping")}</TextGray>
               <NumberFormat
                 value={shipping}
                 displayType={'text'}
@@ -254,14 +284,14 @@ export default function PaymentScreen({navigation, route}) {
                 fixedDecimalScale={true}
                 decimalScale={2}
                 renderText={(value, props) => {
-                  return <TextBlack>{value.replace('.', ',') + ' ' + resultSymbol}</TextBlack>;
+                  return <TextBlack>{new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}</TextBlack>;
                 }}
               />
             </ViewRow>
             <Space lineH={10} />
             <LineW />
             <ViewRow>
-              <TextBlack>{'Big Total'}</TextBlack>
+              <TextBlack>{i18n.t("Global.BigTotal")}</TextBlack>
               <NumberFormat
                 value={totalPrice}
                 displayType={'text'}
@@ -270,19 +300,24 @@ export default function PaymentScreen({navigation, route}) {
                 fixedDecimalScale={true}
                 decimalScale={2}
                 renderText={(value, props) => {
-                  return <TextBlack>{value.replace('.', ',') + ' ' + resultSymbol}</TextBlack>;
+                  return <TextBlack>{new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}</TextBlack>;
                 }}
               />
             </ViewRow>
+            <SliderComponent onValue={(r)=>{setPriceNumber(r)}}/>
           </Padding>
           <Space lineH={120} />
         </ScrollView>
         <BottomViewBasket
-          title={'Checkout Now'}
-          resultPrice={totalPrice}
+          title={i18n.t("Global.CheckoutNow")}
+          ISO3={ISO3}
+          resultPrice={priceNumber}
           resultSymbol={resultSymbol}
           onClick={() => {
             if (selectPayment != 0) {
+               setCodePrice(priceNumber-totalPrice)
+              setTotalPrice(priceNumber)
+             
               navigation.navigate('Final_SCREEN', {
                 address: route.params.address,
                 delivery_contact_group_id:
@@ -292,6 +327,7 @@ export default function PaymentScreen({navigation, route}) {
                 payment_method_id: selectPayment,
                 shipping_profile_id: '',
                 coupon:route.params.coupon,
+              
               });
             }
           }}

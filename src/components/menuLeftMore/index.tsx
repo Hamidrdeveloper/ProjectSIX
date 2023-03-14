@@ -122,26 +122,19 @@ export default function MenuLeftMore() {
       <View
         style={{
           width: `100%`,
-          height: `100%`,
           alignItems: 'flex-end',
-          top: 15,
+          top: 90,
           position: 'absolute',
         }}>
         <View
           style={{
             width: `40%`,
-            borderTopLeftRadius: 15,
-            borderBottomLeftRadius: 15,
+            borderRadius: 8,
+
             height: 30,
+            right:8,
             backgroundColor: Color.brand.white,
-            elevation: 8,
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 3,
-            },
-            shadowOpacity: 0.29,
-            shadowRadius: 4.65,
+           
           }}>
           <TouchableOpacity
             onPress={() => {

@@ -32,12 +32,13 @@ import {
   ViewRow,
   ViewRowItem,
 } from './style/orderDetails.style';
+import i18n from '../../core/i18n/config';
 
 export default function OrderDetails({navigation, route}) {
   const [indexProcess, setIndexProcess] = useState(
     route.params.product.order_status_id,
   );
-  const {addToBasket, orderSaleById} = useContext(BasketContext);
+  const {addToBasket, orderSaleById,ISO3} = useContext(BasketContext);
 
   const [products, setProducts] = useState(route.params.product);
   const [total, setTotal] = useState('0');
@@ -127,7 +128,7 @@ export default function OrderDetails({navigation, route}) {
               <Space lineH={10} />
               {item?.productVariation?.product?.productCategories.length > 0 ? (
                 <TextGray>
-                  {'Category:' +
+                  {i18n.t("Global.Category")+":" +
                     item?.productVariation?.product?.productCategories[0].name}
                 </TextGray>
               ) : null}
@@ -146,11 +147,11 @@ export default function OrderDetails({navigation, route}) {
                 />
                 <Space lineW={40} />
                 <TextGray>
-                  {'Number : ' + item?.productVariation?.product?.number}
+                  {i18n.t("Global.Number")+":"+item?.productVariation?.product?.number}
                 </TextGray>
               </ViewRowItem>
               <ViewRowItem>
-                <TextGray>{'Quantity : ' + item?.quantity}</TextGray>
+                <TextGray>{i18n.t("Global.Quantity")+":" + item?.quantity}</TextGray>
                 <Space lineW={40} />
                 <TextGray>{'VAT : ' + item?.vat_value + '%'}</TextGray>
               </ViewRowItem>
@@ -184,20 +185,21 @@ export default function OrderDetails({navigation, route}) {
           details={''}
           isProduct={false}
           IsText={false}
-          title={'Order Detail'}
+          title={i18n.t("Global.OrderDetail")}
+          
         />
         <Padding>
           <ViewRow>
-            <TextGray>{'Order No. : '}</TextGray>
+            <TextGray>{i18n.t("Global.OrderNo")+":"}</TextGray>
             <TextBlack>{`# ${products.number}`}</TextBlack>
           </ViewRow>
           <ViewRow>
-            <TextGray>{'Order ID. : '}</TextGray>
+            <TextGray>{i18n.t("Global.OrderID")+":"}</TextGray>
             <TextBlack>{`# ${products.id}`}</TextBlack>
           </ViewRow>
           <Space lineH={10} />
           <ViewRow>
-            <TextGray>{'Order date. :'}</TextGray>
+            <TextGray>{i18n.t("Global.Orderdate")+":"}</TextGray>
             <TextBlack>
               {' '}
               {new Date(products.order_date).toUTCString().toString()}
@@ -205,7 +207,7 @@ export default function OrderDetails({navigation, route}) {
           </ViewRow>
           <Space lineH={30} />
           <ViewRow>
-            <TextGray>{'Transferee :'}</TextGray>
+            <TextGray>{i18n.t("Global.Transferee")+":"}</TextGray>
             <TextBlack>
               {products.user.person.first_name +
                 ' ' +
@@ -219,7 +221,7 @@ export default function OrderDetails({navigation, route}) {
           </ViewRow> */}
           <Space lineH={10} />
           <View>
-            <TextGray>{'Delivery address: '}</TextGray>
+            <TextGray>{i18n.t("Global.Deliveryaddress")+":"}</TextGray>
             <Space lineH={10} />
             <TextBlack numberOfLines={2}>
               {products.deliveryContactGroup.address.address_complete.replace(
@@ -230,7 +232,7 @@ export default function OrderDetails({navigation, route}) {
           </View>
           <Space lineH={10} />
           <View>
-            <TextGray>{'Invoice address: '}</TextGray>
+            <TextGray>{i18n.t("Global.Invoiceaddress")+":"}</TextGray>
             <Space lineH={10} />
             <TextBlack numberOfLines={2}>
               {products.invoiceContactGroup.address.address_complete.replace(
@@ -259,7 +261,7 @@ export default function OrderDetails({navigation, route}) {
           })}
           <Space lineH={30} />
           <ViewRow>
-            <TextGray>{'Total Net'}</TextGray>
+            <TextGray>{i18n.t("Global.TotalNet")}</TextGray>
             <NumberFormat
               value={products?.product_variations_net_value}
               displayType={'text'}
@@ -268,7 +270,7 @@ export default function OrderDetails({navigation, route}) {
               fixedDecimalScale={true}
               decimalScale={2}
               renderText={(value, props) => {
-                return <TextBlack>{value.replace('.', ',') + ' €'}</TextBlack>;
+                return <TextBlack>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: ISO3 }).format(value)}</TextBlack>;
               }}
             />
           </ViewRow>
@@ -285,7 +287,7 @@ export default function OrderDetails({navigation, route}) {
               renderText={(value, props) => {
                 return (
                   <TextRed style={{color: Color.brand.green}}>
-                    {value.replace('.', ',') + ' €'}
+                  {new Intl.NumberFormat('de-DE', { style: 'currency', currency: ISO3 }).format(value)}
                   </TextRed>
                 );
               }}
@@ -293,7 +295,7 @@ export default function OrderDetails({navigation, route}) {
           </ViewRow>
           <Space lineH={15} />
           <ViewRow>
-            <TextGray>{'Shipping Price'}</TextGray>
+            <TextGray>{i18n.t("Global.ShippingPrice")}</TextGray>
             <NumberFormat
               value={products?.gross_shipping_cost}
               displayType={'text'}
@@ -304,7 +306,7 @@ export default function OrderDetails({navigation, route}) {
               renderText={(value, props) => {
                 return (
                   <TextRed style={{color: Color.brand.green}}>
-                    {value.replace('.', ',') + ' €'}
+                   {new Intl.NumberFormat('de-DE', { style: 'currency', currency: ISO3 }).format(value)}
                   </TextRed>
                 );
               }}
@@ -312,7 +314,8 @@ export default function OrderDetails({navigation, route}) {
           </ViewRow>
           <Space lineH={15} />
           <ViewRow>
-            <TextBlack>{'Sub Total'}</TextBlack>
+            <TextBlack>{i18n.t("Global.SubTotal")}</TextBlack>
+            {products?.sale_price.gross_value!=products?.sale_price.value?
             <NumberFormat
               value={products?.product_variations_gross_value}
               displayType={'text'}
@@ -321,9 +324,10 @@ export default function OrderDetails({navigation, route}) {
               fixedDecimalScale={true}
               decimalScale={2}
               renderText={(value, props) => {
-                return <TextBlack>{value.replace('.', ',') + ' €'}</TextBlack>;
+                return <TextBlack>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: ISO3}).format(value)}</TextBlack>;
               }}
             />
+:null}
           </ViewRow>
           <Space lineH={10} />
           <LineW />
@@ -334,7 +338,7 @@ export default function OrderDetails({navigation, route}) {
           </ViewRow> */}
           <Space lineH={10} />
           <ViewRow>
-            <TextBlack>{'Total Price'}</TextBlack>
+            <TextBlack>{i18n.t("Global.TotalPrice")}</TextBlack>
             <NumberFormat
               value={products?.total_price}
               displayType={'text'}
@@ -343,7 +347,7 @@ export default function OrderDetails({navigation, route}) {
               fixedDecimalScale={true}
               decimalScale={2}
               renderText={(value, props) => {
-                return <TextBlack>{value.replace('.', ',') + ' €'}</TextBlack>;
+                return <TextBlack>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: ISO3}).format(value)}</TextBlack>;
               }}
             />
           </ViewRow>

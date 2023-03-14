@@ -209,8 +209,8 @@ export const TextProductOffer = styled(Text).attrs(() => ({}))`
   color: ${Color.brand.black};
 `;
 export const TextPriceThroughOffer = styled(Text).attrs(() => ({}))`
-  font-size: 13;
-  color: ${Color.brand.black};
+  font-size: 15px;
+  color: ${Color.brand.colorButton};
   text-decoration-line: line-through;
   text-decoration-style: solid;
 `;
@@ -232,7 +232,7 @@ export const ButtonAddTo = styled(Pressable).attrs(() => ({}))`
   align-self: center;
   justify-content: center;
   position: absolute;
-  bottom: 8;
+  bottom: -15;
 `;
 export const ButtonCategoryAddTo = styled(TouchableOpacity).attrs(() => ({}))`
   border-width: 1;

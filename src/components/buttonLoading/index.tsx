@@ -11,6 +11,7 @@ export const LoadingButton = ({
   title,
   styleMain,
   width = 332,
+  color=Color.brand.colorButton,
 }) => {
   const loadingButton = useRef();
   const _onPressHandler = () => {
@@ -51,7 +52,7 @@ export const LoadingButton = ({
         borderRadius={10}
         titleFontSize={18}
         titleColor="rgb(255,255,255)"
-        backgroundColor={Color.brand.colorButton}
+        backgroundColor={color}
         onPress={() => _onPressHandler()}
       />
     </View>

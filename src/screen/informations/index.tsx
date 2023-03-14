@@ -6,6 +6,7 @@ import {BackgroundView, Padding} from '../../css/main.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {ProfileContext} from '../../service/Profile/Profile.context';
+import i18n from '../../core/i18n/config';
 
 export default function InformationScreen({navigation}) {
   const {user} = useContext(ProfileContext);
@@ -13,11 +14,11 @@ export default function InformationScreen({navigation}) {
   return (
     <BackgroundView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <HeaderScComponent navigation={navigation} title={'Profile'} />
+        <HeaderScComponent navigation={navigation} title={i18n.t("Global.Profile")} />
 
         <Padding>
           <ButtonInformation
-            title={'First Name And Last Name'}
+            title={i18n.t("Global.FirstName")}
             ButtonTitle={
               user?.person.first_name + ' ' + user?.person?.last_name
             }
@@ -30,7 +31,7 @@ export default function InformationScreen({navigation}) {
             }
           />
           <ButtonInformation
-            title={'Email'}
+            title={i18n.t("Global.Email")}
             ButtonTitle={user?.email}
             onClick={() =>
               navigation.navigate('ProfileInformation_SCREEN', {
@@ -41,7 +42,7 @@ export default function InformationScreen({navigation}) {
             }
           />
           <ButtonInformation
-            title={'Birthday'}
+            title={i18n.t("Global.Birthday")}
             ButtonTitle={user?.birth_date}
             onClick={() =>
               navigation.navigate('ProfileInformation_SCREEN', {
@@ -52,7 +53,7 @@ export default function InformationScreen({navigation}) {
             }
           />
           <ButtonInformation
-            title={'Country'}
+            title={i18n.t("Global.Country")}
             ButtonTitle={user?.country?.name}
             onClick={() =>
               navigation.navigate('ProfileInformation_SCREEN', {
@@ -63,7 +64,7 @@ export default function InformationScreen({navigation}) {
             }
           />
           <ButtonInformation
-            title={'Language'}
+            title={i18n.t("Global.Language")}
             ButtonTitle={user?.language?.title}
             onClick={() =>
               navigation.navigate('ProfileInformation_SCREEN', {
@@ -74,7 +75,7 @@ export default function InformationScreen({navigation}) {
             }
           />
           <ButtonInformation
-            title={'Gender'}
+            title={i18n.t("Global.Gender")}
             ButtonTitle={user?.person?.gender}
             onClick={() =>
               navigation.navigate('ProfileInformation_SCREEN', {
@@ -85,7 +86,8 @@ export default function InformationScreen({navigation}) {
             }
           />
           <ButtonInformation
-            title={'Password'}
+            title={i18n.t("Global.Password")}
+            
             ButtonTitle={'*******'}
             onClick={() =>
               navigation.navigate('ProfileInformation_SCREEN', {

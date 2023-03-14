@@ -45,6 +45,7 @@ import styled from 'styled-components';
 import {ProfileContext} from '../../service/Profile/Profile.context';
 import EnterCode from './enterCode';
 import NumberFormat from 'react-number-format';
+import i18n from '../../core/i18n/config';
 
 const TextBlue18 = styled(Text)`
   font-size: 18;
@@ -71,6 +72,7 @@ export default function DeliveryAddressScreen({navigation}) {
 
   const {getAddressFn, addressSelect, getAddressSelect} =
     useContext(AddressContext);
+    
   const {showInvoiceAddress, rolesUser} = useContext(ProfileContext);
   const {
     bulkAdd,
@@ -86,8 +88,10 @@ export default function DeliveryAddressScreen({navigation}) {
     pointProducts,
     resultPriceNotVat,
     dataConfig,
+    totalCoin,
     transportation,
     couponsRoleProduct,
+    ISO3
   } = useContext(BasketContext);
   let dropDownAlertRef = useRef();
   useEffect(() => {
@@ -98,24 +102,25 @@ export default function DeliveryAddressScreen({navigation}) {
   useEffect(() => {
     switch (couponsType) {
       case 1:
-        _fetchData('The code is not correct or not suitable.', 'error');
+        _fetchData(i18n.t('Global.Thecodenot'), 'error');
+       
         break;
       case 2:
-        _fetchData('Discount applied', 'success');
+        _fetchData(i18n.t('Global.Discountapplied'), 'success');
         break;
       case 3:
-        _fetchData('The code is not correct or not suitable.', 'error');
+        _fetchData(i18n.t('Global.Thecodenot'), 'error');
         break;
     }
   }, [couponsType]);
 
   //   const sheetRef = React.useRef(null);
   const regex = /(<([^>]+)>)/gi;
-  function _renderItemAddress({title, data}) {
+  function _renderItemAddress({title, data,type}) {
     console.log('====================================');
     console.log('_renderItemAddress', data);
     console.log('====================================');
-    if (title == 'Invoice address') {
+    if (type ==1) {
       setIdInvoice(data?.id);
       return (
         <View>
@@ -130,7 +135,7 @@ export default function DeliveryAddressScreen({navigation}) {
             onPress={() => {
               navigation.navigate('MyAddress_SCREEN', {type: 'Invoice'});
             }}>
-            <TitleAddressBlue>{'Edit or change address'}</TitleAddressBlue>
+            <TitleAddressBlue>{i18n.t('Global.EditOrChangeAddress')}</TitleAddressBlue>
           </TouchableOpacity>
           <Space lineH={10} />
           <LineW />
@@ -151,7 +156,7 @@ export default function DeliveryAddressScreen({navigation}) {
             onPress={() => {
               navigation.navigate('MyAddress_SCREEN', {type: 'Deliver'});
             }}>
-            <TitleAddressBlue>{'Edit or change address'}</TitleAddressBlue>
+            <TitleAddressBlue>{i18n.t('Global.EditOrChangeAddress')}</TitleAddressBlue>
           </TouchableOpacity>
           <Space lineH={10} />
           <LineW />
@@ -166,21 +171,27 @@ export default function DeliveryAddressScreen({navigation}) {
   };
   function nextStep() {
     if (addressSelect.address != null) {
-      navigation.navigate('PaymentScreen_SCREEN', {
-        address: addressSelect.id,
-        delivery_contact_group_id: idInvoice,
-        invoice_contact_group_id: idDelivery,
-        coupon: code,
-      });
+      if(showInvoiceAddress?.address?.country?.id==addressSelect.address?.country?.id){
+        navigation.navigate('PaymentScreen_SCREEN', {
+          address: addressSelect.id,
+          delivery_contact_group_id: idInvoice,
+          invoice_contact_group_id: idDelivery,
+          coupon: code,
+        });
+      }else{
+        _fetchData(i18n.t('Global.countriesmatch'), 'error');
+        
+      }
+      
     } else {
-      _fetchData('Please Add Address', 'error');
+      _fetchData(i18n.t('Global.PleaseAdd'), 'error');
     }
   }
   return (
     <>
       <BackgroundView>
         <ScrollView>
-          <HeaderScComponent navigation={navigation} title={'My addresses'} />
+          <HeaderScComponent navigation={navigation} title={i18n.t('Global.MyAddresses')} />
 
           <Padding>
             <Space lineH={15} />
@@ -191,17 +202,19 @@ export default function DeliveryAddressScreen({navigation}) {
               <ViewRowJust>
                 <Location set="light" size={'medium'} primaryColor={Color.brand.blue} />
                 <Space lineW={10} />
-                <TextBlue18>{'Add new address'}</TextBlue18>
+                <TextBlue18>{i18n.t('Global.AddNewAddress')}</TextBlue18>
               </ViewRowJust>
             </TouchableOpacity>
             <Space lineH={30} />
             <_renderItemAddress
-              title={'Invoice address'}
+              title={i18n.t("Global.InvoiceAddress")}
               data={showInvoiceAddress}
+              type={1}
             />
             <Space lineH={15} />
             <_renderItemAddress
-              title={'Delivery address'}
+              title={i18n.t("Global.DeliveryAddress")}
+              type={2}
               data={showInvoiceAddress}
             />
             {/* <RadioButton
@@ -224,7 +237,7 @@ export default function DeliveryAddressScreen({navigation}) {
             /> */}
             <Space lineH={30} />
             <ViewRow>
-              <TextBlack>{'Total'}</TextBlack>
+              <TextBlack>{i18n.t("Global.Total")}</TextBlack>
               <NumberFormat
                 value={resultPrice}
                 displayType={'text'}
@@ -235,7 +248,7 @@ export default function DeliveryAddressScreen({navigation}) {
                 renderText={(value, props) => {
                   return (
                     <TextBlack>
-                      {value?.replace('.', ',') + ' ' + resultSymbol}
+                      {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                     </TextBlack>
                   );
                 }}
@@ -245,6 +258,25 @@ export default function DeliveryAddressScreen({navigation}) {
             <LineW />
             <Space lineH={10} />
             <ViewRow>
+              <TextGray>{'CST'}</TextGray>
+              <NumberFormat
+                value={totalCoin}
+                displayType={'text'}
+                thousandSeparator={true}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                prefix={''}
+                renderText={(value, props) => {
+                  return (
+                    <TextBlack>
+                      {value?.replace('.', ',')}
+                    </TextBlack>
+                  );
+                }}
+              />
+            </ViewRow>
+            <Space lineH={10} />
+            {/* <ViewRow>
               <TextGray>{'Total Points'}</TextGray>
               <NumberFormat
                 value={pointProducts}
@@ -261,8 +293,8 @@ export default function DeliveryAddressScreen({navigation}) {
                   );
                 }}
               />
-            </ViewRow>
-            <Space lineH={10} />
+            </ViewRow> */}
+            {/* <Space lineH={10} />
 
             <ViewRow>
               <TextGray>{'Transportation'}</TextGray>
@@ -285,7 +317,7 @@ export default function DeliveryAddressScreen({navigation}) {
                   );
                 }}
               />
-            </ViewRow>
+            </ViewRow> */}
 
             {/* <Space lineH={10} />
             <ViewRow>
@@ -308,7 +340,7 @@ export default function DeliveryAddressScreen({navigation}) {
             </ViewRow> */}
             <Space lineH={10} />
             <ViewRow>
-              <TextGray>{'Shipping'}</TextGray>
+              <TextGray>{i18n.t("Global.Shipping")}</TextGray>
               <NumberFormat
                 value={shipping}
                 displayType={'text'}
@@ -319,7 +351,7 @@ export default function DeliveryAddressScreen({navigation}) {
                 renderText={(value, props) => {
                   return (
                     <TextBlack>
-                      {value?.replace('.', ',') + ' ' + resultSymbol}
+                      {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                     </TextBlack>
                   );
                 }}
@@ -327,7 +359,7 @@ export default function DeliveryAddressScreen({navigation}) {
             </ViewRow>
             <Space lineH={10} />
             <ViewRow>
-              <TextBlack>{'Discount code'}</TextBlack>
+              <TextBlack>{i18n.t("Global.DiscountCode")}</TextBlack>
               {isCoupons ? (
                 <NumberFormat
                   value={codePrice}
@@ -342,7 +374,7 @@ export default function DeliveryAddressScreen({navigation}) {
                           closeCouponsFn();
                         }}>
                         <TextBlack style={{color: Color.brand.red}}>
-                          {value?.replace('.', ',') + ' ' + resultSymbol}
+                          {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                         </TextBlack>
                       </TouchableOpacity>
                     );
@@ -354,14 +386,14 @@ export default function DeliveryAddressScreen({navigation}) {
                     navigation.navigate('Promotion_SCREEN');
                   }}>
                   <TextCode>
-                    {couponsRoleProduct ? 'Product' : 'Enter'}
+                    {couponsRoleProduct ? i18n.t("Global.Product") :i18n.t("Global.Enter")}
                   </TextCode>
                 </TouchCode>
               )}
             </ViewRow>
             <Space lineH={10} />
             <ViewRow>
-              <TextBlack>{'Bag Total'}</TextBlack>
+              <TextBlack>{i18n.t("Global.BagTotal")}</TextBlack>
               <NumberFormat
                 value={totalPrice}
                 displayType={'text'}
@@ -372,7 +404,7 @@ export default function DeliveryAddressScreen({navigation}) {
                 renderText={(value, props) => {
                   return (
                     <TextBlack>
-                      {value?.replace('.', ',') + ' ' + resultSymbol}
+                      {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                     </TextBlack>
                   );
                 }}
@@ -383,10 +415,12 @@ export default function DeliveryAddressScreen({navigation}) {
           </Padding>
         </ScrollView>
         <BottomViewBasket
+        title={i18n.t('Global.Next')}
           resultPrice={totalPrice}
           resultSymbol={resultSymbol}
           navigation={navigation}
           onClick={nextStep}
+          ISO3={ISO3}
         />
         <DropdownAlert
           titleNumOfLines={3}

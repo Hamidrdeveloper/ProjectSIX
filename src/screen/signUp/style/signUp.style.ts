@@ -5,6 +5,7 @@ import {Color} from '../../../infrastructuer/theme/colors.style';
 export const TextInputSign = styled(TextInput)`
   width: 100%;
   height: 50;
+  padding_left:10px;
   border-width: 1;
   border-color: ${Color.brand.border};
   border-radius: 5;

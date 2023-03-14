@@ -10,10 +10,13 @@ import {
   ViewDataOffer,
   ViewOffer,
 } from './style/BottomDetails.style';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en';
 import {Card} from 'react-native-elements';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {BasketContext} from '../../service/Basket/Basket.context';
 import NumberFormat from 'react-number-format';
+import i18n from '../../core/i18n/config';
 
 function BottomDetails({item}) {
   const {addToBasket, removeToBasket} = useContext(BasketContext);
@@ -98,7 +101,8 @@ function BottomDetails({item}) {
             }}>
             <ViewBasket>
               <TextItem style={{color: Color.brand.white}}>
-                {'Add to Basket'}
+                {i18n.t("Global.Addtobasket")}
+              
               </TextItem>
             </ViewBasket>
           </TouchableOpacity>
@@ -117,7 +121,7 @@ function BottomDetails({item}) {
               prefix={''}
               renderText={(value, props) => {
                 return (
-                  <TextItem>{value.replace('.', ',') + ' ' + '€'}</TextItem>
+                  <TextItem>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}</TextItem>
                 );
               }}
             />

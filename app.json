@@ -2,7 +2,7 @@
   "expo": {
     "name": "cleafin",
     "slug": "cleafin",
-    "version": "1.27.1",
+    "version": "2.33.1",
     "orientation": "portrait",
     "icon": "./assets/playstore.png",
     "scheme": "myapp",
@@ -19,15 +19,33 @@
       "**/*"
     ],
     "ios": {
+      "buildNumber": "1.2.0",
+      "bundleIdentifier": "org.reactnative.cleafin",
       "supportsTablet": true,
       "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location to show you nearby places.",
+      "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs access to your location to show you nearby places.",
+      "NSLocationAlwaysUsageDescription": "This app needs access to your location to show you nearby places.",
         "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you share them with your friends.",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      
       },
-      "buildNumber": "1.2.0",
-      "bundleIdentifier": "org.reactnative.cleafin"
+      "config": {
+        "googleMapsApiKey": "AIzaSyB3535z4eKMYIMwZZPPiXpd7UkhmnBT7HA"
+      }
+      
     },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "13.0"
+          }
+        }
+      ]
+    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
@@ -37,6 +55,11 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f18a8347-edd7-4192-a5ba-6f7d3f40c37e"
+      }
     }
   }
 }

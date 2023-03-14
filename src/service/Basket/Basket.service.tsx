@@ -16,7 +16,7 @@ class BasketDataService {
           value: vat,
           gross_value: res?.sale_price?.gross_value,
           value_not_vat: res?.sale_price?.gross_value_after_discount,
-          iso3:res?.sale_price?.iso3
+          iso3:res?.sale_price?.iso3,
         },
       };
     });
@@ -39,7 +39,7 @@ class BasketDataService {
       .post(Address.Basket_CREATE_ORDER_ADDRESS, JSON.stringify(data))
       .then(res => {
         console.log(Address.Basket_CREATE_ORDER_ADDRESS, res);
-        return true;
+        return res.data.data;
       })
       .catch(error => {
         console.log(Address.Basket_CREATE_ORDER_ADDRESS, error.response);

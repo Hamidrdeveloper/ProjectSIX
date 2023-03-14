@@ -9,6 +9,11 @@ export function singUpAc() {
 export function singInAc() {
   return AuthDataService.signIn(SignInModel);
 }
+export function legalsAc() {
+  return AuthDataService.legals();
+}
+
+
 export function forgetPasswordAc() {
   return AuthDataService.forgetPassword(ForgetPasswordModel);
 }

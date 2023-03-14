@@ -22,6 +22,8 @@ import {SignInModel} from '../../service/Auth/model';
 import {AuthContext} from '../../service/Auth/Auth.context';
 import {LoadingButton} from '../../components/buttonLoading';
 import DropdownAlert from 'react-native-dropdownalert';
+import i18n from '../../core/i18n/config';
+import ModalWithCheckBox from './roll';
 
 export default function SignInScreen({navigation}) {
   const [emailUser, setEmailUser] = useState();
@@ -32,7 +34,7 @@ export default function SignInScreen({navigation}) {
   let dropDownAlertRef = React.useRef();
   useEffect(() => {
     if (isLoginOpen) {
-      navigation.replace('Bottom_SCREEN');
+      // navigation.replace('Bottom_SCREEN');
     }
 
     return;
@@ -87,12 +89,12 @@ export default function SignInScreen({navigation}) {
           <HeaderScComponent />
           <Padding>
             <Text style={{fontSize: 26, color: Color.brand.black}}>
-              {'Welcome back'}
+              {i18n.t("Global.WelcomeB")}
             </Text>
             <Space lineH={10} />
             <Text style={{fontSize: 15, color: Color.brand.black}}>
-              {' '}
-              {'login with your data that you '}
+            {i18n.t("Global.loginwith")}
+           
             </Text>
             <Space lineH={10} />
             <TouchableOpacity
@@ -100,11 +102,12 @@ export default function SignInScreen({navigation}) {
                 navigation.replace('Bottom_SCREEN');
               }}>
               <Text style={{fontSize: 19, color: Color.brand.blue}}>
-                {'Skip and Go to shop'}
+             
+                {i18n.t("Global.SkipS")}
               </Text>
             </TouchableOpacity>
             <Space lineH={60} />
-            <Text style={{color: Color.brand.black}}>{'Email'}</Text>
+            <Text style={{color: Color.brand.black}}>{i18n.t('Global.Email')}</Text>
             <Space lineH={10} />
             <TextInputSign
               value={emailUser}
@@ -114,11 +117,13 @@ export default function SignInScreen({navigation}) {
               }}
             />
             <Space lineH={20} />
-            <Text style={{color: Color.brand.black}}>{'Password'}</Text>
+            <Text style={{color: Color.brand.black}}>{i18n.t('Global.Password')}</Text>
             <Space lineH={10} />
             <ViewRowTextInput>
               <TextInputSign
-               
+               secureTextEntry={true}
+               password={true} 
+
                 onChangeText={e => {
                   SignInModel.password = e;
                   setPassword(e);
@@ -144,13 +149,14 @@ export default function SignInScreen({navigation}) {
                 </View>
                 <Space lineW={10} />
                 <Text style={{color: Color.brand.textGrey}}>
-                  {'Remember me'}
+                  {i18n.t('Global.Rememberme')}
                 </Text>
               </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate('ForgetPassword')}>
                 <Text style={{color: Color.brand.blue}}>
-                  {'Forget your password'}
+                
+                  {i18n.t("Global.Forget")}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -168,7 +174,7 @@ export default function SignInScreen({navigation}) {
                 }}>
                 <LoadingButton
                   isActive={isLoginApi}
-                  title={'Submit'}
+                  title={i18n.t("Global.Submit")}
                   onNext={() => singInFn()}
                   onClose={() => {}}
                 />
@@ -250,7 +256,8 @@ export default function SignInScreen({navigation}) {
                     fontSize: 18,
                     color: Color.brand.textGry,
                   }}>
-                  {'Dont Have An Account?'}
+                
+                  {i18n.t("Global.Dont")}
                 </Text>
                 <Space lineW={10} />
                 <Text
@@ -259,7 +266,8 @@ export default function SignInScreen({navigation}) {
                     fontSize: 20,
                     color: Color.brand.colorButton,
                   }}>
-                  {'Register now'}
+              
+                  {i18n.t("Global.RegisterN")}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -283,6 +291,7 @@ export default function SignInScreen({navigation}) {
           }
         }}
       />
+      <ModalWithCheckBox navigation={navigation}/>
     </>
   );
 }

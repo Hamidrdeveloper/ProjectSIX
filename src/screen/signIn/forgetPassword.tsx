@@ -9,6 +9,7 @@ import {ArrowLeft} from 'react-native-iconly';
 import {AuthContext} from '../../service/Auth/Auth.context';
 import {ForgetPasswordModel} from '../../service/Auth/model';
 import {TextInputSign} from '../signUp/style/signUp.style';
+import i18n from '../../core/i18n/config';
 // import Toast from '../../components/toast';
 
 export default function ForgetPassword({navigation}) {
@@ -57,13 +58,11 @@ export default function ForgetPassword({navigation}) {
         <Space lineH={30} />
         <Padding>
           <Text style={{fontSize: 26, color: Color.brand.black}}>
-            {'Forget password'}
+            {i18n.t("Global.Forget")}
           </Text>
           <Space lineH={10} />
           <Text style={{fontSize: 15, color: Color.brand.black}}>
-            {
-              'We Just Need Your Registered Email Address\nTo Send Your Password Recovery Link'
-            }
+             {i18n.t("Global.WeNeed")}
           </Text>
           <Space lineH={60} />
           <Text style={{color: Color.brand.black}}>{'Email'}</Text>
@@ -90,7 +89,7 @@ export default function ForgetPassword({navigation}) {
                 fontSize: 14,
                 color: Color.brand.textGry,
               }}>
-              {"Didn't Receive Recovery Link?"}
+              {i18n.t("Global.Didn")}
             </Text>
             <Space lineW={10} />
             <Text
@@ -101,7 +100,7 @@ export default function ForgetPassword({navigation}) {
                   ? Color.brand.colorButton
                   : Color.brand.grey,
               }}>
-              {'Send Link Again.'}
+              {i18n.t("Global.SendLink")}
             </Text>
           </View>
           <Space lineH={70} />
@@ -148,7 +147,7 @@ export default function ForgetPassword({navigation}) {
                 fontSize: 14,
                 color: Color.brand.textGry,
               }}>
-              {'Dont Have An Account?'}
+              {i18n.t("Global.Dont")}
             </Text>
             <Space lineW={10} />
             <Text
@@ -157,7 +156,7 @@ export default function ForgetPassword({navigation}) {
                 fontSize: 14,
                 color: Color.brand.colorButton,
               }}>
-              {'Register now'}
+              {i18n.t("Global.RegisterN")}
             </Text>
           </TouchableOpacity>
         </Padding>

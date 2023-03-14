@@ -2,6 +2,8 @@ export const SIGNUP_ADDRESS = 'register';
 export const SIGNIN_ADDRESS = 'login';
 export const PROFILE_ADDRESS = 'users/profile';
 export const PROFILE_DOCUMENT = 'users/profile/documents';
+export const LEGALS = 'users/assign-legals';
+
 
 export const PROFILE_EDIT_ADDRESS = '/users/profile/edit';
 export const INVOICE_ADDRESS_ADDRESS =

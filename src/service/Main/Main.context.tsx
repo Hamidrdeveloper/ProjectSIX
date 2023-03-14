@@ -38,7 +38,7 @@ export default function MainContextProvider({
   const {orderSale, shopConfigFn, dataConfigFn} = useContext(BasketContext);
   const {PartnerFn} = useContext(PartnerContext);
   const {getAllFavoritesFn} = useContext(FavoriteContext);
-
+  let hasRun = false;
   const {
     productsFn,
     newProductsFn,
@@ -86,53 +86,76 @@ export default function MainContextProvider({
     onRunAllApi();
   }, [isRegisterOpen, isLoginApi]);
   function onRunAllApi(navigation) {
+    if(!hasRun){
+
+    
+    setTimeout(() => {
+      widgetsFn();
+    }, 1000);
+    setTimeout(() => {
+      arrivalFn();
+    }, 1000);
+    setTimeout(() => {
+      productsFn();
+    }, 1000);
+      
+    setTimeout(() => {
+      cardBottomArrivalFn()
+    }, 1000);
+    setTimeout(() => {
+      categoriesFn();
+    }, 1000);
+    setTimeout(() => {
+      bestSellingFn();
+    }, 1000);
+    setTimeout(() => {
+      newProductsFn();
+    }, 1000);
+    setTimeout(() => {
+      categoriesTreeFn();
+    }, 1000);
+ 
+ 
+    
+    setTimeout(() => {
+      countriesFn();
+    }, 1000);
+    setTimeout(() => {
+      languageFn();
+    }, 1000);
+    setTimeout(() => {
+      PartnerFn();
+    }, 1000);
+  
+    
+ 
+   
+   
+    ProductsModel.pagination = {
+      page: 1,
+      per_page: 12,
+    };
+    
+  
     Storage.retrieveData('TOKEN').then(res => {
-      console.log('MainContext', navigation);
+  
+     
    
       
       TOKEN.token = res;
       setToken(`res`);
       http.defaults.headers.common.Authorization = `Bearer ${res}`;
       
-      setTimeout(() => {
-        PartnerFn();
-      }, 1000);
       getAllFavoritesFn();
-      setTimeout(() => {
-        widgetsFn();
-      }, 1000);
-      setTimeout(() => {
-        countriesFn();
-      }, 1000);
-      setTimeout(() => {
-        languageFn();
-      }, 1000);
-      setTimeout(() => {
-        productsFn();
-      }, 1000);
-     
-      setTimeout(() => {
-        categoriesFn();
-      }, 1000);
       
-      setTimeout(() => {
-        arrivalFn();
+       setTimeout(() => {
+        shopConfigFn();
       }, 1000);
       setTimeout(() => {
-        cardBottomArrivalFn()
+        dataConfigFn();
       }, 1000);
-      setTimeout(() => {
-        bestSellingFn();
-      }, 1000);
-      setTimeout(() => {
-        newProductsFn();
-      }, 1000);
-      setTimeout(() => {
-        categoriesTreeFn();
-      }, 1000);
-     
     
-      
+       
       if (res.length > 15) {
         orderSale();
       }
@@ -146,14 +169,11 @@ export default function MainContextProvider({
       setTimeout(() => {
         profileFn();
       }, 100);
-      setTimeout(() => {
-        shopConfigFn();
-      }, 1000);
-      setTimeout(() => {
-        dataConfigFn();
-      }, 1000);
+     
      
     });
+    hasRun=true;
+  }
   }
   return (
     <MainContext.Provider value={{token, onRunAllApi, onGetUser, onDeleteUser}}>

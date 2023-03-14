@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState,useEffect} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -40,7 +40,10 @@ import {
 } from '../shop/style/shop.style';
 import styled from 'styled-components';
 import ImageLoading from '../../components/imageLoading';
-
+import i18n from '../../core/i18n/config';
+import useDebounce from "./useDebounce";
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 const widthFull = Dimensions.get('screen').width;
 
 const TextTopFilter = styled(Text)`
@@ -60,10 +63,30 @@ export default function SearchPageScreen({
     productByIdFn,
     relatedProductsFn,
     nameCategorySelect,
+    searchProductsFn,
   } = useContext(ProductContext);
   const {addToBasket} = useContext(BasketContext);
   const {getAllCommentIdFn} = useContext(CommentContext);
-
+  const [search, setSearch] = useState("");
+  useEffect(
+    () => {
+      setSearch(value)
+    },
+    [value] // Only call effect if debounced search term changes
+  );
+  const debouncedValue = useDebounce<string>(search, 3000)
+  useEffect(
+    () => {
+   
+      if (search) {
+        searchProductsFn(search, "");
+     
+      } else {
+        
+      }
+    },
+    [debouncedValue] // Only call effect if debounced search term changes
+  );
   const [dataCategory, setDataCategory] = useState([
     {data: {flag: false}},
     {data: {flag: false}},
@@ -90,6 +113,8 @@ export default function SearchPageScreen({
         <View style={{width: widthFull / 2}}>
           <Pressable
             onPress={() => {
+              productByIdFn(item?.product?.id, navigation);
+
               goToScreenDetails(
                 navigation,
                 item,
@@ -101,7 +126,7 @@ export default function SearchPageScreen({
             <View
               style={{
                 width: 144,
-                height: 280,
+                height: 310,
                 borderRadius: 8,
                 padding: 5,
               }}>
@@ -136,12 +161,29 @@ export default function SearchPageScreen({
                 renderText={(value, props) => {
                   return (
                     <TextPriceOffer>
-                      {value?.replace('.', ',') + ' ' + '€'}
+                    {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                     </TextPriceOffer>
                   );
                 }}
               />
-              {/* <Space lineH={5} /> */}
+              <Space lineH={5} />
+              {item?.sale_price.gross_value!=item?.sale_price.value?
+              <NumberFormat
+                  value={parseInt(item?.sale_price.gross_value)}
+                  displayType={'text'}
+                  thousandSeparator={true}
+                  prefix={''}
+                  fixedDecimalScale={true}
+                  decimalScale={2}
+                  renderText={(value, props) => {
+                    return (
+                      <TextPriceThroughOffer>
+                       {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
+                      </TextPriceThroughOffer>
+                    );
+                  }}
+                />
+                :null}
               {/* <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <NumberFormat
@@ -190,29 +232,31 @@ export default function SearchPageScreen({
             onPress={() => {
               addToBasket(item);
             }}>
-            <LabelButton>{'Add to basket'}</LabelButton>
+            <LabelButton>{i18n.t('Global.Addtobasket')}</LabelButton>
           </ButtonCategoryAddTo>
         </View>
       </>
     );
   }
+
   return (
     <Background>
       <ScrollView>
         <Space lineH={35} />
         <SearchView
-          placeholder="Search On Cleaning"
-          onChangeText={value => onChange(value)}
+          placeholder={i18n.t('Global.SearchOnCleaning')}
+          onChangeText={e =>setSearch(e)}
           onClear={() => {
-            onChange('');
+            setSearch('');
           }}
-          value={value}
+          value={search}
           searchIcon={() => (
             <ArrowLeft
               size={'large'}
               set="light"
               primaryColor={Color.brand.textGrey}
-              onPress={() => onShow()}
+              onPress={() => {onShow()
+                onChange('')}}
             />
           )}
         />
@@ -255,7 +299,7 @@ export default function SearchPageScreen({
               {nameCategory}
             </Text>
             <Text style={{color: Color.brand.textGry, fontSize: 16}}>
-              {`${categoryProductsItem?.length} Products`}
+              {`${categoryProductsItem?.length} ${i18n.t('Global.Products')}`}
             </Text>
           </View>
           <View

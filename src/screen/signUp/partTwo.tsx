@@ -15,6 +15,7 @@ import BirthdayComponent from '../../components/birthday';
 import RadioButton from '../../components/radioButton';
 import email from '../profileInformation/component/email';
 import {BackgroundForm, ButtonColor, ShadowButton} from '../../css/main.style';
+import i18n from '../../core/i18n/config';
 
 export default function PartTwo({onChangeValue}) {
   const {countries, language} = useContext(AuthContext);
@@ -50,7 +51,8 @@ export default function PartTwo({onChangeValue}) {
   return (
     <>
       <BackgroundForm>
-        <TitleInput>{'Birthday'}</TitleInput>
+        <TitleInput>
+        {i18n.t("Global.Birthday")}</TitleInput>
         <Space lineH={10} />
         <View style={{zIndex: 15}}>
           <BirthdayComponent
@@ -62,7 +64,7 @@ export default function PartTwo({onChangeValue}) {
           />
         </View>
         <Space lineH={10} />
-        <TitleInput>{'Country'}</TitleInput>
+        <TitleInput>{i18n.t("Global.Country")}</TitleInput>
         <Space lineH={10} />
         <Picker
           containerStyle={{width: '100%'}}
@@ -71,7 +73,7 @@ export default function PartTwo({onChangeValue}) {
             backgroundColor: Color.brand.f9,
           }}
           placeholderStyle={{fontSize: 18}}
-          placeholder={'Your Country'}
+          placeholder={i18n.t("Global.YCountry")}
           open={openCountry}
           zIndex={10}
           value={valueCountry}
@@ -81,7 +83,7 @@ export default function PartTwo({onChangeValue}) {
           setValue={setValueCountry}
         />
         <Space lineH={10} />
-        <TitleInput>{'Language'}</TitleInput>
+        <TitleInput>{i18n.t("Global.Language")}</TitleInput>
         <Space lineH={10} />
         <Picker
           containerStyle={{width: '100%'}}
@@ -91,7 +93,8 @@ export default function PartTwo({onChangeValue}) {
           }}
           dropDownDirection="TOP"
           placeholderStyle={{fontSize: 18}}
-          placeholder={'Your Language'}
+          placeholder={i18n.t("Global.YLanguage")}
+          
           open={openLanguage}
           value={valueLanguage}
           items={language}
@@ -104,17 +107,17 @@ export default function PartTwo({onChangeValue}) {
           flexDirection={'row'}
           items={[
             {
-              title: 'Male',
+              title:i18n.t("Global.Male") ,
               description: '',
               id: 0,
             },
             {
-              title: 'Other',
+              title:i18n.t("Global.Other"),
               description: '',
               id: 2,
             },
             {
-              title: 'Female',
+              title: i18n.t("Global.Female"),
               description: '',
               id: 1,
             },
@@ -138,7 +141,8 @@ export default function PartTwo({onChangeValue}) {
               fontSize: 18,
               color: Color.brand.white,
             }}>
-            {'Next'}
+
+            {i18n.t("Global.Next")}
           </Text>
         </ButtonColor>
         {!isForm ? <ShadowButton zIndex={-10} /> : null}

@@ -13,6 +13,7 @@ import {LoadingButton} from '../../components/buttonLoading';
 import {AuthContext} from '../../service/Auth/Auth.context';
 import {MainContext} from '../../service/Main/Main.context';
 import {widthFullScreen} from '../../utils/main';
+import i18n from '../../core/i18n/config';
 
 export default function PartThree({onChangeValue}) {
   const [passOne, setPassOne] = useState(SignUpModel.password);
@@ -44,7 +45,7 @@ export default function PartThree({onChangeValue}) {
   return (
     <>
       <BackgroundForm>
-        <Text style={{color: Color.brand.black}}>{'Password'}</Text>
+        <Text style={{color: Color.brand.black}}>{i18n.t("Global.Password")}</Text>
         <Space lineH={10} />
         <ViewRowTextInput>
           <TextInputSign
@@ -63,7 +64,7 @@ export default function PartThree({onChangeValue}) {
           </ViewIcon>
         </ViewRowTextInput>
         <Space lineH={20} />
-        <Text style={{color: Color.brand.black}}>{'Confirm Password'}</Text>
+        <Text style={{color: Color.brand.black}}>{i18n.t("Global.Confirm")}</Text>
         <Space lineH={10} />
         <ViewRowTextInput>
           <TextInputSign
@@ -114,10 +115,11 @@ export default function PartThree({onChangeValue}) {
           <Space lineW={10} />
           <Text>
             <Text style={{color: Color.brand.textGrey, fontSize: 18}}>
-              {'I agree with the'}
+              {i18n.t("Global.agree")}
             </Text>
             <Text style={{color: Color.brand.blue, fontSize: 18}}>
-              {' terms and conditions'}
+              {i18n.t("Global.conditions")}
+              
             </Text>
           </Text>
         </View>
@@ -127,7 +129,7 @@ export default function PartThree({onChangeValue}) {
           isActive={false}
           width={widthFullScreen - 30}
           onNext={() => onSign()}
-          title={'Next'}
+          title={i18n.t("Global.Next")}
           onClose={() => {}}
         />
 

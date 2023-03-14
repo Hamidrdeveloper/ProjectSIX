@@ -24,6 +24,9 @@ import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {PartnerContext} from '../../service/Partner/Partner.context';
 import {regexHtml} from '../../utils/main';
+import { BasketContext } from '../../service/Basket/Basket.context';
+import { IMAGE_ADDRESS } from '../../utils/adress.api';
+import i18n from '../../core/i18n/config';
 export const Animations = ({open}) => {
   useEffect(() => {
     if (played) {
@@ -32,7 +35,7 @@ export const Animations = ({open}) => {
   }, [open]);
 
   const [animation, setAnimation] = useState(new Animated.Value(1));
-  const {partnerSelectId} = useContext(PartnerContext);
+  const {dataConfig} = useContext(BasketContext);
   const [played, setPlayed] = useState(false);
   const openAnimation = () => {
     setPlayed(true);
@@ -86,24 +89,25 @@ export const Animations = ({open}) => {
               <View style={{flexDirection: 'row'}}>
                 <Space lineW={5} />
                 <Image
-                resizeMode="contain"
+                resizeMode="cover"
                   style={styles.image}
-                  source={require('../../assets/image/avatarman.png')}
+                  source={{uri:IMAGE_ADDRESS+dataConfig?.company?.logo_path}}
                 />
                 <Space lineW={30} />
                 <View>
                   <Text style={{color: Color.brand.colorButton}}>
-                    {partnerSelectId?.fullname}
+                    {dataConfig?.company?.chief_name}
                   </Text>
-                  <Text>{'Independent Cleafin sales partner'}</Text>
+                  <Text>{i18n.t("Global.Independent")}</Text>
                   <TouchableOpacity
                     onPress={() =>
                       Linking.openURL(
-                        `mailto:${partnerSelectId?.email}?subject=SendMail&body=Description`,
+                        `mailto:${dataConfig?.company?.contactGroup?.emails[0]?.email}?subject=SendMail&body=Description`,
                       )
                     }>
                   <Text style={{color: Color.brand.blue}}>
-                    {'Contact with partner'}
+    
+                    {i18n.t("Global.Contactwith")}
                   </Text>
                   </TouchableOpacity>
                 </View>
@@ -112,13 +116,13 @@ export const Animations = ({open}) => {
               <View style={{flexDirection: 'row'}}>
                 <Call set="light" primaryColor={Color.brand.grey} size={'small'} />
                 <Space lineW={10} />
-                {/* <Text style={{color: Color.brand.grey}}>
-                  {partnerSelectId?.iban}
-                </Text> */}
+                <Text style={{color: Color.brand.grey}}>
+                  {dataConfig?.company?.contactGroup?.phones[0]?.number}
+                </Text>
                 <Space lineW={10} />
                 <Message set="light" primaryColor={Color.brand.grey} size={'small'} />
                 <Space lineW={10} />
-                <Text>{partnerSelectId?.bank_name}</Text>
+                <Text>{dataConfig?.company?.contactGroup?.emails[0]?.email}</Text>
               </View>
               <Space lineH={10} />
               {/* <Text style={{height: 40, width: 200}}>
@@ -131,17 +135,18 @@ export const Animations = ({open}) => {
                 <Space lineW={30} />
                 <View>
                   <Text style={{color: Color.brand.colorButton}}>
-                    {partnerSelectId?.fullname}
+                    {dataConfig?.company?.chief_name}
                   </Text>
-                  <Text>{'Independent Cleafin sales partner'}</Text>
+                  <Text>{i18n.t("Global.Independent")}</Text>
                   <TouchableOpacity
                     onPress={() =>
                       Linking.openURL(
-                        `mailto:${partnerSelectId?.email}?subject=SendMail&body=Description`,
+                        `mailto:${dataConfig?.company?.contactGroup?.emails[0]?.email}?subject=SendMail&body=Description`,
                       )
                     }>
                     <Text style={{color: Color.brand.blue}}>
-                      {'Contact with partner'}
+                    
+                      {i18n.t("Global.Contactwith")}
                     </Text>
                   </TouchableOpacity>
                 </View>

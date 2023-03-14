@@ -2,7 +2,10 @@ import React, {useState} from 'react';
 import {Modal, View, Text, TouchableOpacity} from 'react-native';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
+import i18n from '../../core/i18n/config';
+import { BasketContext } from '../../service/Basket/Basket.context';
 export default function PopUpLoginNavigation({navigation}) {
+  const {closeBasket} =React.useContext(BasketContext);
   return (
     <>
       <View
@@ -17,7 +20,7 @@ export default function PopUpLoginNavigation({navigation}) {
         <View
           style={{
             width: '102%',
-            height: 250,
+            height: 270,
             backgroundColor: 'rgba(0,0,0,0.1)',
             borderRadius: 12,
             alignItems: 'center',
@@ -27,7 +30,7 @@ export default function PopUpLoginNavigation({navigation}) {
         <View
           style={{
             width: '100%',
-            height: 245,
+            height: 265,
             backgroundColor: Color.brand.white,
             borderRadius: 12,
             alignItems: 'center',
@@ -40,11 +43,12 @@ export default function PopUpLoginNavigation({navigation}) {
               width: '100%',
               textAlign: 'center',
             }}>
-            {'You have to sign in first for next'}
+           {i18n.t("Global.Youhavefirst")}           
           </Text>
           <Space lineH={70} />
           <TouchableOpacity
             onPress={() => {
+              closeBasket();
               navigation.navigate('SignInScreen');
             }}
             style={{
@@ -73,7 +77,7 @@ export default function PopUpLoginNavigation({navigation}) {
                   fontSize: 18,
                   color: Color.brand.white,
                 }}>
-                {'Sign in now'}
+                {i18n.t("Global.Signnow")} 
               </Text>
             </View>
           </TouchableOpacity>
@@ -100,7 +104,7 @@ export default function PopUpLoginNavigation({navigation}) {
                   fontSize: 18,
                   color: Color.brand.textGrey,
                 }}>
-                {'No, Cancle '}
+                {i18n.t("Global.NoCancle")} 
               </Text>
             </View>
           </TouchableOpacity>

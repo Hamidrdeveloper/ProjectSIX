@@ -6,6 +6,7 @@ import {Space} from '../../../infrastructuer/theme/space.style';
 import {AuthContext} from '../../../service/Auth/Auth.context';
 import {useController, UseControllerProps} from 'react-hook-form';
 import {ProfileContext} from '../../../service/Profile/Profile.context';
+import i18n from '../../../core/i18n/config';
 
 interface PickerProps extends UseControllerProps {
   label: string;
@@ -29,7 +30,7 @@ export default function Language(props: PickerProps) {
   return (
     <>
       <View>
-        <Text>{'Language'}</Text>
+        <Text>{i18n.t("Global.Language")}</Text>
         <Space lineH={10} />
         <Picker
           containerStyle={{width: '100%'}}

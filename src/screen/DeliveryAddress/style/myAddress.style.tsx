@@ -46,7 +46,7 @@ export const Menu = styled(Image).attrs(props => ({
 `;
 export const TouchCode = styled(TouchableOpacity).attrs(props => ({}))`
   background-color: ${Color.brand.colorButton};
-  width: 70px;
+  width: 100px;
   height: 30px;
   border-radius: 8px;
   align-items: center;
@@ -55,5 +55,6 @@ export const TouchCode = styled(TouchableOpacity).attrs(props => ({}))`
 export const TextCode = styled(Text).attrs(props => ({}))`
   color:${Color.brand.white};
   font-size:18;
+
 `;
 

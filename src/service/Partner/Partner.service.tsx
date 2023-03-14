@@ -6,7 +6,7 @@ class PartnerDataService {
   async partner(countryId?: number) {
     try {
       const res = await http.get(Url.Partner_ADDRESS, {
-        params: {countryId: countryId},
+        params: {countryId: countryId,per_page:100},
       });
       console.log(Url.Partner_ADDRESS, res.data.data);
       return res.data.data;

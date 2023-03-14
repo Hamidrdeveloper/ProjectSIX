@@ -34,10 +34,10 @@ export default function SplashScreen({navigation}) {
              
           
           } else {
-              navigation.replace('WELCOME_SCREEN');
+              navigation.replace('Bottom_SCREEN');
             
           }
-    }, 15000);
+    }, 6000);
 
     return () => {
       clearTimeout(handler);

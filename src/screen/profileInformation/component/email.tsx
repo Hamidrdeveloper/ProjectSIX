@@ -5,6 +5,7 @@ import {ControlledInput} from '../../../components/textInputController';
 import {Color} from '../../../infrastructuer/theme/colors.style';
 import {Space} from '../../../infrastructuer/theme/space.style';
 import {ProfileContext} from '../../../service/Profile/Profile.context';
+import i18n from '../../../core/i18n/config';
 
 export default function Email() {
   const {user} = useContext(ProfileContext);
@@ -16,7 +17,8 @@ export default function Email() {
         <Space lineH={10} />
         <ControlledInput
           name="email"
-          label="Email"
+          label= {i18n.t("Global.Email")}
+         
           placeholder={user?.email}
           placeholderTextColor={'#000'}
         />
@@ -30,9 +32,8 @@ export default function Email() {
             <InfoCircle />
           </IconlyProvider>
           <Text style={{fontSize: 11, paddingLeft: 8}}>
-            {
-              ' If you are editing an email, you will need to confirm\nthe new email again'
-            }
+          
+             {i18n.t("Global.Ifyouare")}
           </Text>
         </View>
       </View>

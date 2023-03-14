@@ -12,6 +12,7 @@ import {
   Animated,
   TouchableWithoutFeedback,
   Image,
+  
 } from 'react-native';
 import {
   ArrowDown,
@@ -22,6 +23,7 @@ import {
 } from 'react-native-iconly';
 import styled from 'styled-components/native';
 import Picker from '../../components/picker/components/Picker';
+import i18n from '../../core/i18n/config';
 import {HandleEvent} from '../../css/main.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
@@ -39,6 +41,7 @@ export const LocationPartner = ({open, onChange}) => {
   }, [open]);
   const {countries} = useContext(AuthContext);
   const {PartnerFn} = useContext(PartnerContext);
+  const [selectedValue, setSelectedValue] = useState(false);
 
   const [valueCountry, setValueCountry] = useState(null);
   const [openCountry, setOpenCountry] = useState(false);
@@ -89,6 +92,7 @@ export const LocationPartner = ({open, onChange}) => {
     borderWidth: yInterpolateRadios,
   };
   function searchPartner(item) {
+ 
     closeAnimation();
     PartnerFn(item.value);
     onChange(item);
@@ -106,16 +110,32 @@ export const LocationPartner = ({open, onChange}) => {
       </>
     );
   };
-  return (
-    <Animated.View style={[styles.box, boxStyle]}>
-      {played ? (
-        <FlatList
-          data={countries}
-          renderItem={_renderItem}
-          style={styles.box2}
+  const MyDropdown = () => {
+    return (
+      <View>
+        <Picker
+          containerStyle={{width: 150}}
+          style={{
+            borderColor: Color.brand.border,
+            backgroundColor: Color.brand.f9,
+          }}
+          placeholderStyle={{fontSize: 18}}
+          placeholder={i18n.t("Global.YCountry")}
+          open={openCountry}
+          onSelectItem={(value)=>{ searchPartner(value)}}
+          zIndex={10}
+          value={valueCountry}
+          items={countries}
+          setOpen={setOpenCountry}
+          setValue={setValueCountry}
         />
-      ) : null}
-    </Animated.View>
+         
+      </View>
+    );
+  }
+  return (
+    <MyDropdown
+        />
   );
 };
 

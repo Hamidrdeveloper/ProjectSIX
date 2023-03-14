@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { Card, Rating, SearchBar } from "react-native-elements";
 import Icon from "react-native-vector-icons/AntDesign";
 import FlatListSlide from "../../components/slideList";
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import {
   Background,
   Brand,
@@ -80,6 +82,8 @@ import { Animations } from "./animations";
 import { PartnerContext } from "../../service/Partner/Partner.context";
 import useDebounce from "./useDebounce";
 import ImageLoading from "../../components/imageLoading";
+import i18n from "../../core/i18n/config";
+import { ProfileContext } from "../../service/Profile/Profile.context";
 function ShopScreen({ navigation }) {
   const {
     productsItem,
@@ -97,6 +101,8 @@ function ShopScreen({ navigation }) {
   } = useContext(ProductContext);
   const { getAllCommentIdFn } = useContext(CommentContext);
   const { partnerSelectId } = useContext(PartnerContext);
+  
+  const { rolesUser } = useContext(ProfileContext);
 
   const { addToBasket } = useContext(BasketContext);
   const [search, setSearch] = useState("");
@@ -195,7 +201,7 @@ function ShopScreen({ navigation }) {
         <Card
           containerStyle={{
             width: 180,
-            height: 280,
+            height: 300,
             margin: 8,
             borderRadius: 8,
             padding: 5,
@@ -254,20 +260,25 @@ function ShopScreen({ navigation }) {
             </ViewOffer>
             <Space lineH={5} />
             <TextProductOffer>{item.name}</TextProductOffer>
-            {/* <Space lineH={5} />
+            <Space lineH={5} />
+            {item?.sale_price.gross_value!=item?.sale_price.value?
             <NumberFormat
-              value={parseInt(item?.sale_price.value)}
+              value={parseInt(item?.sale_price.gross_value)}
               displayType={'text'}
               thousandSeparator={true}
               prefix={''}
+            
+
+              decimalScale={2}
+              fixedDecimalScale={true}
               renderText={(value, props) => {
                 return (
                   <TextPriceThroughOffer>
-                    {value + ' ' + '€'}
+                    {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                   </TextPriceThroughOffer>
                 );
               }}
-            /> */}
+            />:null}
             <Space lineH={5} />
             <NumberFormat
               value={item?.sale_price.value}
@@ -279,7 +290,7 @@ function ShopScreen({ navigation }) {
               renderText={(value, props) => {
                 return (
                   <TextPriceOffer>
-                    {value.replace(".", ",") + " " + "€"}
+                   {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                   </TextPriceOffer>
                 );
               }}
@@ -290,7 +301,7 @@ function ShopScreen({ navigation }) {
           </TouchableOpacity>
         </Card>
         <ButtonAddTo onPress={() => addToBasket(item)}>
-          <LabelButton>{"Add to basket"}</LabelButton>
+          <LabelButton>{i18n.t('Global.Addtobasket')}</LabelButton>
         </ButtonAddTo>
         <CheckSaveProduct item={item} />
       </View>
@@ -362,6 +373,8 @@ function ShopScreen({ navigation }) {
       <ViewProducts>
         <Touchable
           onPress={() => {
+            productByIdFn(item?.product?.id, navigation);
+
             goToScreenDetails(
               navigation,
               item,
@@ -406,11 +419,11 @@ function ShopScreen({ navigation }) {
       imageUrl = item?.product?.file;
     }
     return (
-      <View style={{ alignItems: "center", height: 290 }}>
+      <View style={{ alignItems: "center", height: 320 }}>
         <Card
           containerStyle={{
             width: (Dimensions.get("screen").width - 30) / 2,
-            height: 280,
+            height: 300,
             margin: 8,
             borderRadius: 8,
             padding: 5,
@@ -418,6 +431,8 @@ function ShopScreen({ navigation }) {
         >
           <TouchableOpacity
             onPress={() => {
+              productByIdFn(item?.product?.id, navigation);
+
               goToScreenDetails(
                 navigation,
                 item,
@@ -451,20 +466,22 @@ function ShopScreen({ navigation }) {
             </ViewOffer>
             <Space lineH={5} />
             <TextProductOffer>{item.name}</TextProductOffer>
-            {/* <Space lineH={5} />
+            <Space lineH={5} />
+            {item?.sale_price.gross_value!=item?.sale_price.value?
             <NumberFormat
-              value={parseInt(item?.sale_price.value)}
+              value={parseInt(item?.sale_price.gross_value)}
               displayType={'text'}
               thousandSeparator={true}
               prefix={''}
+              fixedDecimalScale={true}
+              decimalScale={2}
               renderText={(value, props) => {
                 return (
                   <TextPriceThroughOffer>
-                    {value + ' ' + '€'}
-                  </TextPriceThroughOffer>
+{new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}</TextPriceThroughOffer>
                 );
               }}
-            /> */}
+            />:null}
             <Space lineH={5} />
             <NumberFormat
               value={item?.sale_price.value}
@@ -476,8 +493,7 @@ function ShopScreen({ navigation }) {
               renderText={(value, props) => {
                 return (
                   <TextPriceOffer>
-                    {value?.replace(".", ",") + " " + "€"}
-                  </TextPriceOffer>
+{new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}                  </TextPriceOffer>
                 );
               }}
             />
@@ -486,8 +502,8 @@ function ShopScreen({ navigation }) {
             <Space lineH={5} /> */}
           </TouchableOpacity>
         </Card>
-        <ButtonAddTo style={{ width: 150 }} onPress={() => addToBasket(item)}>
-          <LabelButton>{"Add to basket"}</LabelButton>
+        <ButtonAddTo style={{ width: 150 ,bottom:20}} onPress={() => addToBasket(item)}>
+          <LabelButton>{i18n.t('Global.Addtobasket')}</LabelButton>
         </ButtonAddTo>
         <CheckSaveProduct item={item} />
       </View>
@@ -503,7 +519,7 @@ function ShopScreen({ navigation }) {
   return (
     <SafeAreaView edges={["top"]} style={{ backgroundColor: "#fff" }}>
       <Background>
-        {partnerSelectId != null ? <Animations open={openPartner} /> : null}
+        {rolesUser != "partner" &&rolesUser=="user"? <Animations open={openPartner} /> : null}
         {!isSearching ? (
           <Scroll
             scrollEventThrottle={160}
@@ -516,7 +532,7 @@ function ShopScreen({ navigation }) {
           >
             <Space lineH={35} />
             <SearchView
-              placeholder="Search On Cleaning"
+              placeholder={i18n.t('Global.SearchOnCleaning')}
               onChangeText={(e: any) => setSearch(e)}
               value={search}
               searchIcon={() => <Icon color={"gry"} size={30} name="search1" />}
@@ -536,7 +552,7 @@ function ShopScreen({ navigation }) {
               height={85}
             />
             <Space lineH={25} />
-            <TitleStep>{"Offers"}</TitleStep>
+            <TitleStep>{i18n.t('Global.Offers')}</TitleStep>
             <Space lineH={25} />
             <FlatListSlide
               data={productsItem}
@@ -546,7 +562,7 @@ function ShopScreen({ navigation }) {
               isLoading={isProducts}
             />
             <Space lineH={25} />
-            <TitleStep>{"Why Cleafin"}</TitleStep>
+            <TitleStep>{i18n.t('Global.WhyCleafin')}</TitleStep>
             <Space lineH={25} />
             <ViewWhyCleafin>
               <ViewItemWhy
@@ -555,7 +571,7 @@ function ShopScreen({ navigation }) {
                 }}
               >
                 <ImageWhy source={require("../../assets/image/car.png")} />
-                <TextContact>{"Easy to use"}</TextContact>
+                <TextContact>{i18n.t('Global.Easytouse')}</TextContact>
               </ViewItemWhy>
               <ViewItemWhy
                 onPress={() => {
@@ -563,7 +579,7 @@ function ShopScreen({ navigation }) {
                 }}
               >
                 <ImageWhy source={require("../../assets/image/phone.png")} />
-                <TextContact>{"contact us"}</TextContact>
+                <TextContact>{i18n.t('Global.contactus')}</TextContact>
               </ViewItemWhy>
               <ViewItemWhy
                 onPress={() => {
@@ -571,11 +587,11 @@ function ShopScreen({ navigation }) {
                 }}
               >
                 <ImageWhy source={require("../../assets/image/private.png")} />
-                <TextContact>{"Online support"}</TextContact>
+                <TextContact>{i18n.t('Global.Onlinesupport')}</TextContact>
               </ViewItemWhy>
             </ViewWhyCleafin>
             <Space lineH={45} />
-            <TitleStep>{"New arrival Products"}</TitleStep>
+            <TitleStep>{i18n.t('Global.NewarrivalProducts')}</TitleStep>
             <Space lineH={25} />
             <FlatListSlide
               data={arrivalItem}
@@ -605,7 +621,7 @@ function ShopScreen({ navigation }) {
               snap={0}
               height={100}
             />
-            <TitleStep>{"Newest Products"}</TitleStep>
+            <TitleStep>{i18n.t('Global.NewestProducts')}</TitleStep>
             <Space lineH={25} />
             <FlatList
               data={newProductsItem}

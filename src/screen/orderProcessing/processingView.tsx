@@ -20,9 +20,10 @@ import NumberFormat from 'react-number-format';
 import {IMAGE_ADDRESS} from '../../utils/adress.api';
 import {RelatedProductItem} from './realted';
 import {ViewRow} from '../orderDetails/style/orderDetails.style';
+import i18n from '../../core/i18n/config';
 
 export default function ProcessingView({navigation}) {
-  const {listOrderSale, loadingListOrderSale, orderSaleIDFn} =
+  const {listOrderSale, loadingListOrderSale, orderSaleIDFn,ISO3} =
     useContext(BasketContext);
   const [orders, setOrders] = useState([]);
   const [search, setSearch] = useState('');
@@ -125,7 +126,7 @@ export default function ProcessingView({navigation}) {
         <ViewRow>
           <Text>
             <Text style={{fontSize: 14, color: Color.brand.textGrey}}>
-              {'Order ID. :#'}
+              {i18n.t("Global.OrderID")}
             </Text>
             <Text style={{fontSize: 14, color: Color.brand.black}}>
               {item?.id}
@@ -159,7 +160,7 @@ export default function ProcessingView({navigation}) {
           }}>
           <Text>
             <Text style={{fontSize: 14, color: Color.brand.textGrey}}>
-              {'Payment :'}
+              {i18n.t("Global.PaymentD")}
             </Text>
             <NumberFormat
               value={item?.total_price}
@@ -174,21 +175,23 @@ export default function ProcessingView({navigation}) {
               renderText={(value, props) => {
                 return (
                   <Text style={{fontSize: 14, color: Color.brand.black}}>
-                    {value?.replace('.', ',') + ' ' + '€'}
+                 {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                   </Text>
                 );
               }}
             />
           </Text>
-          <Text>
+         
+        </View>
+        <Space lineH={10} />
+        <Text>
             <Text style={{fontSize: 12, color: Color.brand.textGrey}}>
-              {'Order Date :'}
+              {i18n.t("Global.OrderDate")}
             </Text>
             <Text style={{fontSize: 12, color: Color.brand.black}}>
               {new Date(item?.order_date).toUTCString().toString()}
             </Text>
           </Text>
-        </View>
         <Space lineH={10} />
         <View
           style={{
@@ -275,7 +278,7 @@ export default function ProcessingView({navigation}) {
                 justifyContent: 'center',
               }}>
               <Text style={{color: Color.brand.colorButton, fontSize: 14}}>
-                {'View detail'}
+                {i18n.t("Global.Viewdetail")}
               </Text>
             </View>
           </TouchableOpacity>
@@ -301,7 +304,7 @@ export default function ProcessingView({navigation}) {
     <>
       <View style={{width: widthFull}}>
         <SearchView
-          placeholder="Search On Cleaning"
+          placeholder={i18n.t('Global.SearchOnCleaning') }
           searchIcon={() => <Icon color={'gry'} size={30} name="search1" />}
           onChangeText={(e: any) => updateSearch(e)}
           value={search}
@@ -319,7 +322,7 @@ export default function ProcessingView({navigation}) {
               {orders?.length == 0 ? (
                 <>
                   <ViewEmpty>
-                    <TextEmpty>{'There is no Processing order!'}</TextEmpty>
+                    <TextEmpty>{i18n.t('Global.Thereno')}</TextEmpty>
                   </ViewEmpty>
                   <RelatedProductItem navigation={navigation} />
                 </>

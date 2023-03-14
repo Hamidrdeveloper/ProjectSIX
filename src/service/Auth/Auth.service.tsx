@@ -7,6 +7,7 @@ import {
   COUNTRIES_ADDRESS,
   EMAIL_ADDRESS,
   LANGUAGE_ADDRESS,
+  LEGALS,
   LINK_FORGET_PASSWORD,
   SIGNIN_ADDRESS,
   SIGNUP_ADDRESS,
@@ -29,6 +30,22 @@ class AuthDataService {
         return false;
       });
   }
+  legals() {
+  
+
+    return http
+      .get(LEGALS)
+      .then(res => {
+        console.log("legals",res);
+        
+        return res?.data?.data;
+      })
+      .catch(error => {
+        console.log(LEGALS, error.response);
+
+        return false;
+      });
+  }
   signIn(data: SignIn) {
     console.log(data);
     http.defaults.headers.common.Authorization = '';
@@ -38,6 +55,7 @@ class AuthDataService {
         console.log(SIGNIN_ADDRESS, res.data.data);
         TOKEN.token = res.data.data.token;
         Storage.storeData('TOKEN', res.data.data.token);
+      
         return {message: res.data.data.user, status: true};
       })
       .catch(error => {

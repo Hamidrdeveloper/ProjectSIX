@@ -26,6 +26,7 @@ import ControlledCheckBox from '../../components/controlledCheckBox';
 import styled from 'styled-components';
 import PickerController from '../../components/pickerController';
 import {AuthContext} from '../../service/Auth/Auth.context';
+import i18n from '../../core/i18n/config';
 
 const ViewLoading = styled(View)`
   height: 50;
@@ -93,7 +94,7 @@ export default function AddAddressScreen({navigation}) {
       if (isAddToData == '2') {
         dropDownAlertRef.alertWithType(
           'error',
-          'Your address could not be registered. Please try again',
+          i18n.t("Global.couldnot"),
         );
       }
     }
@@ -101,7 +102,7 @@ export default function AddAddressScreen({navigation}) {
   const onError: SubmitErrorHandler<FormValues> = errors => {
     dropDownAlertRef.alertWithType(
       'error',
-      'All fields marked with an asterisk must be filled',
+      i18n.t("Global.Allfields"),
     );
 
     return console.log('errors', errors);
@@ -138,7 +139,7 @@ export default function AddAddressScreen({navigation}) {
     <>
       <BackgroundView>
         <ScrollView>
-          <HeaderScComponent navigation={navigation} title={'Add Address'} />
+          <HeaderScComponent navigation={navigation} title={i18n.t("Global.AddAddress")} />
 
           <Padding>
             <FormProvider {...methods}>
@@ -146,30 +147,30 @@ export default function AddAddressScreen({navigation}) {
                 name={'cart_title'}
                 containerStyle={{width: '100%'}}
                 placeholderStyle={{fontSize: 18}}
-                placeholder={'Standard'}
-                defaultValue={'Standard'}
+                placeholder={i18n.t("Global.Standard")}
+                defaultValue={i18n.t("Global.Standard")}
                 style={{
                   borderColor: Color.brand.border,
                   backgroundColor: Color.brand.f9,
                 }}
                 items={[
-                  {label: 'Standard', value: 'Standard'},
-                  {label: 'Home', value: 'Home'},
-                  {label: 'Office', value: 'Office'},
-                  {label: 'Other', value: 'Other'},
+                  {label:i18n.t("Global.Standard"), value: 'Standard'},
+                  {label: i18n.t("Global.Home"), value: 'Home'},
+                  {label: i18n.t("Global.Office"), value: 'Office'},
+                  {label: i18n.t("Global.Other"), value: 'Other'},
                 ]}
                 onChange={() => {}}
               />
               <ControlledInput
                 name="company_name"
-                label="Company Name"
+                label={i18n.t("Global.CompanyName")}
                 placeholderTextColor={'#F9F9F9'}
                 maxLength={100}
                 setFormError={setError}
               />
               <ControlledInput
                 name="first_name"
-                label="First Name"
+                label={i18n.t("Global.FirstName")}
                 maxLength={40}
                 placeholderTextColor={'#F9F9F9'}
                 rules={{required: 'Password is required!'}}
@@ -177,7 +178,7 @@ export default function AddAddressScreen({navigation}) {
               />
               <ControlledInput
                 name="last_name"
-                label="Last Name"
+                label={i18n.t("Global.LastName")}
                 maxLength={40}
                 placeholderTextColor={'#F9F9F9'}
                 rules={{required: 'Password is required!'}}
@@ -185,14 +186,14 @@ export default function AddAddressScreen({navigation}) {
               />
               <ControlledInput
                 name="address2"
-                label="Street"
+                label={i18n.t("Global.Street")}
                 maxLength={50}
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
               />
               <ControlledInputPhone
                 name="house_number"
-                label="House Number"
+                label={i18n.t("Global.HouseNumber")}
                 rules={{required: 'Password is required!'}}
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
@@ -201,7 +202,7 @@ export default function AddAddressScreen({navigation}) {
               />
               <ControlledInput
                 name="postal_code"
-                label="Post Code"
+                label={i18n.t("Global.PostCode")}
                 placeholderTextColor={'#F9F9F9'}
                 rules={{required: 'Password is required!'}}
                 setFormError={setError}
@@ -211,7 +212,7 @@ export default function AddAddressScreen({navigation}) {
 
               <ControlledInput
                 name="city"
-                label="City"
+                label={i18n.t("Global.City")}
                 placeholderTextColor={'#F9F9F9'}
                 rules={{required: 'Password is required!'}}
                 setFormError={setError}
@@ -219,14 +220,14 @@ export default function AddAddressScreen({navigation}) {
               />
               <ControlledInput
                 name="state"
-                label="State"
+                label={i18n.t("Global.State")}
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
                 maxLength={40}
               />
               <Space lineH={10} />
               <Text style={{color: 'black'}}>
-                {'Country'}
+                {i18n.t("Global.Country")}
                 <Text style={{color: 'red'}}>{'*'}</Text>
               </Text>
               <Space lineH={10} />
@@ -245,7 +246,7 @@ export default function AddAddressScreen({navigation}) {
 
               <ControlledInputPhone
                 name="phone"
-                label="Phone"
+                label={i18n.t("Global.Phone")}
                 rules={{required: 'Password is required!'}}
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
@@ -255,7 +256,7 @@ export default function AddAddressScreen({navigation}) {
 
               <ControlledInput
                 name="address1"
-                label="Address Line"
+                label={i18n.t("Global.AddressLine")}
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
                 style={{
@@ -271,7 +272,7 @@ export default function AddAddressScreen({navigation}) {
             <ViewLoading>
               <LoadingButton
                 isActive={isAddToDataLodging}
-                title={'Submit'}
+                title={i18n.t("Global.Submit")}
                 onNext={methods.handleSubmit(onSubmit, onError)}
                 onClose={() => {}}
               />

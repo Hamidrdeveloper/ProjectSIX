@@ -31,10 +31,13 @@ import {BasketContext} from '../../service/Basket/Basket.context';
 import {IMAGE_ADDRESS} from '../../utils/adress.api';
 import HeaderScComponent from '../../components/header2';
 import DropdownAlert from 'react-native-dropdownalert';
+import i18n from '../../core/i18n/config';
+import { ProfileContext } from '../../service/Profile/Profile.context';
 const widthFull = Dimensions.get('screen').width;
 
 export default function WalletProductScreen({navigation}) {
   const [product, setProduct] = useState('');
+  const {rolesUser, walletBalance} = useContext(ProfileContext);
 
   const {
     addToBasketCoin,
@@ -44,6 +47,7 @@ export default function WalletProductScreen({navigation}) {
     productWallet,
     setProductWallet,
     priceBasketWallet,
+    totalCoin,
     setWalletRoleProduct,
   } = useContext(BasketContext);
   let dropDownAlertRef = useRef();
@@ -52,11 +56,15 @@ export default function WalletProductScreen({navigation}) {
     setProduct(productWallet);
   }, [productWallet]);
   const addOffer = item => {
+   let price = totalCoin + item.sale_price.value;
+    if(price <walletBalance){
+
     let change = product.filter(key => key.id !== item.id);
 
     setProductWallet(change);
     addToBasketCoin({...item, coin: true});
     setAddCoinProduct([...addCoinProduct, {...item, coin: true}]);
+  }
   };
 
   function CategoryProductItem({item}) {
@@ -89,7 +97,7 @@ export default function WalletProductScreen({navigation}) {
             elevation: 5,
             borderRadius: 8,
             paddingLeft: 15,
-            height: 120,
+            height: 140,
             justifyContent: 'center',
           }}
           onPress={() => {}}>
@@ -210,7 +218,7 @@ export default function WalletProductScreen({navigation}) {
   }
   return (
     <BackgroundView>
-      <HeaderScComponent navigation={navigation} title={'Wallet Product'} />
+      <HeaderScComponent navigation={navigation} title={i18n.t("Global.WalletProduct")} />
       {addCoinProduct.length >= 0 ? (
         <View style={{flexDirection: 'row', paddingLeft: 20}}>
           <Buy set="light" primaryColor={Color.brand.blue} />
@@ -221,7 +229,7 @@ export default function WalletProductScreen({navigation}) {
 
               fontWeight: 'bold',
             }}>
-            {'Product with Coin:'}
+            {i18n.t("Global.ProductwithCoin")+":"} 
           </Text>
         </View>
       ) : null}

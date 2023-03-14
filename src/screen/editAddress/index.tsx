@@ -25,6 +25,7 @@ import {LoadingButton} from '../../components/buttonLoading';
 import ControlledCheckBox from '../../components/controlledCheckBox';
 import PickerController from '../../components/pickerController';
 import {AuthContext} from '../../service/Auth/Auth.context';
+import i18n from '../../core/i18n/config';
 type FormValues = {
   first_name: string;
   last_name: string;
@@ -93,7 +94,7 @@ export default function EditAddressScreen({navigation, route}) {
       if (isAddToData == '2') {
         dropDownAlertRef.alertWithType(
           'error',
-          'Your address could not be registered. Please try again',
+          i18n.t('Global.couldnot')
         );
       }
     }
@@ -101,7 +102,7 @@ export default function EditAddressScreen({navigation, route}) {
   const onError: SubmitErrorHandler<FormValues> = errors => {
     dropDownAlertRef.alertWithType(
       'error',
-      'All fields marked with an asterisk must be filled',
+      i18n.t('Global.Allfields')
     );
 
     return console.log('errors', errors);
@@ -125,16 +126,16 @@ export default function EditAddressScreen({navigation, route}) {
                   backgroundColor: Color.brand.f9,
                 }}
                 items={[
-                  {label: 'Standard', value: 'Standard'},
-                  {label: 'Home', value: 'Home'},
-                  {label: 'Office', value: 'Office'},
-                  {label: 'Other', value: 'Other'},
+                  {label: i18n.t("Global.Standard"), value: 'Standard'},
+                  {label:  i18n.t("Global.Home"), value: 'Home'},
+                  {label: i18n.t("Global.Office"), value: 'Office'},
+                  {label: i18n.t("Global.Other"), value: 'Other'},
                 ]}
                 onChange={() => {}}
               />
               <ControlledInput
                 name="company_name"
-                label="Company Name"
+                label={i18n.t("Global.CompanyName")}
                 defaultValue={defaultValues?.company_name}
                 placeholder={defaultValues?.company_name}
                 placeholderTextColor={'#000'}
@@ -145,7 +146,7 @@ export default function EditAddressScreen({navigation, route}) {
                 defaultValue={defaultValues?.first_name}
                 placeholder={defaultValues?.first_name}
                 name="first_name"
-                label="First Name"
+                label={i18n.t("Global.FirstName")}
                 placeholderTextColor={'#000'}
                 rules={{required: 'Password is required!'}}
                 setFormError={setError}
@@ -153,7 +154,7 @@ export default function EditAddressScreen({navigation, route}) {
               />
               <ControlledInput
                 name="last_name"
-                label="Last Name"
+                label={i18n.t("Global.LastName")}
                 defaultValue={defaultValues?.last_name}
                 placeholder={defaultValues?.last_name}
                 placeholderTextColor={'#000'}
@@ -163,7 +164,7 @@ export default function EditAddressScreen({navigation, route}) {
               />
               <ControlledInput
                 name="address2"
-                label="Street"
+                label={i18n.t("Global.Street")}
                 defaultValue={defaultValues?.address?.address2}
                 placeholder={defaultValues?.address?.address2}
                 placeholderTextColor={'#000'}
@@ -172,7 +173,7 @@ export default function EditAddressScreen({navigation, route}) {
               />
               <ControlledInputPhone
                 name="house_number"
-                label="House Number"
+                label={i18n.t("Global.HouseNumber")}
                 rules={{required: 'Password is required!'}}
                 placeholderTextColor={'#F9F9F9'}
                 setFormError={setError}
@@ -183,7 +184,7 @@ export default function EditAddressScreen({navigation, route}) {
               />
               <ControlledInput
                 name="postal_code"
-                label="Post Code"
+                label={i18n.t("Global.PostCode")}
                 defaultValue={defaultValues?.address?.postal_code}
                 placeholder={defaultValues?.address?.postal_code}
                 placeholderTextColor={'#000'}
@@ -194,7 +195,7 @@ export default function EditAddressScreen({navigation, route}) {
               />
               <ControlledInput
                 name="city"
-                label="City"
+                label={i18n.t("Global.City")}
                 defaultValue={defaultValues?.address?.city}
                 placeholder={defaultValues?.address?.city}
                 placeholderTextColor={'#000'}
@@ -204,7 +205,7 @@ export default function EditAddressScreen({navigation, route}) {
               />
               <ControlledInput
                 name="state"
-                label="State"
+                label={i18n.t("Global.State")}
                 defaultValue={defaultValues?.address?.state}
                 placeholder={defaultValues?.address?.state}
                 placeholderTextColor={'#000'}
@@ -214,7 +215,7 @@ export default function EditAddressScreen({navigation, route}) {
 
               <Space lineH={10} />
               <Text style={{color: 'black'}}>
-                {'Country'}
+                {i18n.t("Global.Country")}
                 <Text style={{color: 'red'}}>{'*'}</Text>
               </Text>
               <Space lineH={10} />
@@ -235,7 +236,7 @@ export default function EditAddressScreen({navigation, route}) {
 
               <ControlledInputPhone
                 name="phone"
-                label="Phone"
+                label={i18n.t("Global.Phone")}
                 defaultValue={defaultValues?.phones[0]?.number}
                 placeholder={defaultValues?.phones[0]?.number}
                 placeholderTextColor={'#000'}
@@ -263,7 +264,7 @@ export default function EditAddressScreen({navigation, route}) {
 
               <ControlledInput
                 name="address1"
-                label="Address Line"
+                label={i18n.t("Global.AddressLine")}
                 defaultValue={defaultValues?.address?.address1}
                 placeholder={defaultValues?.address?.address1}
                 placeholderTextColor={'#000'}
@@ -280,7 +281,7 @@ export default function EditAddressScreen({navigation, route}) {
               }}>
               <LoadingButton
                 isActive={isAddToDataLodging}
-                title={'Submit'}
+                title={i18n.t("Global.Submit")}
                 onNext={methods.handleSubmit(onSubmit, onError)}
                 onClose={() => {}}
               />

@@ -93,7 +93,7 @@ export function RelatedProductItem({navigation}) {
                 prefix={''}
                 decimalScale={2}
                 renderText={(value, props) => {
-                  return <TextPriceOffer>{value?.replace('.', ',') + ' ' + '€'}</TextPriceOffer>;
+                  return <TextPriceOffer>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}</TextPriceOffer>;
                 }}
               />
               <Space lineH={5} />

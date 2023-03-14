@@ -31,6 +31,7 @@ import {TextInput} from 'react-native-gesture-handler';
 import CheckBox from '../../components/checkBox';
 import DropdownAlert from 'react-native-dropdownalert';
 import { ProfileContext } from '../../service/Profile/Profile.context';
+import i18n from '../../core/i18n/config';
 export default function FinalScreen({navigation, route}) {
   const {
     totalPrice,
@@ -46,6 +47,8 @@ export default function FinalScreen({navigation, route}) {
     resultPriceNotVat,
     resultPrice,
     dataConfig,
+    totalCoin,
+    ISO3
   } = useContext(BasketContext);
   let dropDownAlertRef = React.useRef();
   const {rolesUser} = useContext(ProfileContext);
@@ -60,14 +63,14 @@ export default function FinalScreen({navigation, route}) {
     if (showError) {
       dropDownAlertRef.alertWithType(
         'error',
-        'Unfortunately, your purchase was not completed, please try again or empty your shopping cart and purchase again.',
+        i18n.t('Global.Unfortunately'),
       );
       setError(false);
     }
   }, [showError]);
   useEffect(() => {
     if (error) {
-      dropDownAlertRef.alertWithType('error', 'All fields must be filled');
+      dropDownAlertRef.alertWithType('error', i18n.t('Global.Allfields'));
       setError(false);
     }
   }, [error]);
@@ -100,11 +103,11 @@ export default function FinalScreen({navigation, route}) {
             />
             <Text
               style={{fontStyle: 'normal', fontWeight: 'bold', fontSize: 22}}>
-              {'Thank you for purchasing from our app'}
+              {i18n.t("Global.Thankyou")}
             </Text>
             <Space lineH={15} />
             <Text style={{fontStyle: 'normal', fontSize: 17}}>
-              {'Your purchase has been made'}
+              {i18n.t("Global.Yourpurchase")}
             </Text>
             <Space lineH={15} />
             <ButtonColor
@@ -119,7 +122,8 @@ export default function FinalScreen({navigation, route}) {
                   fontSize: 18,
                   color: Color.brand.white,
                 }}>
-                {'Finish'}
+         
+                {i18n.t("Global.Finish")}
               </Text>
             </ButtonColor>
           </View>
@@ -136,7 +140,7 @@ export default function FinalScreen({navigation, route}) {
             details={''}
             isProduct={false}
             IsText={true}
-            title={'Payment Info'}
+            title={i18n.t("Global.PaymentInfo")}
           />
           <Padding>
             <View
@@ -146,7 +150,7 @@ export default function FinalScreen({navigation, route}) {
                 justifyContent: 'space-between',
               }}>
               <Text style={{fontSize: 20, color: Color.brand.black}}>
-                {'Accept the rules'}
+                {i18n.t("Global.Acceptrules")}
               </Text>
               <TouchableOpacity
                 style={{
@@ -163,7 +167,7 @@ export default function FinalScreen({navigation, route}) {
                   navigation.navigate('Home_SCREEN');
                 }}>
                 <Text style={{fontSize: 15, color: Color.brand.white}}>
-                  {'Empty'}
+                  {i18n.t("Global.Empty")}
                 </Text>
                 <Space lineW={8} />
                 <CloseSquare
@@ -175,7 +179,7 @@ export default function FinalScreen({navigation, route}) {
               </TouchableOpacity>
             </View>
             <Space lineH={40} />
-            <Text>{'َAdd Note:'}</Text>
+            <Text>{i18n.t("Global.AddNote")}</Text>
             <Space lineH={15} />
             <TextInput
               style={{
@@ -193,25 +197,29 @@ export default function FinalScreen({navigation, route}) {
             <ViewRow style={{justifyContent: 'flex-start'}}>
               <CheckBox onCheck={e => setWithdrawal(e)} />
               <Space lineW={10} />
-              <Text>{'I have read and agree with Right of Withdrawal'}</Text>
+              <Text>
+              {i18n.t("Global.IhavereadWithdrawal")}
+              </Text>
             </ViewRow>
             <Space lineH={15} />
             <ViewRow style={{justifyContent: 'flex-start'}}>
               <CheckBox onCheck={e => setConditions(e)} />
               <Space lineW={10} />
-              <Text>{'I have read and agree with Term of Conditions'}</Text>
+              <Text>
+              {i18n.t("Global.IhavereadConditions")}
+              </Text>
             </ViewRow>
             <Space lineH={15} />
             <ViewRow style={{justifyContent: 'flex-start'}}>
               <CheckBox onCheck={e => setDeclaration(e)} />
               <Space lineW={10} />
               <Text>
-                {'I have read and agree with Data protection declaration'}
+                {i18n.t("Global.Ihaveread")}
               </Text>
             </ViewRow>
             <Space lineH={30} />
             <ViewRow>
-              <TextBlack>{'Total'}</TextBlack>
+              <TextBlack>{i18n.t("Global.Total")}</TextBlack>
               <NumberFormat
                 value={resultPrice}
                 displayType={'text'}
@@ -222,7 +230,7 @@ export default function FinalScreen({navigation, route}) {
                 renderText={(value, props) => {
                   return (
                     <TextBlack>
-                      {value?.replace('.', ',') + ' ' + resultSymbol}
+                      {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                     </TextBlack>
                   );
                 }}
@@ -232,7 +240,26 @@ export default function FinalScreen({navigation, route}) {
             <LineW />
             <Space lineH={10} />
             <ViewRow>
-              <TextGray>{'Total Points'}</TextGray>
+              <TextGray>{'CST'}</TextGray>
+              <NumberFormat
+                value={totalCoin}
+                displayType={'text'}
+                thousandSeparator={true}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                prefix={''}
+                renderText={(value, props) => {
+                  return (
+                    <TextBlack>
+                      {value?.replace('.', ',')}
+                    </TextBlack>
+                  );
+                }}
+              />
+            </ViewRow>
+            <Space lineH={10} />
+            {/* <ViewRow>
+              <TextGray>{i18n.t("Global.TotalPoints")}</TextGray>
               <NumberFormat
                 value={pointProducts}
                 displayType={'text'}
@@ -249,10 +276,10 @@ export default function FinalScreen({navigation, route}) {
                 }}
               />
             </ViewRow>
-            <Space lineH={10} />
+            <Space lineH={10} /> */}
 
-            <ViewRow>
-              <TextGray>{'Transportation'}</TextGray>
+            {/* <ViewRow>
+              <TextGray>{i18n.t("Global.Transportation")}</TextGray>
               <NumberFormat
                 value={
                   rolesUser == 'partner'
@@ -274,9 +301,9 @@ export default function FinalScreen({navigation, route}) {
               />
             </ViewRow>
 
-            <Space lineH={10} />
-            <ViewRow>
-              <TextGray>{'Total Net'}</TextGray>
+            <Space lineH={10} /> */}
+            {/* <ViewRow>
+              <TextGray>{i18n.t("Global.TotalNet")}</TextGray>
               <NumberFormat
                 value={resultPriceNotVat}
                 displayType={'text'}
@@ -287,15 +314,15 @@ export default function FinalScreen({navigation, route}) {
                 renderText={(value, props) => {
                   return (
                     <TextBlack>
-                      {value?.replace('.', ',') + ' ' + resultSymbol}
+                      {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                     </TextBlack>
                   );
                 }}
               />
-            </ViewRow>
-            <Space lineH={10} />
+            </ViewRow> */}
+            {/* <Space lineH={10} /> */}
             <ViewRow>
-              <TextGray>{'Discount'}</TextGray>
+              <TextGray>{i18n.t("Global.Discount")}</TextGray>
               <NumberFormat
                 value={codePrice}
                 displayType={'text'}
@@ -304,13 +331,13 @@ export default function FinalScreen({navigation, route}) {
                 fixedDecimalScale={true}
                 decimalScale={2}
                 renderText={(value, props) => {
-                  return <TextRed>{value.replace('.', ',') + ' ' + resultSymbol}</TextRed>;
+                  return <TextRed>{new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}</TextRed>;
                 }}
               />
             </ViewRow>
             <Space lineH={10} />
             <ViewRow>
-              <TextGray>{'Shipping'}</TextGray>
+              <TextGray>{i18n.t("Global.Shipping")}</TextGray>
               <NumberFormat
                 value={shipping}
                 displayType={'text'}
@@ -319,14 +346,14 @@ export default function FinalScreen({navigation, route}) {
                 fixedDecimalScale={true}
                 decimalScale={2}
                 renderText={(value, props) => {
-                  return <TextBlack>{value.replace('.', ',') + ' ' + resultSymbol}</TextBlack>;
+                  return <TextBlack>{new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}</TextBlack>;
                 }}
               />
             </ViewRow>
             <Space lineH={10} />
             <LineW />
             <ViewRow>
-              <TextBlack>{'Big Total'}</TextBlack>
+              <TextBlack>{i18n.t("Global.BigTotal")}</TextBlack>
               <NumberFormat
                 value={totalPrice}
                 displayType={'text'}
@@ -335,7 +362,7 @@ export default function FinalScreen({navigation, route}) {
                 fixedDecimalScale={true}
                 decimalScale={2}
                 renderText={(value, props) => {
-                  return <TextBlack>{value.replace('.', ',') + ' ' + resultSymbol}</TextBlack>;
+                  return <TextBlack>{new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}</TextBlack>;
                 }}
               />
             </ViewRow>
@@ -343,7 +370,8 @@ export default function FinalScreen({navigation, route}) {
           <Space lineH={120} />
         </ScrollView>
         <BottomViewBasket
-          title={'Pey'}
+          title={i18n.t("Global.Pay")}
+          ISO3={ISO3}
           resultPrice={totalPrice}
           resultSymbol={resultSymbol}
           onClick={() => {
@@ -356,15 +384,34 @@ export default function FinalScreen({navigation, route}) {
                 payment_method_id: route.params.payment_method_id,
                 shipping_profile_id: '',
                 coupon: coupon,
+                wallet_coin_amount:totalCoin,
+
               };
               bulkAdd(pay).then(res => {
              
                 setTimeout(() => {
-                  setShowFinish(res);
-                  setShowError(!res);
+                  if(res?.paymentLink){
+                    Linking.openURL(res?.paymentLink).then((result) => {
+                      // success
+            
+                      console.log('Link opened:', result);
+                    }).catch((error) => {
+                      // error
+                   
+                      console.log('Error opening link:', error);
+                    });
+                  }
+                 
+                  if(res){
+                    setShowFinish(true);
+                  }else{
+                    setShowError(!res);
+                  }
+               
+                  
                 }, 3000);
               });
-              // Linking.openURL('http://paypal.com');
+              
             } else {
               setError(true);
             }

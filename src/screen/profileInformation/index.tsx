@@ -24,6 +24,7 @@ import {ProfileContext} from '../../service/Profile/Profile.context';
 import DownAlertToast from '../../components/dropDownAlertRef';
 import Indicator from '../../components/lodging/indicator';
 import DropdownAlert from 'react-native-dropdownalert';
+import i18n from '../../core/i18n/config';
 
 export default function ProfileInformation({route, navigation}) {
   const {typeInformation, title, text} = route.params;
@@ -52,7 +53,7 @@ export default function ProfileInformation({route, navigation}) {
     if (isUpdate == 1) {
       dropDownAlertRef.alertWithType(
         'success',
-        'Your information could be update.',
+        i18n.t('Global.Yourinformationupdate')
       );
       setTimeout(() => {
         navigation.goBack();
@@ -61,7 +62,8 @@ export default function ProfileInformation({route, navigation}) {
       if (isUpdate == 2) {
         dropDownAlertRef.alertWithType(
           'error',
-          'Your information could not be update. Please try again',
+          i18n.t('Global.Yourinformation')
+          
         );
       }
     }
@@ -144,7 +146,8 @@ export default function ProfileInformation({route, navigation}) {
                 fontSize: 18,
                 color: Color.brand.white,
               }}>
-              {'Submit'}
+         
+              {i18n.t("Global.Submit")}
             </Text>
           </HandleEvent>
         </View>

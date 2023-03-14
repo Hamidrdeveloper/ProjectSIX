@@ -13,6 +13,7 @@ import {TextInputSign} from './style/signUp.style';
 import {BackgroundForm, ButtonColor} from '../../css/main.style';
 import ShowClick from '../../components/map';
 import {MapData} from '../../service/map/types';
+import i18n from '../../core/i18n/config';
 
 export default function PartFour({onChangeValue}) {
   const [address, setAddress] = useState<MapData>();
@@ -24,17 +25,18 @@ export default function PartFour({onChangeValue}) {
           <Space lineH={10} />
           <Text>
             <Text style={{fontSize: 14, color: Color.brand.textGrey}}>
-              {'Your Location :'}
+              {i18n.t("Global.Location")}
             </Text>
             <Text style={{fontSize: 16, color: Color.brand.black}}>
               {address?.features[0]?.place_name}
             </Text>
           </Text>
           <Space lineH={30} />
-          <Text style={{color: Color.brand.black}}>{'Your Postcode'}</Text>
+          <Text style={{color: Color.brand.black}}>{i18n.t("Global.Postcode")}</Text>
           <Space lineH={10} />
           <TextInputSign
-            placeholder={'Postal code'}
+            placeholder={i18n.t("Global.Postal")}
+            
             placeholderTextColor={'#000'}
           />
         </View>
@@ -50,7 +52,7 @@ export default function PartFour({onChangeValue}) {
             fontSize: 18,
             color: Color.brand.white,
           }}>
-          {'Submit'}
+       {i18n.t("Global.Submit")}
         </Text>
       </ButtonColor>
     </>

@@ -34,6 +34,7 @@ import {
   ViewRowPart,
 } from './style/signUp.style';
 import IndicatorStep from '../../components/stepIndicator';
+import i18n from '../../core/i18n/config';
 const heightFull = Dimensions.get('screen').height;
 export default function SignUpScreen({navigation}) {
   const [index, setIndex] = useState(1);
@@ -115,9 +116,9 @@ export default function SignUpScreen({navigation}) {
           <Padding>
             {index >= 4 ? null : (
               <>
-                <BoldTitle>{'Get Started'}</BoldTitle>
+                <BoldTitle>{i18n.t("Global.GetStarted")}</BoldTitle>
                 <Space lineH={10} />
-                <TitleWelcome>{'welcome to cleafin online shop'}</TitleWelcome>
+                <TitleWelcome>{i18n.t("Global.welcome")}</TitleWelcome>
                 <Space lineH={30} />
               </>
             )}
@@ -171,11 +172,11 @@ export default function SignUpScreen({navigation}) {
                         textAlign: 'center',
                       }}>
                       <Text style={{fontSize: 18, color: Color.brand.black}}>
-                        {'Have An Account? '}
+                        {i18n.t("Global.HaveAnAccount")}
                       </Text>
                       <Text
                         style={{fontSize: 20, color: Color.brand.colorButton}}>
-                        {'Log In'}
+                        {i18n.t("Global.LogIn")}
                       </Text>
                     </Text>
                   </TouchableOpacity>

@@ -12,6 +12,7 @@ import {ControlledInput} from '../../components/textInputController';
 import {FormProvider, useForm} from 'react-hook-form';
 import {TextBlue} from './styles/signIn.styles';
 import {useTranslation} from 'react-i18next';
+import i18n from '../../core/i18n/config';
 
 export default function ResetPassword({navigation, route}) {
   const [type, setType] = useState('profile');
@@ -79,20 +80,19 @@ export default function ResetPassword({navigation, route}) {
           <HeaderScComponent />
           <Space lineH={30} />
           <Padding>
-            <Text style={{fontSize: 26, color: Color.brand.black}}>
-              {'Forget password'}
+          <Text style={{fontSize: 26, color: Color.brand.black}}>
+              {i18n.t("Forget.SkipS")}
             </Text>
             <Space lineH={10} />
             <Text style={{fontSize: 15, color: Color.brand.black}}>
-              {
-                'We Just Need Your Registered Email Address\nTo Send Your Password Recovery Link'
-              }
+            
+                 {i18n.t("Forget.WeNeed")}
             </Text>
             <Space lineH={40} />
             <RenderType />
 
             <ControlledInput
-              label={'Password'}
+              label={i18n.t("Forget.Password")}
               name={'password'}
               placeholderTextColor={'#000'}
               rules={{required: 'Password is required!'}}
@@ -101,7 +101,8 @@ export default function ResetPassword({navigation, route}) {
             <Space lineH={20} />
             <ControlledInput
               name="confirm_password"
-              label="Confirm Password"
+              label={i18n.t("Forget.Confirm")}
+              
               placeholderTextColor={'#000'}
               rules={{required: 'Password is required!'}}
             />
@@ -146,7 +147,7 @@ export default function ResetPassword({navigation, route}) {
                     fontSize: 18,
                     color: Color.brand.white,
                   }}>
-                  {'Save'}
+                  {i18n.t("Forget.Save")}
                 </Text>
               </View>
             </TouchableOpacity>

@@ -11,6 +11,7 @@ import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {CommentContext} from '../../service/Comment/Comment.context';
 import * as Type from '../../service/Comment/types';
+import i18n from '../../core/i18n/config';
 
 export default function CommentModal({show, onChange, id}) {
   const {...methods} = useForm();
@@ -85,7 +86,7 @@ export default function CommentModal({show, onChange, id}) {
               padding: 15,
             }}>
             <FormProvider {...methods}>
-              <Text>{'Rate This Product:'}</Text>
+              <Text>{i18n.t("Global.RateThisProduct")}</Text>
               <Space lineH={15} />
               <RatingControl
                 name="title"
@@ -95,14 +96,15 @@ export default function CommentModal({show, onChange, id}) {
               <Space lineH={15} />
               <ControlledInput
                 name="title"
-                label="title"
+                label={i18n.t("Global.Title")}
                 rules={{required: 'Password is required!'}}
                 setFormError={setError}
               />
               <Space lineH={15} />
               <ControlledInput
                 name="description"
-                label="description"
+                label={i18n.t("Global.Description")}
+            
                 rules={{required: 'Password is required!'}}
                 style={{
                   width: '100%',
@@ -115,7 +117,8 @@ export default function CommentModal({show, onChange, id}) {
               />
               <LoadingButton
                 isActive={sendCommentLoading}
-                title={'Submit'}
+                title={i18n.t("Global.Submit")}
+              
                 onNext={methods.handleSubmit(onSubmit, onError)}
                 onClose={() => {}}
               />

@@ -15,11 +15,14 @@ import {Space} from '../../infrastructuer/theme/space.style';
 import {AddressContext} from '../../service/Address/Address.context';
 import { FavoriteContext } from '../../service/Favorite/Favorite.context';
 import {IMAGE_ADDRESS} from '../../utils/adress.api';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en';
 import {
   ImageSuggest,
   TextReviewOffer,
   TextReviewSuggest,
 } from '../shop/style/shop.style';
+import i18n from '../../core/i18n/config';
 
 export default function MySave({navigation}) {
   const {favorite,removeFavoriteFn} = useContext(FavoriteContext);
@@ -83,7 +86,7 @@ export default function MySave({navigation}) {
                         fontSize: 20,
                         width: 100,
                       }}>
-                      {value?.replace('.', ',') + ' ' + '€'}
+                    {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                     </Text>
                   );
                 }}
@@ -125,7 +128,8 @@ export default function MySave({navigation}) {
                 removeFavoriteFn(item.id);
               }}>
               <Text style={{color: Color.brand.textGrey, fontSize: 14}}>
-                {'Delete from list'}
+           
+                {i18n.t('Global.Deletefromlist')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -139,7 +143,7 @@ export default function MySave({navigation}) {
   return (
     <BackgroundView>
       <ScrollView>
-        <HeaderScComponent navigation={navigation} title={'My Favorites'} />
+        <HeaderScComponent navigation={navigation} title={i18n.t('Global.MyFavorites')} />
         <View
           style={{
             width: '100%',

@@ -12,6 +12,7 @@ import {
   HandleEvent,
   Padding,
 } from '../../css/main.style';
+import i18n from '../../core/i18n/config';
 export default function MyReviewsScreen({navigation}) {
     function _renderItemReviews() {
         return (
@@ -77,7 +78,7 @@ export default function MyReviewsScreen({navigation}) {
   return (
     <BackgroundView>
       <ScrollView>
-        <HeaderScComponent navigation={navigation} title={'My reviews'} />
+        <HeaderScComponent navigation={navigation} title={i18n.t("Global.Myreviews")} />
         <View
           style={{
             width: `100%`,

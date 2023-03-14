@@ -15,6 +15,7 @@ import {BasketContext} from '../../service/Basket/Basket.context';
 import {AuthContext} from '../../service/Auth/Auth.context';
 import PopUpLogin from '../../components/popUpLogin';
 import PopUpLoginNavigation from '../../components/popUpLoginNavigtion';
+import i18n from '../../core/i18n/config';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +40,7 @@ function BottomTab(props) {
         name={'Home_SCREEN'}
         component={ShopScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: i18n.t('Global.Home'),
           tabBarIcon: ({color, size}) => (
             <TouchableOpacity
               onPress={() => {
@@ -57,7 +58,7 @@ function BottomTab(props) {
         name={'Basket_SCREEN'}
         component={BasketScreen}
         options={{
-          tabBarLabel: 'Basket',
+          tabBarLabel: i18n.t('Global.Basket'),
           tabBarIcon: ({color, size}) => (
             <>
               <TouchableOpacity
@@ -102,7 +103,7 @@ function BottomTab(props) {
         name={'OrderProcessingScreen'}
         component={OrderProcessingScreen}
         options={{
-          tabBarLabel: 'Orders',
+          tabBarLabel: i18n.t('Global.Orders'),
           tabBarIcon: ({color, size}) => (
             <TouchableOpacity
               onPress={() => {
@@ -122,7 +123,7 @@ function BottomTab(props) {
           name={'OrderProcessingScreen'}
           component={CheckLogin}
           options={{
-            tabBarLabel: 'Orders',
+            tabBarLabel:i18n.t('Global.Orders'),
             tabBarIcon: ({color, size}) => (
               <TouchableOpacity
                 onPress={() => {
@@ -144,7 +145,7 @@ function BottomTab(props) {
           name={'SHOP4_SCREEN'}
           component={ProfileScreen}
           options={{
-            tabBarLabel: 'Profile',
+            tabBarLabel:i18n.t('Global.Profile'),
             tabBarIcon: ({color, size}) => (
               <TouchableOpacity
                 onPress={() => {
@@ -164,7 +165,7 @@ function BottomTab(props) {
           name={'SHOP4_SCREEN'}
           component={CheckLogin}
           options={{
-            tabBarLabel: 'Profile',
+            tabBarLabel:i18n.t('Global.Profile'),
             tabBarIcon: ({color, size}) => (
               <TouchableOpacity
                 onPress={() => {

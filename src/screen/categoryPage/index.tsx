@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {ScrollView} from 'react-native';
 import {Card, Rating} from 'react-native-elements';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en';
 import {ArrowLeft, Filter, Heart, Search, Swap} from 'react-native-iconly';
 import NumberFormat from 'react-number-format';
 import {CheckSaveProduct} from '../../components/checkSaveProduct';
@@ -40,6 +42,7 @@ import styled from 'styled-components';
 import {goToScreenDetails} from '../../service/Products/Product.action';
 import {CommentContext} from '../../service/Comment/Comment.context';
 import ImageLoading from '../../components/imageLoading';
+import i18n from '../../core/i18n/config';
 
 export const TextPrcentOffer = styled(Text)`
   font-size: 12;
@@ -213,7 +216,7 @@ export default function CategoryPageScreen({navigation, route}) {
                 renderText={(value, props) => {
                   return (
                     <TextPriceOffer>
-                      {value?.replace('.', ',') + ' ' + '€'}
+                     {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                     </TextPriceOffer>
                   );
                 }}
@@ -257,7 +260,7 @@ export default function CategoryPageScreen({navigation, route}) {
               onPress={() => {
                 addToBasket(item);
               }}>
-              <LabelButton>{'Add to basket'}</LabelButton>
+              <LabelButton>{i18n.t("Global.Addtobasket")}</LabelButton>
             </ButtonCategoryAddTo>
           </View>
         </TouchableOpacity>
@@ -269,7 +272,7 @@ export default function CategoryPageScreen({navigation, route}) {
       <ScrollView>
         <Space lineH={35} />
         <SearchView
-          placeholder="Search On Cleaning"
+          placeholder={i18n.t("Global.SearchOnCleaning")}
           onChangeText={value => updateSearch(value)}
           onClear={()=>{updateSearch('');}}
           value={search}
@@ -321,7 +324,7 @@ export default function CategoryPageScreen({navigation, route}) {
           <ViewRowPrice>
             <TextNameAndCategory>{name}</TextNameAndCategory>
             <TextNameAndCategory>
-              {`${categoryProductsItem?.length} Products`}
+              {`${categoryProductsItem?.length} ${i18n.t("Global.Products")}`}
             </TextNameAndCategory>
           </ViewRowPrice>
           <FlatListCustom

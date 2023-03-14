@@ -24,6 +24,7 @@ import {FileContext} from '../../service/File/File.context';
 import {MainContext} from '../../service/Main/Main.context';
 import {BackgroundView} from '../../css/main.style';
 import HeaderScComponent from '../../components/header2';
+import i18n from '../../core/i18n/config';
 
 export default function ProfileScreen({navigation}) {
   const {user} = useContext(ProfileContext);
@@ -48,7 +49,7 @@ export default function ProfileScreen({navigation}) {
     <>
       <BackgroundView>
         <ScrollView>
-        <HeaderScComponent navigation={navigation} title={'Profile'} />
+        <HeaderScComponent navigation={navigation} title={i18n.t("Global.Profile")} />
           <View>
             <Space lineH={25} />
             <Avatar
@@ -79,7 +80,7 @@ export default function ProfileScreen({navigation}) {
               style={{paddingLeft: 15, paddingRight: 15, paddingBottom: 15}}>
               <ButtonMenuProfile
                 icon={<User />}
-                text="Personal Information"
+                text={i18n.t("Global.PersonalInformation")}
                 onClick={() =>
                   navigation.navigate('InformationScreen', {
                     typeInformation: 'Email',
@@ -91,7 +92,7 @@ export default function ProfileScreen({navigation}) {
               <Space lineH={10} />
               <ButtonMenuProfile
                 icon={<Location />}
-                text="My Address"
+                text={i18n.t("Global.MyAddress")}
                 onClick={() =>
                   navigation.navigate('MyAddress_SCREEN', {
                     typeInformation: 'Email',
@@ -104,7 +105,7 @@ export default function ProfileScreen({navigation}) {
               <Space lineH={10} />
               <ButtonMenuProfile
                 icon={<Heart />}
-                text="Saved"
+                text={i18n.t("Global.Saved")}
                 onClick={() =>
                   navigation.navigate('MySave_SCREEN', {
                     typeInformation: 'Email',
@@ -116,7 +117,7 @@ export default function ProfileScreen({navigation}) {
               <Space lineH={10} />
               <ButtonMenuProfile
                 icon={<Bag />}
-                text="My Orders"
+                text={i18n.t("Global.MyOrders")}
                 onClick={() =>
                   navigation.navigate('OrderProcessingScreen', {
                     typeInformation: 'Email',
@@ -140,7 +141,7 @@ export default function ProfileScreen({navigation}) {
               <Space lineH={10} />
               <ButtonMenuProfile
                 icon={<EditSquare />}
-                text="My Reviews"
+                text={i18n.t("Global.MyReviews")}
                 onClick={() =>
                   navigation.navigate('MyReviews_SCREEN', {
                     typeInformation: 'Email',
@@ -164,7 +165,7 @@ export default function ProfileScreen({navigation}) {
                <Space lineH={10} />
               <ButtonMenuProfile
                 icon={<Document />}
-                text="Document"
+                text={i18n.t("Global.Document")}
                 onClick={() => {
                   
                   navigation.navigate('DocumentScreen');
@@ -173,7 +174,7 @@ export default function ProfileScreen({navigation}) {
               <Space lineH={10} />
               <ButtonMenuProfile
                 icon={<Logout />}
-                text="Sign Out"
+                text={i18n.t("Global.SignOut")}
                 onClick={() => {
                   onDeleteUser();
                   navigation.replace('SignInScreen');

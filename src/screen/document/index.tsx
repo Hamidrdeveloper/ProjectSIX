@@ -8,6 +8,7 @@ import { Color } from "../../infrastructuer/theme/colors.style";
 import { Space } from "../../infrastructuer/theme/space.style";
 import { ProfileContext } from "../../service/Profile/Profile.context";
 import { BASE_URL } from "../../utils/main";
+import i18n from "../../core/i18n/config";
 
 export default function DocumentScreen({navigation}) {
   const { listDocument ,documentFn} = useContext(ProfileContext);
@@ -44,7 +45,7 @@ export default function DocumentScreen({navigation}) {
     <>
      <BackgroundView>
       <ScrollView>
-    <HeaderScComponent title={'Orders'} navigation={navigation} />
+    <HeaderScComponent title={i18n.t("Global.Document")} navigation={navigation} />
         <FlatList
         keyExtractor={(item, index) => item.id}
         data={listDocument}

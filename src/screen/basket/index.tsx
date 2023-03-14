@@ -38,12 +38,14 @@ import {
 import NumberFormat from 'react-number-format';
 import {AuthContext} from '../../service/Auth/Auth.context';
 import {ProfileContext} from '../../service/Profile/Profile.context';
-
+// import 'intl';
+// import 'intl/locale-data/jsonp/en';
 import PopUpLogin from '../../components/popUpLogin';
 import styled from 'styled-components';
 import {useIsFocused} from '@react-navigation/native';
 import MenuLeftMore from '../../components/menuLeftMore';
 import {Discount} from 'react-native-iconly';
+import i18n from '../../core/i18n/config';
 const heightFull = Dimensions.get('screen').height;
 
 const ViewBasketHigh = styled(View)`
@@ -84,7 +86,12 @@ export default function BasketScreen({navigation}) {
     pointProducts,
     walletCoinFn,
     dataConfig,
+    removeCoinProduct,
     transportation,
+    removeToBasketCoin,
+    totalCoin,
+    addToBasketCoin,
+    ISO3
   } = useContext(BasketContext);
   const {isLoginOpen} = useContext(AuthContext);
   const {rolesUser, walletBalance} = useContext(ProfileContext);
@@ -95,6 +102,63 @@ export default function BasketScreen({navigation}) {
   useEffect(() => {
     closeCouponsFn();
   }, [isFocused]);
+  function RenderPlusCoin({product}) {
+    return (
+      <>
+        <ViewPlus>
+          <TouchableOpacity
+            onPress={() => {
+              setShowRule(false);
+              setNumber(number - 1);
+              removeCoinProduct(product);
+            }}>
+            <Card
+              containerStyle={{
+                width: 30,
+                height: 30,
+                borderRadius: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Delete source={require('../../assets/image/remove.png')} />
+            </Card>
+          </TouchableOpacity>
+          <View style={{justifyContent: 'center', height: 30}}>
+            <NumberPlus
+              style={{
+                ...Platform.select({
+                  ios: {
+                    lineHeight: 30, // as same as height
+                  },
+                }),
+              }}>
+              {product.numberBasket}
+            </NumberPlus>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              let price = totalCoin + product.sale_price.value;
+              if(price <walletBalance){
+              setShowRule(false);
+              setNumber(number + 1);
+              addToBasketCoin(product);
+              }
+            }}>
+            <Card
+              containerStyle={{
+                width: 30,
+                height: 30,
+                borderRadius: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Plus source={require('../../assets/image/plusBsket.png')} />
+            </Card>
+          </TouchableOpacity>
+        </ViewPlus>
+      </>
+    );
+  }
   function RenderPlus({product}) {
     return (
       <>
@@ -155,7 +219,7 @@ export default function BasketScreen({navigation}) {
       <ViewBottomDetails>
         <View
           style={{alignItems: 'flex-end', width: '105%', position: 'absolute'}}>
-          {dataConfig?.transportation_rule?.min_partner_amount >
+          {/* {dataConfig?.transportation_rule?.min_partner_amount >
           transportation ? (
             <NumberFormat
               value={
@@ -185,7 +249,7 @@ export default function BasketScreen({navigation}) {
                 );
               }}
             />
-          ) : null}
+          ) : null} */}
           <NumberFormat
             value={shipping}
             displayType={'text'}
@@ -202,10 +266,8 @@ export default function BasketScreen({navigation}) {
                     color: Color.brand.red,
                     textAlign: 'right',
                   }}>
-                  {'Shipping Price : ' +
-                    value.replace('.', ',') +
-                    ' ' +
-                    resultSymbol}
+                 {i18n.t('Global.ShippingPrice')+
+                    new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                 </TextDetailBasketBlack>
               );
             }}
@@ -219,7 +281,7 @@ export default function BasketScreen({navigation}) {
             renderText={(value, props) => {
               return (
                 <TextPriceBasketAbsolute>
-                  {value.replace('.', ',') + ' ' + resultSymbol}
+                  {basketsExited.length>0?new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value):new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(0)}
                 </TextPriceBasketAbsolute>
               );
             }}
@@ -228,7 +290,7 @@ export default function BasketScreen({navigation}) {
         <TouchableOpacity
           onPress={() => {
             if (isLoginOpen) {
-              if (basketsExited.length > 0 && !showRule) {
+              if (basketsExited.length > 0&&totalPrice>1 && !showRule) {
                 navigation.navigate('DeliveryAddress_SCREEN', {type: 'Basket'});
               }
             } else {
@@ -236,14 +298,14 @@ export default function BasketScreen({navigation}) {
             }
           }}>
           <ViewBasket>
-            <TextItem style={{color: Color.brand.white}}>{'Next'}</TextItem>
+            <TextItem style={{color: Color.brand.white}}> {i18n.t('Global.Next')}</TextItem>
           </ViewBasket>
         </TouchableOpacity>
       </ViewBottomDetails>
     );
   }
   function _renderItemBasket({data}) {
-    console.log(data);
+    console.log(data?.coin);
     if (data?.min_order_quantity > data?.numberBasket) {
       setShowRule(true);
     }
@@ -261,24 +323,25 @@ export default function BasketScreen({navigation}) {
     }
     return (
       <ItemBasket>
-        <View>
-          <ImageSuggest source={{uri: IMAGE_ADDRESS + imageUrl}} />
+        <View style={{width:`25%`,height:200,alignItems:'center'}}>
+          <Image style={{width:`100%`,height:100,left:10}} source={{uri: IMAGE_ADDRESS + imageUrl}} />
+          {data?.coin?<RenderPlusCoin product={data} />:
           <RenderPlus product={data} />
+        }
         </View>
 
         <ViewCenter>
-          <View style={{height: 110}}>
+          <View style={{height: 120,width:`75%`,left:10,justifyContent:'center'}}>
             <TextDetailBasketBlack>{data.name}</TextDetailBasketBlack>
             <Space lineH={10} />
-            <TextDetailBasket>{'2 Litre'}</TextDetailBasket>
+            {/* <TextDetailBasket>{'2 Litre'}</TextDetailBasket> */}
             <Space lineH={10} />
             {data?.productVariationCategories?.length > 0 ? (
-              <TextDetailBasket>
-                {`Category: ${data?.productVariationCategories[0].name}`}
+              <TextDetailBasket style={{width:`180%`}}>
+                {`Category:${data?.productVariationCategories[0].name}`}
               </TextDetailBasket>
             ) : null}
-          </View>
-          <NumberFormat
+            <NumberFormat
             value={data?.sale_price.value}
             displayType={'text'}
             thousandSeparator={true}
@@ -288,11 +351,15 @@ export default function BasketScreen({navigation}) {
             renderText={(value, props) => {
               return (
                 <TextPriceBasket>
-                  {value.replace('.', ',') + ' ' + '€'}
+                  {data.coin?value?.replace('.', ',') +
+                            ' ' +
+                            data?.sale_price?.iso3:new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
                 </TextPriceBasket>
               );
             }}
           />
+          </View>
+          
         </ViewCenter>
         {data?.max_order_quantity < data?.numberBasket &&
         data?.max_order_quantity != null ? (
@@ -360,8 +427,9 @@ export default function BasketScreen({navigation}) {
                 source={require('../../assets/image/menu.png')}
               />
               <Space lineW={'5%'} />
-              <TextBasket>{'Basket'}</TextBasket>
+              <TextBasket>{i18n.t('Global.Basket')}</TextBasket>
             </MenuView>
+            {rolesUser == 'partner'?  <Space lineH={30} />:null}
             {basketsExited.map(data => {
               return <_renderItemBasket data={data} />;
             })}
@@ -376,7 +444,7 @@ export default function BasketScreen({navigation}) {
           navigation={navigation}
         />
         {rolesUser == 'partner' ? <MenuLeftMore /> : null}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             position: 'absolute',
             top: 50,
@@ -389,13 +457,13 @@ export default function BasketScreen({navigation}) {
             borderRadius: 8,
           }}
           onPress={() => {
-            walletCoinFn(walletBalance);
+            walletCoinFn(walletBalance-totalCoin);
             navigation.navigate("WalletProduct_SCREEN")
           }}>
           <Text style={{color: Color.brand.white, fontSize: 15}}>
-            {'wallet: ' + walletBalance}
+            {i18n.t('Global.wallet')+ (walletBalance-totalCoin)}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </BackgroundView>
     </>
   );

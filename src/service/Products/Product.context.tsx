@@ -3,6 +3,7 @@ import {ProductsArrivalModel, ProductsModel} from './model';
 import * as Ac from './Product.action';
 import {ProductItem} from './types';
 import * as Type from './types';
+import { useThrottle } from '../../utils/useThrottle';
 interface IProductContext {
   isProducts: boolean;
   productsItem: ProductItem;
@@ -208,7 +209,9 @@ export default function ProductContextProvider({
       setRelatedProductsItem(res);
     });
   }
-  function widgetsFn() {
+  const  widgetsFn= useThrottle(() => {
+   
+      console.log("Button clicked!");
     Ac.widgetsAc().then(res => {
       res.map(x => {
         if (x.slug == 'footer-images') {
@@ -222,7 +225,9 @@ export default function ProductContextProvider({
         }
       });
     });
-  }
+  
+
+  }, 5000);
   function searchProductsFn(
     text?: string,
     categoryId?: number | Array<number>,

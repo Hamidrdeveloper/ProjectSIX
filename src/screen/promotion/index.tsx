@@ -13,6 +13,8 @@ import {BackgroundView, ViewRowBetween} from '../../css/main.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {ViewRow} from '../orderDetails/style/orderDetails.style';
 import EnterCode from '../DeliveryAddress/enterCode';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en';
 import {
   ButtonCategoryAddTo,
   ImageOffer,
@@ -31,6 +33,7 @@ import {BasketContext} from '../../service/Basket/Basket.context';
 import {IMAGE_ADDRESS} from '../../utils/adress.api';
 import HeaderScComponent from '../../components/header2';
 import DropdownAlert from 'react-native-dropdownalert';
+import i18n from '../../core/i18n/config';
 const widthFull = Dimensions.get('screen').width;
 
 export default function PromotionScreen({navigation}) {
@@ -87,7 +90,7 @@ export default function PromotionScreen({navigation}) {
               <Plus set="light" primaryColor={Color.brand.blue} size={'medium'} />
             </View>
             <Text style={{color: Color.brand.blue, fontSize: 15}}>
-              {'Add promotion code'}
+              {i18n.t("Global.Addpromotioncode")}
             </Text>
           </View>
         </Card>
@@ -139,10 +142,8 @@ export default function PromotionScreen({navigation}) {
             renderText={(value, props) => {
               return (
                 <TextPriceOffer style={{color: Color.brand.blue, fontSize: 20}}>
-                  {'Your Total Benefit: ' +
-                    value?.replace('.', ',') +
-                    ' ' +
-                    '€'}
+                  {i18n.t("Global.YourTotalBenefit")+
+                    new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                 </TextPriceOffer>
               );
             }}
@@ -214,12 +215,13 @@ export default function PromotionScreen({navigation}) {
                     renderText={(value, props) => {
                       return (
                         <TextPriceOffer>
-                          {value?.replace('.', ',') + ' ' + '€'}
+                         {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                         </TextPriceOffer>
                       );
                     }}
                   />
                   <Space lineW={10} />
+                  {item?.sale_price.gross_value!=item?.sale_price.value?
                   <NumberFormat
                     value={item?.sale_price.gross_value}
                     displayType={'text'}
@@ -230,11 +232,11 @@ export default function PromotionScreen({navigation}) {
                     renderText={(value, props) => {
                       return (
                         <TextPriceOffer style={{color: Color.brand.red}}>
-                          {'(' + value?.replace('.', ',') + ' ' + '€' + ')'}
+                          {'(' +new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value) + ')'}
                         </TextPriceOffer>
                       );
                     }}
-                  />
+                  />:null}
                 </View>
                 <Space lineH={5} />
               </View>
@@ -300,7 +302,7 @@ export default function PromotionScreen({navigation}) {
   }
   return (
     <BackgroundView>
-      <HeaderScComponent navigation={navigation} title={'Coupon'} />
+      <HeaderScComponent navigation={navigation} title={i18n.t("Global.Coupon")} />
 
       <GetPromotionCode />
       <EnterCode
@@ -320,7 +322,8 @@ export default function PromotionScreen({navigation}) {
 
               fontWeight: 'bold',
             }}>
-            {'Product Offers:'}
+
+            {i18n.t("Global.ProductOffers")} 
           </Text>
         </View>
       ) : null}

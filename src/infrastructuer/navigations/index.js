@@ -50,10 +50,12 @@ const NavigationStart = () => {
   return (
     <NavigationContainer>
       <Slack.Navigator screenOptions={{headerShown: false}}>
-      
-      
+      <Slack.Screen name={'Splash_SCREEN'} component={SplashScreen} />
 
-        <Slack.Screen name={'Splash_SCREEN'} component={SplashScreen} />
+      <Slack.Screen name={'SignInScreen'} component={SignInScreen} />
+      <Slack.Screen name={'Bottom_SCREEN'} component={BottomTab} />
+
+        <Slack.Screen name={'SignUpScreen'} component={SignUpScreen} />
         <Slack.Screen name={'EmailVerify'} component={EmailVerify} />
         <Slack.Screen name={'DocumentScreen'} component={DocumentScreen} />
 
@@ -66,9 +68,8 @@ const NavigationStart = () => {
         <Slack.Screen name={'PaymentScreen_SCREEN'} component={PaymentScreen} />
         <Slack.Screen name={'Final_SCREEN'} component={FinalScreen} />
 
-        <Slack.Screen name={'Bottom_SCREEN'} component={BottomTab} />
 
-        <Slack.Screen name={'SignUpScreen'} component={SignUpScreen} />
+        
 
         <Slack.Screen name={'MyAddress_SCREEN'} component={MyAddressScreen} />
         <Slack.Screen
@@ -76,7 +77,7 @@ const NavigationStart = () => {
           component={EditAddressScreen}
         />
 
-        <Slack.Screen name={'SignInScreen'} component={SignInScreen} />
+      
 
         <Slack.Screen name={'ResetPassword'} component={ResetPassword} />
         <Slack.Screen name={'Profile_SCREEN'} component={ProfileScreen} />

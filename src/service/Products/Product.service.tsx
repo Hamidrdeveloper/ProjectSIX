@@ -15,13 +15,14 @@ class ProductDataService {
       //   res?.sale_price?.value_after_discount *
       //   res?.product?.min_order_quantity *
       //   (1 + res?.product?.default_vat / 100);
-        let vat = res?.sale_price?.gross_value_after_discount;
+        let vat = res?.sale_price?.gross_value_after_discount?.toFixed(2);
       return {
         ...res,
         sale_price: {
           value: vat,
-          value_not_vat: res?.sale_price?.gross_value_after_discount,
-          iso3:res?.sale_price?.iso3
+          value_not_vat: res?.sale_price?.gross_value_after_discount?.toFixed(2),
+          iso3:res?.sale_price?.iso3,
+          gross_value:res?.sale_price?.gross_value?.toFixed(2)
         },
       };
     });
@@ -31,13 +32,14 @@ class ProductDataService {
     //   res?.sale_price?.value_after_discount *
     //   res?.product?.min_order_quantity *
     //   (1 + res?.product?.default_vat / 100);
-    let vat = res?.sale_price?.gross_value_after_discount;
+    let vat = res?.sale_price?.gross_value_after_discount?.toFixed(2);
     return {
       ...res,
       sale_price: {
         value: vat,
-        value_not_vat: res?.sale_price?.gross_value_after_discount,
+        value_not_vat: res?.sale_price?.gross_value_after_discount?.toFixed(2),
         iso3:res?.sale_price?.iso3,
+        gross_value:res?.sale_price?.gross_value?.toFixed(2)
       },
     };
   }
@@ -105,7 +107,7 @@ class ProductDataService {
       Address.PRODUCTS_BY_ID_ADDRESS + 'id' + productId,
     );
     return http
-      .get(Address.PRODUCTS_BY_ID_ADDRESS + '?productId=' + productId)
+      .get(Address.PRODUCTS_BY_ID_ADDRESS + '/product/' + productId)
       .then(res => {
         console.log(Address.PRODUCTS_BY_ID_ADDRESS, res);
         return this.taxCalculationById(res.data.data);
@@ -122,21 +124,10 @@ class ProductDataService {
       Address.PRODUCTS_BY_ID_ADDRESS + 'id' + productId,
     );
     return http
-      .get(Address.PRODUCTS_BY_ID_ADDRESS, {
-        params: {productId: productId, page: 1, per_page: 10},
-        headers: {
-          Host: 'api.solutionsapps.shop',
-          'X-PANEL': true,
-          Accept: 'application/json, text/plain, */*',
-          Referer: 'https://admin.solutionsapps.shop/',
-          Origin: 'https://admin.solutionsapps.shop/',
-          Authorization:
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiODU1NDExYWU1MWMxNTU5MDVkOTI2ZDk1Nzk0YWJhMTQ3YmU1OWNmYjVhZTZiNDM0ZTNhNWIxZDVjYzQwM2RhNTNhNWZiMTcwOWIxZjE4M2MiLCJpYXQiOjE2NTM4MjMyNTAuNjEzNzQ5LCJuYmYiOjE2NTM4MjMyNTAuNjEzNzUzLCJleHAiOjE2ODUzNTkyNTAuNjExNzM1LCJzdWIiOiIyMCIsInNjb3BlcyI6W119.CGzCgaKEirdya_FCD856I-E5xMWWed4UZ9GJmIbsgNsr5COTz0KEL8OOXLlz9yb9_ZtkYG1aNyW580FL_Fp-m5CIqE_EzOUTuEaBMWnm8h2-K9lzTOMFP2-r0rDsuy7mZwvnvJ9YKyzDBn1oTWN2mObtAuwANXZeMUMkarf-V7OIriHdKUuwy2zxiz3-DUUsMUcy6r61CaznRnnY0Xno_D2saTgws90RMSi_oGBXArSdcAh2W6X5NRJFb9Luy09VDlX9z3chVu9u1qRg-Ja5Vq1fOcAEKvU0GdtMyG_FMXHVALyzmqfqSYsUZYgLfeGFnxZZHhC_nq7T0hvydKWrHEMn9y2yUlUu54orxHQL7eD6DU3zwtXk3meyE19I03GoFnojauWLetGA8wzNf4kc4B8nzikjTf54v8fnRjF7W2BvA5BXOVxymUvipUF1Iy6OtSZwfTVcVg5_dYexAq4SR07wuk5kGuA4hI7EMEugDtkuIs_b72c5KnedwVku_y9YPZYii89yJpKasfGlte9048H5gGB4pRsQZ-JX2zdA0wgFs6fBrUH7irkZI9UNOU0wLRueN4XutY0T7R96x2ppuHpRFcY-IOc5bD_6Tw9-8rAL2n1_7E0fbKkVR-mrI_fcD27zaqg8uAQFUnTOHJJwNkKV3gxDitNyBv2kxjFJs1o',
-        },
-      })
+      .get(Address.PRODUCTS_BY_ID_ADDRESS + '/product/' + productId)
       .then(res => {
         console.log(Address.PRODUCTS_BY_ID_ADDRESS, res);
-        return res.data.data;
+        return this.taxCalculation(res.data.data);
       })
       .catch(error => {
         console.log(Address.PRODUCTS_BY_ID_ADDRESS, error.response);

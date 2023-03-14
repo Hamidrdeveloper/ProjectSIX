@@ -14,6 +14,7 @@ import {
   languageAc,
   countriesAc,
   linkForgetPasswordAc,
+  legalsAc,
 } from './Auth.action';
 import {SignUpModel} from './model';
 import {LinkForgetPassword} from './types';
@@ -21,6 +22,9 @@ import {LinkForgetPassword} from './types';
 interface IAuthContext {
   isLoginOpen: boolean;
   isRegister: boolean;
+  legals: Array<any>;
+  showLegals: boolean;
+  isLegals: boolean;
   isForgotPasswordOpen: boolean;
   linkForgetPasswordFn: (value: LinkForgetPassword) => void;
   setLoginOpen: (toggle: boolean) => void;
@@ -31,6 +35,7 @@ interface IAuthContext {
   forgetPasswordFn: () => void;
   countriesFn: () => void;
   languageFn: () => void;
+  legalsFn: () => void;
   activeForm: (value: boolean) => void;
   language: any;
   countries: any;
@@ -48,10 +53,14 @@ export default function AuthContextProvider({
 }) {
   const [isLoginOpen, setLoginOpen] = useState(false);
   const [isRegisterOpen, setRegisterOpen] = useState(false);
+  
+  const [showLegals, isLegals] = useState(false);
 
   const [isRegister, setRegister] = useState(false);
   const [isForgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const [countries, setCountries] = useState([]);
+  const [legals, setLegals] = useState([]);
+
   const [language, setLanguage] = useState([]);
   const [isForm, setForm] = useState(false);
   const [isShowError, setIsShowError] = useState(false);
@@ -76,12 +85,23 @@ export default function AuthContextProvider({
       setRegisterOpen(is);
     });
   }
+  function legalsFn() {
+   
+    legalsAc().then(is => {
+      console.log("is",is);
+      
+      setLegals(is)
+      isLegals(true)
+    });
+  }
+  
   function singInFn() {
     setLoginApi(true);
     setLoginOpen(false);
     setIsShowError(false);
     singInAc()
       .then(is => {
+        legalsFn();
         if (!is.status) {
           setMessageError(is.message);
           setIsShowError(!is.status);
@@ -150,6 +170,9 @@ export default function AuthContextProvider({
         messageError,
         isShowError,
         isLoginApi,
+        legals,
+        isLegals,
+        showLegals
       }}>
       {children}
     </AuthContext.Provider>

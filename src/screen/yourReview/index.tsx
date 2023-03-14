@@ -18,6 +18,7 @@ import {BackgroundView, Padding} from '../../css/main.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import i18n from '../../core/i18n/config';
 
 export default function YourReviewScreen({navigation}) {
   const [value, setValue] = useState(false);
@@ -29,7 +30,8 @@ export default function YourReviewScreen({navigation}) {
     <BackgroundView>
       <HeaderScComponent
         navigation={navigation}
-        title={'Your Review'}
+        title= {i18n.t("Global.YourReview")}
+       
         details={''}
         isProduct={true}
       />
@@ -73,11 +75,11 @@ export default function YourReviewScreen({navigation}) {
         /> */}
          <Space lineH={30} />
         <Text style={{color: Color.brand.textGrey, fontSize: 16}}>
-          {'Review'}
+          {i18n.t("Global.Review")}
         </Text>
         <Space lineH={20} />
         <Text style={{color: Color.brand.textGrey, fontSize: 16}}>
-          {'Review Title'}
+          {i18n.t("Global.ReviewTitle")}
         </Text>
         <Space lineH={10} />
 
@@ -94,7 +96,7 @@ export default function YourReviewScreen({navigation}) {
          <Space lineH={20} />
         <Text style={{color: Color.brand.textGrey, fontSize: 16}}>
           <Text style={{color: Color.brand.textGrey, fontSize: 16}}>
-          {'Review Text'}
+          {i18n.t("Global.ReviewText")}
         </Text>
           <Text style={{color:Color.brand.red, fontSize: 16}}>
           {'*'}
@@ -173,7 +175,7 @@ export default function YourReviewScreen({navigation}) {
                 fontSize: 18,
                 color: Color.brand.colorButton,
               }}>
-              {'Submit a review'}
+                  {i18n.t("Global.SubmitArReview")}
             </Text>
           </View>
       </Padding>

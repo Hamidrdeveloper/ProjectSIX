@@ -7,6 +7,7 @@ import {BackgroundView, Padding} from '../../css/main.style';
 import HeaderScComponent from '../../components/header2';
 import {ArrowLeft} from 'react-native-iconly';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from '../../components/codeField';
+import i18n from '../../core/i18n/config';
 const CELL_COUNT = 4;
 export default function VerifyCode({navigation}) {
   const [value, setValue] = useState('');
@@ -144,7 +145,8 @@ export default function VerifyCode({navigation}) {
                     fontSize: 18,
                     color: Color.brand.white,
                   }}>
-                  {'Submit'}
+               
+                  {i18n.t("Forget.Submit")}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -222,7 +224,7 @@ export default function VerifyCode({navigation}) {
                 fontSize: 14,
                 color: Color.brand.textGry,
               }}>
-              {'Dont Have An Account?'}
+              {i18n.t("Forget.Dont")}
             </Text>
             <Space lineW={10} />
             <Text
@@ -231,7 +233,7 @@ export default function VerifyCode({navigation}) {
                 fontSize: 14,
                 color: Color.brand.colorButton,
               }}>
-              {'Register now'}
+              {i18n.t("Forget.RegisterN")}
             </Text>
           </View>
         </Padding>

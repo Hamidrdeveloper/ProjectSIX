@@ -19,6 +19,7 @@ import {
 import styled from 'styled-components';
 import {regexHtml} from '../../utils/main';
 import CommentModal from './comment';
+import i18n from '../../core/i18n/config';
 
 const TextReViewPlus = styled(TextReviewOffer)`
   font-size: 16;
@@ -67,7 +68,8 @@ export function TabShop({product}) {
           height: 3,
         }}>
         <Tab.Item
-          title="Description"
+          title={i18n.t("Global.Description")}
+
           titleStyle={{
             fontSize: 12,
             color: index == 0 ? Color.brand.blue : Color.brand.grey,
@@ -75,7 +77,7 @@ export function TabShop({product}) {
           containerStyle={{backgroundColor: '#fff'}}
         />
         <Tab.Item
-          title="Review"
+          title={i18n.t("Global.Review")}
           titleStyle={{
             fontSize: 12,
             color: index == 1 ? Color.brand.blue : Color.brand.grey,
@@ -83,7 +85,7 @@ export function TabShop({product}) {
           containerStyle={{backgroundColor: '#fff'}}
         />
         <Tab.Item
-          title="Attitude"
+          title={i18n.t("Global.Attitude")}
           titleStyle={{
             fontSize: 12,
             color: index == 2 ? Color.brand.blue : Color.brand.grey,
@@ -103,15 +105,15 @@ export function TabShop({product}) {
                     style={{color: Color.brand.blue, fontWeight: 'bold'}}>
                     <TextProduct
                       style={{color: Color.brand.blue, fontWeight: 'bold'}}>
-                      {x?.percentage_of_provision + '% of Provision Price.\n'}
+                      {x?.percentage_of_provision + `% ${i18n.t('Global.ofProvision')}\n`}
                     </TextProduct>
                     <TextProduct
                       style={{color: Color.brand.blue, fontWeight: 'bold'}}>
-                      {'€' + x?.provision_price + ' Provision Price.\n'}
+                      {'€' + x?.provision_price +' '+i18n.t('Global.Provision') +'\n'}
                     </TextProduct>
                     <TextProduct
                       style={{color: Color.brand.blue, fontWeight: 'bold'}}>
-                      {x?.qv + ' Points.'}
+                      {x?.qv + ' '+i18n.t('Global.Points')}
                     </TextProduct>
                   </TextProduct>
                 </>
@@ -132,7 +134,7 @@ export function TabShop({product}) {
               height={listComment.length > 0 ? 250 : 10}
             />
             <TextReViewPlus>
-              {`View all ${listComment.length} Reviews`}
+              {`${  i18n.t('Global.Viewall')} ${listComment.length} ${i18n.t('Global.Reviews')}`}
             </TextReViewPlus>
             <Space lineH={25} />
             <ViewCenterRow
@@ -144,7 +146,7 @@ export function TabShop({product}) {
               />
               <Space lineW={15} />
               <TextButtonComment>
-                {'Write your review about this product'}
+                {  i18n.t('Global.Writereview')}
               </TextButtonComment>
               <IconRight
               onPress={() => {

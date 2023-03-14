@@ -4,6 +4,8 @@ import {
   ViewBasket,
   ViewBottomDetails,
 } from '../bottomDetails/style/BottomDetails.style';
+// import 'intl';
+// import 'intl/locale-data/jsonp/en';
 import {TouchableOpacity, View} from 'react-native';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import NumberFormat from 'react-number-format';
@@ -12,7 +14,8 @@ export default function BottomViewBasket({
   title = 'Next',
   onClick,
   resultPrice,
-  resultSymbol
+  resultSymbol,
+  ISO3,
 }) {
   return (
     <View
@@ -59,7 +62,7 @@ export default function BottomViewBasket({
           renderText={(value, props) => {
             return (
               <TextItem>
-                {value?.replace('.', ',') + ' ' + resultSymbol}
+                {new Intl.NumberFormat('de-DE', { style: 'currency', currency:ISO3 }).format(value)}
               </TextItem>
             );
           }}

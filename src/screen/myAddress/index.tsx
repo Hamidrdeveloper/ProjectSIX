@@ -41,6 +41,7 @@ import {
   ViewItemAddress,
   ViewPopUp,
 } from './style/myAddress.style';
+import i18n from '../../core/i18n/config';
 const height = Dimensions.get('screen').height;
 export default function MyAddressScreen({navigation, route}) {
   //Context
@@ -124,7 +125,8 @@ export default function MyAddressScreen({navigation, route}) {
             </IconlyProvider>
             <Space lineW={10} />
             <Text style={{color: Color.brand.black, fontSize: 16}}>
-              {'Edit address'}
+              {i18n.t("Global.Editaddress")}
+
             </Text>
           </HandleEvent>
           <Space lineH={10} />
@@ -213,7 +215,7 @@ export default function MyAddressScreen({navigation, route}) {
     <>
       <BackgroundView>
         <ScrollView>
-          <HeaderScComponent navigation={navigation} title={'My addresses'} />
+          <HeaderScComponent navigation={navigation} title={i18n.t('Global.MyAddresses')} />
 
           <Padding>
             <Space lineH={15} />
@@ -225,7 +227,7 @@ export default function MyAddressScreen({navigation, route}) {
                 <Location set="light" size={'large'} primaryColor={Color.brand.blue} />
                 <Space lineW={10} />
                 <Text style={{color: Color.brand.blue, fontSize: 18}}>
-                  {'Add new address'}
+                  {i18n.t("Global.AddNewAddress")}
                 </Text>
               </View>
             </TouchableOpacity>

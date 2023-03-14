@@ -36,6 +36,7 @@ import AttributeItem from './attribute';
 import {taxCalculationById} from '../../utils/main';
 import {ZoomableImage} from '../../components/zoomableImage/ZoomableImage';
 import {ChevronDownCircle} from 'react-native-iconly';
+import i18n from '../../core/i18n/config';
 
 const TextBlack18 = styled(Text)`
   font-size: 18;
@@ -117,7 +118,7 @@ export default function DetailsProduct({navigation, route}) {
             renderText={(value, props) => {
               return (
                 <TextPriceOffer>
-                  {value?.replace('.', ',') + ' ' + '€'}
+                  {new Intl.NumberFormat('de-DE', { style: 'currency', currency: item?.sale_price.iso3 }).format(value)}
                 </TextPriceOffer>
               );
             }}
@@ -233,7 +234,7 @@ export default function DetailsProduct({navigation, route}) {
             <View style={{height: 400}}>
               <TabShop product={productByRoute} />
             </View>
-            <TitleStep>{'Related Products'}</TitleStep>
+            <TitleStep>{i18n.t("Global.RelatedProducts")}</TitleStep>
             <Space lineH={15} />
             {productByRoute?.crossSellingVariations?.length > 0 ? (
               <FlatListSlide
@@ -244,7 +245,7 @@ export default function DetailsProduct({navigation, route}) {
               />
             ) : null}
           </Padding>
-          <Space lineH={30} />
+          <Space lineH={110} />
         </BackgroundView>
       </ScrollView>
       <BottomDetails item={productByRoute} />

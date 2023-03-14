@@ -12,6 +12,7 @@ import {BackgroundView, Padding} from '../../css/main.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {regexHtml} from '../../utils/main';
+import i18n from '../../core/i18n/config';
 
 export default function PartnerDetailScreen({navigation, route}) {
   let partner =route.params.params;
@@ -28,7 +29,7 @@ export default function PartnerDetailScreen({navigation, route}) {
           justifyContent: 'space-between',
         }}>
         <Text style={{color: Color.brand.black, fontSize: 18}}>
-          {'Partner detail'}
+          {i18n.t("Global.Partnerdetail")}
         </Text>
         <IconlyProvider
           primaryColor={Color.brand.black}
@@ -54,17 +55,18 @@ export default function PartnerDetailScreen({navigation, route}) {
             </Text>
             <Space lineH={8} />
             <Text style={{fontSize: 15, color: Color.brand.black}}>
-              {'Independent Cleafin sales partner'}
+              {i18n.t("Global.Independent")}
+              
             </Text>
             <Space lineH={8} />
 
             <Text style={{fontSize: 14, color: Color.brand.textGrey}}>
-              {'Location: '+partner?.address_complete.replace(regexHtml,',')}
+              {i18n.t("Global.Location")+': '+partner?.address_complete.replace(regexHtml,',')}
             </Text>
             <Space lineH={8} />
 
             <Text style={{fontSize: 14, color: Color.brand.textGrey}}>
-              {'Number Of Customers : '+partner?.user_id}
+              {i18n.t("Global.NumberOfCustomers")+partner?.user_id}
             </Text>
           </View>
         </View>
@@ -142,7 +144,8 @@ People friendly • home friendly • planet friendl`}
                 fontSize: 18,
                 color: Color.brand.white,
               }}>
-              {'Submit'}
+             
+              {i18n.t("Global.Submit")}
             </Text>
           </View>
           </View>

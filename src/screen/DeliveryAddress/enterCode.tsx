@@ -8,6 +8,7 @@ import {Color} from '../../infrastructuer/theme/colors.style';
 import {Space} from '../../infrastructuer/theme/space.style';
 import {BasketContext} from '../../service/Basket/Basket.context';
 import {widthFullScreen} from '../../utils/main';
+import i18n from '../../core/i18n/config';
 
 const Card = styled(View)`
   width: 100%;
@@ -63,7 +64,7 @@ export default function EnterCode({onChange, visible}: Type) {
             <Space lineH={20} />
             <LoadingButton
               isActive={false}
-              title={'Enter Code'}
+              title={i18n.t("Global.EnterCode")}
               onNext={() => {
                 couponsFn(textCode);
                 setTimeout(() => {

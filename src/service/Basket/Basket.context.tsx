@@ -72,6 +72,12 @@ interface IBasketContext {
   walletRoleProduct: any;
   setWalletRoleProduct: any;
   priceBasketWallet: any;
+  totalCoin: any;
+  ISO3: any; 
+  setISO3: any;
+  setTotalPrice: any;
+  setCodePrice: any;
+  setTotalCoin: any;
 }
 export const BasketContext = createContext<IBasketContext>(
   {} as IBasketContext,
@@ -86,6 +92,7 @@ export default function BasketContextProvider({
   const {rolesUser} = useContext(ProfileContext);
 
   const [walletRoleProduct, setWalletRoleProduct] = useState<boolean>(false);
+  const [ISO3, setISO3] = useState("EUR");
 
   const [numberBasket, setNumberBasket] = useState(0);
   const [priceBasketWallet, setPriceBasketWallet] = useState(0);
@@ -132,6 +139,7 @@ export default function BasketContextProvider({
   const [vatShipping, setVatShipping] = useState<any>(0);
   const [vatTransportation, setVatTransportation] = useState<any>(0);
   const [chackRole, setChackRole] = useState<any>("");
+  const [totalCoin, setTotalCoin] = useState<any>(0);
 
 useEffect(() => {
   setChackRole(rolesUser)
@@ -144,7 +152,9 @@ useEffect(() => {
   }
   function addToBasketCoin(product: ProductVariation) {
     let point = product?.point;
+    setTotalCoin(totalCoin+product.sale_price.value)
     console.log('ProductVariation', product);
+    
     console.log('point', product?.point);
     // alert(product?.point);
     if (point != null) {
@@ -166,11 +176,12 @@ useEffect(() => {
         }
       });
       console.log('dataP', dataP);
-
+    
       setBasketsExited(dataP);
     }
   }
   function removeToBasketCoin(product: ProductVariation) {
+  
     let point = product.point;
     if (point != null) {
       setPointProducts(point - pointProducts);
@@ -195,67 +206,64 @@ useEffect(() => {
     }
   }
   function addToBasket(product: ProductVariation) {
-    let point = product?.point;
-    console.log('ProductVariation', product);
-    console.log('point', product?.point);
-    if (point != null) {
-      setPointProducts(point + pointProducts);
+    console.log('Adding product to basket:', product);
+  
+    const productPoint = product?.point;
+    if (productPoint) {
+      setPointProducts(pointProducts + productPoint);
     }
-    const filter = basketsExited.filter(val => {
-      return val.id == product.id;
-    });
-    console.log(filter);
-    setNumberBasket(numberBasket + 1);
-    if (filter.length == 0) {
-      let bask = {...product, numberBasket: 1};
+  
+    const filter = basketsExited.filter(val => val.id === product.id);
+    if (filter.length === 0) {
+      const bask = {...product, numberBasket: 1};
       setBasketsExited([...basketsExited, bask]);
     } else {
-      let dataP = basketsExited;
-      dataP.map((val, index) => {
-        if (val.id == product.id) {
-          dataP[index] = {...product, numberBasket: val.numberBasket + 1};
+      const updatedBaskets = basketsExited.map(val => {
+        if (val.id === product.id) {
+          return {...product, numberBasket: val.numberBasket + 1};
         }
+        return val;
       });
-      console.log('dataP', dataP);
-
-      setBasketsExited(dataP);
+      setBasketsExited(updatedBaskets);
     }
-    let price = parseFloat(resultPrice) + parseFloat(product?.sale_price.value);
-    let transport = transportation + product?.transportation?.gross_value;
-
-    let priceNotVat =
-      parseFloat(resultPriceNotVat) +
-      parseFloat(product?.sale_price.value_not_vat);
-    console.log('parseFloat', price);
-    console.log('value_not_vat', product?.sale_price.value_not_vat);
-    console.log('priceNotVat', priceNotVat);
-    setResultPrice(price);
-    setResultPriceNotVat(priceNotVat);
-    setTransportation(transport);
+  
+    const productPrice = parseFloat(product?.sale_price.value);
+    const productPriceNotVat = parseFloat(product?.sale_price.value_not_vat);
+    const productTransport = product?.transportation?.gross_value || 0;
+  
+    const newPrice = parseFloat(resultPrice) + productPrice;
+    const newPriceNotVat = parseFloat(resultPriceNotVat) + productPriceNotVat;
+    const newTransport = transportation + productTransport;
+  
     let plusT = 0;
-    if (
-      dataConfig?.transportation_rule?.min_customer_amount > transportation
-    ) {
-      if (price < shopConfig?.shipping_cost_rule?.min_amount) {
-      plusT = dataConfig?.transportation_rule?.customer_cost;
-      }else{
-        plusT = vatTransportation;
-
-
-      }
+    if (chackRole === "partner" && newTransport > dataConfig?.transportation_rule?.min_partner_amount) {
+      plusT = newTransport;
+      setShipping(newTransport);
+    } else {
+      plusT = vatTransportation;
+      setShipping(vatTransportation);
     }
+  
     let plusS = 0;
-    // alert(shopConfig?.shipping_cost_rule?.min_amount)
-    if (price < shopConfig?.shipping_cost_rule?.min_amount) {
-      setShipping(vatShipping);
+    if (chackRole !== "partner" && newPrice < shopConfig?.shipping_cost_rule?.min_amount) {
       plusS = vatShipping;
+      setShipping(vatShipping);
     } else {
       setShipping(0);
-      plusS = 0;
     }
-    setTotalPrice(price + plusS + plusT);
-    setDefaultPrice(price + plusS + plusT);
+  
+    const totalPrice = newPrice + plusS + plusT;
+    setTotalPrice(totalPrice);
+    setDefaultPrice(totalPrice);
     setResultSymbol('€');
+  
+    setResultPrice(newPrice);
+    setResultPriceNotVat(newPriceNotVat);
+    setTransportation(newTransport);
+  
+    setNumberBasket(numberBasket + 1);
+  
+    console.log('Product added to basket:', product);
   }
 
   function removeToBasket(product: ProductVariation) {
@@ -291,26 +299,31 @@ useEffect(() => {
 
     setResultPrice(price);
     setResultPriceNotVat(priceNotVat);
-    setTransportation(transport);
+    
     let plusT = 0;
-    if (
-      dataConfig?.transportation_rule?.min_customer_amount > transportation
-    ) {
-      if (price < shopConfig?.shipping_cost_rule?.min_amount) {
-      plusT = dataConfig?.transportation_rule?.customer_cost;
+    if(chackRole=="partner") {
+      if (
+        transport> dataConfig?.transportation_rule?.min_partner_amount 
+      ) {
+        plusT = transport;
+        setShipping(transport);
+       
       }else{
         plusT = vatTransportation;
-
-
+       
+        setShipping(vatTransportation);
       }
     }
-    let plusS = 0;
-    if (price < shopConfig?.shipping_cost_rule?.min_amount) {
-      setShipping(vatShipping);
-      plusS = vatShipping;
-    } else {
-      setShipping(0);
-      plusS = 0;
+      let plusS = 0;
+      // alert(shopConfig?.shipping_cost_rule?.min_amount)
+      if(chackRole!="partner") {
+      if (price < shopConfig?.shipping_cost_rule?.min_amount) {
+        setShipping(vatShipping);
+        plusS = vatShipping;
+      } else {
+        setShipping(0);
+        plusS = 0;
+      }
     }
     setTotalPrice(price + plusS + plusT);
     setDefaultPrice(price + plusS + plusT);
@@ -349,10 +362,12 @@ useEffect(() => {
       });
     });
   }
-
+  useEffect(()=>{ closeBasket()},[])
   function closeBasket() {
     setBasketsExited([]);
+    setAddCoinProduct([]);
     setNumberBasket(0);
+    setTotalCoin(0);
     setDefaultPrice(0);
     setTotalPrice(0);
     setResultPrice(0);
@@ -391,6 +406,8 @@ useEffect(() => {
   function closeCouponsFn() {
     setCouponsType(0);
     setTotalPrice(defaultPrice);
+    setCodePrice(0)
+    setTotalCoin(0)
     setCoupons(false);
   }
   function setCouponsProductPriceFn() {
@@ -474,6 +491,7 @@ useEffect(() => {
   }
 
   function removeCoinProduct(item) {
+    setTotalCoin(totalCoin-item.sale_price.value)
     setNumberBasket(numberBasket - 1);
     const change = basketsExited.filter(
       x => x?.id != item?.id || typeof x?.coin === 'undefined',
@@ -534,14 +552,16 @@ useEffect(() => {
     return AC.dataConfigAc().then(res => {
       setDataConfig(res);
       setShopConfig(res);
-      
-      if(res?.country?.vats)
-      setVatShipping((((1+res?.country?.vats[0].value)/100)*res?.shipping_cost_rule?.amount)+res?.shipping_cost_rule?.amount)
-      if (chackRole == 'partner') {
-          setVatTransportation((((1+res?.country?.vats[0].value)/100)*res?.transportation_rule?.partner_cost)+res?.transportation_rule?.partner_cost)
-      } else {
-        setVatTransportation((((1+res?.country?.vats[0].value)/100)*res?.transportation_rule?.customer_cost)+res?.transportation_rule?.customer_cost)
-      }
+      if(res?.country){
+        setISO3(res?.country?.currency?.iso3);
+
+      var vat =res?.country?.default_vat/100;
+      setVatShipping(res?.shipping_cost_rule?.amount*(vat+1));
+      setVatTransportation(res?.transportation_rule?.partner_cost*(vat+1))
+
+    }
+   
+
       if (res == 'null') {
         return false;
       }
@@ -617,6 +637,12 @@ useEffect(() => {
         walletRoleProduct,
         removeCoinProduct,
         priceBasketWallet,
+        dataConfig,
+        totalCoin,
+        ISO3,
+        setCodePrice,
+        setTotalPrice,
+        setTotalCoin
       }}>
       {children}
     </BasketContext.Provider>

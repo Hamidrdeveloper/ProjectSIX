@@ -1,6 +1,7 @@
-import { AsyncStorage } from 'react-native';
+
 import React from 'react'
 import PropTypes from 'prop-types'
+import AsyncStorage from '@react-native-async-storage/async-storage';
  class Storage {
 
 
@@ -23,6 +24,7 @@ retrieveData = async (keys:string) => {
     
     return await AsyncStorage.getItem(keys)
     .then((result) => {
+     
         if (result) {
             try {
                 console.log(keys,result);

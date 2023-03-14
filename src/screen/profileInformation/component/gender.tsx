@@ -5,6 +5,7 @@ import {Color} from '../../../infrastructuer/theme/colors.style';
 import {Space} from '../../../infrastructuer/theme/space.style';
 import {useController, UseControllerProps} from 'react-hook-form';
 import {ProfileContext} from '../../../service/Profile/Profile.context';
+import i18n from '../../../core/i18n/config';
 
 interface PickerProps extends UseControllerProps {
   label: string;
@@ -20,15 +21,16 @@ export default function Gender(props: PickerProps) {
   const [items, setItems] = useState([
     {
       id: 1,
-      value: 'Male',
+      value:i18n.t("Global.Male"),
+     
     },
     {
       id: 2,
-      value: 'Female',
+      value:i18n.t("Global.Female"),
     },
     {
       id: 3,
-      value: 'Other',
+      value:i18n.t("Global.Other"),
     },
   ]);
 
@@ -64,7 +66,7 @@ export default function Gender(props: PickerProps) {
   return (
     <>
       <View>
-        <Text>{'Gender'}</Text>
+        <Text>{i18n.t("Global.Gender")}</Text>
         <Space lineH={10} />
         <View
           style={{

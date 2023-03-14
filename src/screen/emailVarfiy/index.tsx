@@ -3,6 +3,7 @@ import {Image, Text, View} from 'react-native';
 import {CloseSquare} from 'react-native-iconly';
 import {ButtonColor} from '../../css/main.style';
 import {Color} from '../../infrastructuer/theme/colors.style';
+import i18n from '../../core/i18n/config';
 
 export default function EmailVerify({navigation}) {
   return (
@@ -19,7 +20,7 @@ export default function EmailVerify({navigation}) {
           source={require('../../assets/image/verified.png')}
         />
         <Text style={{fontSize: 30, padding: 15, textAlign: 'center'}}>
-          {'Congratulations! Your account has been created.'}
+          {i18n.t("Global.Congratulations")}
         </Text>
         <Text
           style={{
@@ -28,7 +29,7 @@ export default function EmailVerify({navigation}) {
             textAlign: 'center',
             color: Color.brand.colorButton,
           }}>
-          {'Please confirm the email we sent to your email address.'}
+          {i18n.t("Global.Pleaseconfirmemail")}
         </Text>
         <ButtonColor style={{width: `70%`}} onPress={() => {}}>
           <Text
@@ -37,7 +38,7 @@ export default function EmailVerify({navigation}) {
               fontSize: 18,
               color: Color.brand.white,
             }}>
-            {'RESEND EMAIL'}
+            {i18n.t("Global.RESENDEMAIL")}
           </Text>
         </ButtonColor>
         <View style={{position: 'absolute', top: 50}}>
